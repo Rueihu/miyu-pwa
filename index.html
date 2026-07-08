@@ -757,4 +757,340 @@ async function sendHi(targetUid,targetName,targetEmoji,targetColorIdx){
 async function loadMyHiSent(){
   if(!currentUser)return;
   try{
-    const snap=await db.collection('hel
+    const snap=await db.collection('hellos').where('from','==',currentUser.uid).get();
+    snap.forEach(doc=>myHiSent.add(doc.data().to));
+  }catch(e){}
+}
+
+/* ===== 監聽配對（即時）===== */
+function listenMatches(){
+  if(!currentUser)return;
+  db.collection('matches').where('users','array-contains',currentUser.uid)
+    .onSnapshot(snap=>{
+      snap.docChanges().forEach(change=>{
+        const d=change.doc.data();
+        const otherUid=d.users.find(u=>u!==currentUser.uid);
+        if(change.type==='added'){
+          myMatches.add(otherUid);
+          matchedProfiles[otherUid]={
+            uid:otherUid,
+            name:d.userNames[otherUid],
+            emoji:d.userEmojis[otherUid],
+            colorIdx:d.userColorIdx[otherUid],
+            matchId:change.doc.id,
+            lastMsg:d.lastMsg||'',
+            lastMsgAt:d.lastMsgAt
+          };
+        }
+      });
+      updateMatchBadge();
+      renderUserList();
+      renderMatchPage();
+    });
+}
+
+/* ===== 配對成功動畫 ===== */
+function showMatchOverlay(name,emoji,colorIdx){
+  const me=myProfile;
+  const mAvMe=document.getElementById('mAvMe');
+  const mAvThem=document.getElementById('mAvThem');
+  mAvMe.style.cssText=COLORS[me?.colorIdx%COLORS.length||0];
+  mAvMe.textContent=me?.emoji||'😊';
+  mAvThem.style.cssText=COLORS[colorIdx%COLORS.length];
+  mAvThem.textContent=emoji;
+  document.getElementById('matchOverlaySub').textContent=`你和 ${name} 互相打了招呼！`;
+  launchConfetti();
+  document.getElementById('matchOverlay').classList.add('show');
+}
+function closeMatchOverlay(){document.getElementById('matchOverlay').classList.remove('show');newMatchUid=null;}
+function openChatFromOverlay(){closeMatchOverlay();if(newMatchUid)openChat(newMatchUid);}
+
+function launchConfetti(){
+  const c=document.getElementById('confettiWrap');c.innerHTML='';
+  const cols=['#E8623A','#F4C0A4','#fff','#534AB7','#22C55E','#F4C029','#FF6B9D'];
+  for(let i=0;i<50;i++){
+    const d=document.createElement('div');d.className='confetti-dot';
+    d.style.cssText=`left:${Math.random()*100}%;top:${-10-Math.random()*20}px;background:${cols[~~(Math.random()*cols.length)]};width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;animation-duration:${1+Math.random()*1.5}s;animation-delay:${Math.random()*0.5}s;`;
+    c.appendChild(d);
+  }
+}
+
+/* ===== 配對頁渲染 ===== */
+function renderMatchPage(){
+  const matched=Object.values(matchedProfiles);
+  // 待回應（我打過招呼但還沒配對）
+  const pending=[...myHiSent].filter(uid=>!myMatches.has(uid));
+  const pendingSec=document.getElementById('pendingSection');
+  const pendingRow=document.getElementById('pendingRow');
+  if(pending.length){
+    pendingSec.style.display='block';
+    pendingRow.innerHTML=pending.map(uid=>`
+      <div class="pending-card">
+        <div class="pending-av" style="background:#f5f5f0;color:#888">
+          <span style="font-size:20px">👋</span>
+          <div class="pending-pulse"></div>
+        </div>
+        <div class="pending-name">等待回應</div>
+        <div class="pending-time">剛剛</div>
+      </div>`).join('');
+  } else pendingSec.style.display='none';
+
+  // 已配對
+  const matchedLabel=document.getElementById('matchedLabel');
+  const matchedList=document.getElementById('matchedList');
+  const emptyState=document.getElementById('matchEmptyState');
+  const sub=document.getElementById('matchHeaderSub');
+
+  if(matched.length){
+    matchedLabel.style.display='block';
+    emptyState.style.display='none';
+    sub.textContent=`你有 ${matched.length} 個配對！`;
+    matchedList.innerHTML=matched.map(p=>{
+      const c=COLORS[p.colorIdx%COLORS.length];
+      const preview=p.lastMsg||'點擊開始聊天 💬';
+      return`<div class="matched-card" onclick="openChat('${p.uid}')">
+        <div class="matched-av" style="${c}">${p.emoji}</div>
+        <div class="matched-info">
+          <div class="matched-name">${p.name}</div>
+          <div class="matched-preview">${preview}</div>
+        </div>
+        <span class="matched-time">💚</span>
+      </div>`;
+    }).join('');
+  } else if(!pending.length){
+    matchedLabel.style.display='none';
+    matchedList.innerHTML='';
+    emptyState.style.display='flex';
+    sub.textContent='尚未有配對';
+  } else {
+    matchedLabel.style.display='none';
+    matchedList.innerHTML='';
+    emptyState.style.display='none';
+    sub.textContent='等待對方回應中...';
+  }
+}
+
+/* ===== 聊天室 ===== */
+function openChat(uid){
+  const p=matchedProfiles[uid];if(!p)return;
+  chatTarget=uid;prevTab=getCurrentTab();
+  // 頭部
+  const c=COLORS[p.colorIdx%COLORS.length];
+  const hdrAv=document.getElementById('chatHdrAv');
+  hdrAv.style.cssText=c;hdrAv.textContent=p.emoji;
+  document.getElementById('chatHdrName').textContent=p.name;
+  document.getElementById('chatHdrStatus').textContent='配對成功 💚';
+  // Emoji 快捷
+  document.getElementById('eqRow').innerHTML=['😊','❤️','👋','😄','🎉','☕','🌸','😂'].map(e=>`<span class="eq" onclick="appendEmoji('${e}')">${e}</span>`).join('');
+  // 切換到聊天頁
+  hideAllMainPages();
+  document.getElementById('chatPage').style.display='flex';
+  document.getElementById('chatInp').value='';
+  document.getElementById('chatInp').addEventListener('keydown',onChatEnter);
+  listenChat(uid);
+  setTimeout(()=>document.getElementById('chatMessages').scrollTop=9999,100);
+}
+
+function closeChat(){
+  if(chatUnsubscribe){chatUnsubscribe();chatUnsubscribe=null;}
+  document.getElementById('chatInp').removeEventListener('keydown',onChatEnter);
+  document.getElementById('chatPage').style.display='none';
+  chatTarget=null;
+  switchTab(prevTab||'match');
+}
+
+function onChatEnter(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg();}}
+function appendEmoji(e){document.getElementById('chatInp').value+=e;document.getElementById('chatInp').focus();}
+
+function listenChat(uid){
+  if(chatUnsubscribe){chatUnsubscribe();chatUnsubscribe=null;}
+  const matchId=[currentUser.uid,uid].sort().join('_');
+  chatUnsubscribe=db.collection('messages').doc(matchId).collection('msgs')
+    .orderBy('createdAt').limit(100)
+    .onSnapshot(snap=>{renderChatMessages(snap,uid);});
+}
+
+function renderChatMessages(snap,uid){
+  const p=matchedProfiles[uid];if(!p)return;
+  const c=COLORS[p.colorIdx%COLORS.length];
+  const box=document.getElementById('chatMessages');
+  box.innerHTML=`<div class="sys-msg"><span>你和 ${p.name} 配對成功，開始聊天吧！💚</span></div>`;
+  let prevSender=null;
+  snap.forEach(doc=>{
+    const m=doc.data();
+    const isMe=m.from===currentUser.uid;
+    const t=m.createdAt?.toDate?.()?new Date(m.createdAt.toDate()):new Date();
+    const timeStr=t.getHours().toString().padStart(2,'0')+':'+t.getMinutes().toString().padStart(2,'0');
+    if(isMe){
+      box.innerHTML+=`<div class="brow me"><div><div class="bubble me">${esc(m.text)}</div><div class="b-time me-t">${timeStr}</div></div></div>`;
+    } else {
+      const showAv=prevSender!==m.from;
+      box.innerHTML+=`<div class="brow them">${showAv?`<div class="b-av" style="${c}">${p.emoji}</div>`:'<div style="width:28px;flex-shrink:0"></div>'}<div><div class="bubble them">${esc(m.text)}</div><div class="b-time th-t">${timeStr}</div></div></div>`;
+    }
+    prevSender=m.from;
+  });
+  box.scrollTop=9999;
+}
+
+async function sendMsg(){
+  const inp=document.getElementById('chatInp');
+  const text=inp.value.trim();
+  if(!text||!chatTarget||!currentUser)return;
+  inp.value='';
+  const matchId=[currentUser.uid,chatTarget].sort().join('_');
+  try{
+    await db.collection('messages').doc(matchId).collection('msgs').add({
+      from:currentUser.uid,text,
+      createdAt:firebase.firestore.FieldValue.serverTimestamp()
+    });
+    // 更新最後訊息
+    await db.collection('matches').doc(matchId).update({
+      lastMsg:text,lastMsgAt:firebase.firestore.FieldValue.serverTimestamp()
+    });
+    if(matchedProfiles[chatTarget]) matchedProfiles[chatTarget].lastMsg=text;
+  }catch(e){T('發送失敗');}
+}
+
+/* ===== Tab 切換 ===== */
+function switchTab(tab){
+  hideAllMainPages();
+  document.querySelectorAll('.tab-item').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+tab)?.classList.add('active');
+  if(tab==='nearby'){document.getElementById('nearbyPage').style.display='flex';}
+  else if(tab==='match'){document.getElementById('matchPage').style.display='flex';renderMatchPage();}
+  else if(tab==='profile'){document.getElementById('profilePage').style.display='flex';renderProfilePage();}
+}
+function hideAllMainPages(){
+  ['nearbyPage','matchPage','chatPage','profilePage'].forEach(id=>{
+    const el=document.getElementById(id);if(el)el.style.display='none';
+  });
+}
+function getCurrentTab(){
+  const tabs=['nearby','match','profile'];
+  return tabs.find(t=>document.getElementById('tab-'+t)?.classList.contains('active'))||'nearby';
+}
+
+/* ===== 地圖 ===== */
+function initMap(){
+  if(leafletMap)return;
+  const lat=myLat||25.0330,lng=myLng||121.5654;
+  leafletMap=L.map('leafletMap',{zoomControl:false}).setView([lat,lng],13);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap',maxZoom:18}).addTo(leafletMap);
+  L.control.zoom({position:'bottomright'}).addTo(leafletMap);
+  updateMyMarker();renderMapMarkers();
+}
+function updateMyMarker(){
+  if(!leafletMap||!myLat||!myLng)return;
+  if(myMarker)myMarker.remove();
+  const icon=L.divIcon({className:'',html:'<div class="my-marker-pulse"></div>',iconSize:[16,16],iconAnchor:[8,8]});
+  myMarker=L.marker([myLat,myLng],{icon,zIndexOffset:1000}).addTo(leafletMap).bindPopup('📍 你的位置');
+}
+function renderMapMarkers(){
+  if(!leafletMap)return;
+  userMarkers.forEach(m=>m.remove());userMarkers=[];
+  if(!myLat||!myLng)return;
+  allUsers.forEach(u=>{
+    if(!u.location)return;
+    const dist=calcDist(myLat,myLng,u.location.lat,u.location.lng);
+    if(dist>distFilter)return;
+    const c=COLORS[u.colorIdx%COLORS.length];
+    const bg=c.split(';')[0].replace('background:','');
+    const tc=c.split(';')[1]?.replace('color:','');
+    const icon=L.divIcon({className:'',html:`<div style="background:${bg};color:${tc};width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;border:2.5px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.25)">${u.emoji}</div>`,iconSize:[36,36],iconAnchor:[18,18]});
+    const m=L.marker([u.location.lat,u.location.lng],{icon}).addTo(leafletMap).bindPopup(`<b>${u.name}</b>，${u.age}歲<br>📍 ${fmtDist(dist)}`);
+    userMarkers.push(m);
+  });
+}
+function setView(v){
+  currentView=v;
+  document.getElementById('listView').style.display=v==='list'?'flex':'none';
+  document.getElementById('mapView').style.display=v==='map'?'block':'none';
+  document.getElementById('vt-list').classList.toggle('active',v==='list');
+  document.getElementById('vt-map').classList.toggle('active',v==='map');
+  if(v==='map')setTimeout(()=>{initMap();leafletMap?.invalidateSize();},100);
+}
+function setDist(km){
+  distFilter=km;
+  document.querySelectorAll('[id^="fc-"]').forEach(el=>el.classList.remove('active'));
+  document.getElementById('fc-'+km)?.classList.add('active');
+  renderUserList();renderMapMarkers();
+}
+function centerMap(){if(!leafletMap||!myLat)return;leafletMap.setView([myLat,myLng],14,{animate:true});}
+
+/* ===== Badge ===== */
+function updateMatchBadge(){
+  const n=myMatches.size;
+  const b=document.getElementById('matchBadge');
+  b.style.display=n>0?'flex':'none';
+  b.textContent=n;
+}
+
+/* ===== 個人頁 ===== */
+function renderProfilePage(){
+  const p=myProfile;
+  if(!p){document.getElementById('profileContent').innerHTML='<div style="padding:20px;color:#aaa;text-align:center">載入中...</div>';return;}
+  const c=COLORS[p.colorIdx%COLORS.length];
+  document.getElementById('profileContent').innerHTML=`
+    <div class="profile-cover"></div>
+    <div class="profile-av-row">
+      <div class="profile-av" style="${c}">${p.emoji}</div>
+      <button class="profile-edit-btn" onclick="T('編輯功能即將上線')">✏️ 編輯</button>
+    </div>
+    <div class="profile-name">${p.name}，${p.age}歲 <span class="v-badge">✓ 已驗證</span></div>
+    <div class="profile-sub">
+      📍 ${p.city||'台灣'}
+      ${p.gender?` · ${p.gender==='male'?'👨 男生':p.gender==='female'?'👩 女生':'🧑 其他'}`:''}
+      ${p.mbti?` · 🧠 ${p.mbti}`:''}
+    </div>
+    <div class="profile-tags">${(p.tags||[]).map(t=>`<div class="p-tag">${t}</div>`).join('')}</div>
+    <div class="profile-sec">
+      <div class="profile-sec-title">配對統計</div>
+      <div class="info-card"><i class="ti ti-heart" style="color:#22C55E"></i><div><div class="info-card-text">已配對 ${myMatches.size} 人</div><div class="info-card-sub">打招呼給 ${myHiSent.size} 人</div></div></div>
+    </div>
+    <div class="profile-sec">
+      <div class="profile-sec-title">地理位置</div>
+      <div class="info-card"><i class="ti ti-map-pin"></i><div><div class="info-card-text">${myLat?'位置已啟用':'尚未取得位置'}</div><div class="info-card-sub">${myLat?`${myLat.toFixed(4)}, ${myLng.toFixed(4)}`:'請允許位置權限'}</div></div></div>
+    </div>
+    <div class="profile-sec">
+      <div class="profile-sec-title">帳號</div>
+      <div class="info-card"><i class="ti ti-phone"></i><div><div class="info-card-text">${p.phone||'—'}</div><div class="info-card-sub">已透過 Firebase 驗證</div></div></div>
+    </div>
+    <div style="padding:0 16px;margin-top:8px"><button class="btn-ghost" onclick="doSignOut()">登出</button></div>
+  `;
+}
+
+/* ===== 用戶詳情（預留）===== */
+function showUserDetail(uid){T('用戶詳情頁即將上線');}
+
+/* ===== 登出 ===== */
+async function doSignOut(){
+  clearInterval(locTimer);
+  if(chatUnsubscribe){chatUnsubscribe();chatUnsubscribe=null;}
+  if(currentUser){try{await db.collection('users').doc(currentUser.uid).update({online:false});}catch(e){}}
+  await auth.signOut();
+  currentUser=null;myProfile=null;myLat=null;myLng=null;
+  myHiSent=new Set();myMatches=new Set();matchedProfiles={};
+  window.recaptchaVerifier?.clear();window.recaptchaVerifier=null;
+  document.getElementById('phoneInp').value='';
+  go(0);T('已登出');
+}
+
+/* ===== 自動登入 ===== */
+auth.onAuthStateChanged(async user=>{
+  if(user&&document.getElementById('s0').classList.contains('active')){
+    currentUser=user;
+    await loadProfile(user.uid);
+    enterApp();
+  }
+});
+
+/* ===== 工具 ===== */
+function errMsg(code,phase){const m={'auth/invalid-phone-number':'手機號碼格式不正確','auth/too-many-requests':'請求次數過多，請稍後再試','auth/invalid-verification-code':'驗證碼不正確','auth/code-expired':'驗證碼已過期，請重新發送'};return m[code]||(phase==='send'?'發送失敗':'驗證失敗');}
+function setStEl(id,type,msg){const el=document.getElementById(id);if(!el)return;const ic={info:'ℹ️',error:'❌',success:'✅'};if(el.className.includes('status-box')){el.style.display=msg?'flex':'none';el.className=`status-box ${type}`;el.innerHTML=msg?`<span style="font-size:16px;flex-shrink:0">${ic[type]||'ℹ️'}</span><span>${msg}</span>`:'';}else el.innerHTML=msg?`<div class="status-box ${type}"><span style="font-size:16px;flex-shrink:0">${ic[type]||'ℹ️'}</span><span>${msg}</span></div>`:'';}
+function setBtnL(btnId,textId,loading,text){document.getElementById(btnId).disabled=loading;document.getElementById(textId).innerHTML=loading?`<div class="spinner"></div>${text}`:text;}
+function esc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function T(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2500);}
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(e=>console.warn(e)));}
+</script>
+</body>
+</html>
