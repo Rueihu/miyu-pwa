@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head><title>圖示產生器</title></head>
+<body>
+<p>點下方按鈕下載 App 圖示（需手動放入 icons/ 資料夾）</p>
+<canvas id="c192" width="192" height="192" style="border:1px solid #ccc;margin:8px"></canvas>
+<canvas id="c512" width="512" height="512" style="border:1px solid #ccc;margin:8px;width:96px;height:96px"></canvas>
+<br>
+<button onclick="gen(192,'c192')">下載 192×192</button>
+<button onclick="gen(512,'c512')">下載 512×512</button>
+<script>
+function gen(size, id) {
+  const c = document.getElementById(id);
+  const ctx = c.getContext('2d');
+  // 背景
+  const grad = ctx.createLinearGradient(0, 0, size, size);
+  grad.addColorStop(0, '#E8623A');
+  grad.addColorStop(1, '#F4A46A');
+  ctx.fillStyle = grad;
+  roundRect(ctx, 0, 0, size, size, size * 0.22);
+  ctx.fill();
+  // 文字
+  ctx.fillStyle = '#fff';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.font = `900 ${size * 0.52}px "PingFang TC", "Microsoft JhengHei", sans-serif`;
+  ctx.fillText('蜜', size * 0.36, size * 0.47);
+  ctx.fillStyle = 'rgba(255,255,255,0.85)';
+  ctx.font = `400 ${size * 0.22}px "PingFang TC", "Microsoft JhengHei", sans-serif`;
+  ctx.fillText('MiYou', size * 0.62, size * 0.78);
+  // 下載
+  const a = document.createElement('a');
+  a.download = `icon-${size}.png`;
+  a.href = c.toDataURL('image/png');
+  a.click();
+}
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+}
+// 自動預覽
+gen(192, 'c192');
+</script>
+</body>
+</html>
