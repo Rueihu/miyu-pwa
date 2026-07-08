@@ -10,11 +10,16 @@
 <meta name="apple-mobile-web-app-title" content="蜜友"/>
 <link rel="manifest" href="manifest.json"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+<<<<<<< HEAD
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+=======
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+>>>>>>> d47683fd3908a1a1619e250d85ad91c34d133404
 <title>蜜友 MiYou</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -31,6 +36,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
 .scr-footer{padding:12px 20px;padding-bottom:calc(16px + var(--sab));flex-shrink:0;background:#fff}
 .nav-row{display:flex;align-items:center;padding:12px 16px 4px;flex-shrink:0}
 .btn-back{width:38px;height:38px;border-radius:50%;background:#f5f5f0;border:.5px solid #e0e0e0;display:flex;align-items:center;justify-content:center;color:#666;cursor:pointer;font-size:22px;transition:background .15s}
+<<<<<<< HEAD
+=======
+.btn-back:hover{background:#ebebeb}
+>>>>>>> d47683fd3908a1a1619e250d85ad91c34d133404
 .step-indicator{flex:1;text-align:center;font-size:13px;color:#aaa;font-weight:500}
 .step-chip{display:inline-block;font-size:10px;font-weight:700;color:var(--brand);text-transform:uppercase;letter-spacing:.7px;background:var(--brand-light);padding:3px 10px;border-radius:20px;margin-bottom:10px;border:.5px solid var(--brand-border)}
 .s-title{font-size:22px;font-weight:700;color:#111;line-height:1.35;margin-bottom:5px}
@@ -40,14 +49,23 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
 .btn-main:active{transform:scale(.98)}
 .btn-main:disabled{opacity:.4;cursor:default;transform:none}
 .btn-ghost{width:100%;padding:13px;background:#f5f5f0;color:#666;border:.5px solid #e0e0e0;border-radius:14px;font-size:14px;cursor:pointer;margin-top:8px;font-family:inherit;transition:background .15s}
+<<<<<<< HEAD
 .btn-social{width:100%;padding:13px;border:.5px solid #e0e0e0;border-radius:12px;font-size:14px;cursor:pointer;background:#f9f9f8;color:#444;display:flex;align-items:center;justify-content:center;gap:9px;margin-bottom:8px;font-weight:500;transition:background .15s;font-family:inherit}
+=======
+.btn-ghost:hover{background:#ebebeb}
+.btn-social{width:100%;padding:13px;border:.5px solid #e0e0e0;border-radius:12px;font-size:14px;cursor:pointer;background:#f9f9f8;color:#444;display:flex;align-items:center;justify-content:center;gap:9px;margin-bottom:8px;font-weight:500;transition:background .15s;font-family:inherit}
+.btn-social:hover{background:#ebebeb}
+>>>>>>> d47683fd3908a1a1619e250d85ad91c34d133404
 .inp{width:100%;padding:13px 14px;border:.5px solid #e0e0e0;border-radius:12px;background:#f9f9f8;color:#111;font-size:15px;font-family:inherit;outline:none;transition:all .2s}
 .inp:focus{border-color:var(--brand);background:#fff;box-shadow:0 0 0 3px rgba(232,98,58,.08)}
 .inp.error{border-color:#E24B4A;background:#FCEBEB}
 .inp-label{font-size:12px;color:#888;margin-bottom:5px;font-weight:600}
 .inp-group{margin-bottom:14px}
 .inp-hint{font-size:11px;color:#bbb;margin-top:5px}
+<<<<<<< HEAD
 
+=======
+>>>>>>> d47683fd3908a1a1619e250d85ad91c34d133404
 /* 歡迎 */
 .welcome-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 24px;text-align:center;overflow-y:auto}
 .logo{font-size:46px;font-weight:800;color:var(--brand);letter-spacing:-1px}
@@ -60,7 +78,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
 .social-div span{font-size:12px;color:#bbb;white-space:nowrap}
 .terms{font-size:11px;color:#bbb;margin-top:14px;line-height:1.7}
 .terms b{color:var(--brand);cursor:pointer}
+<<<<<<< HEAD
 
+=======
+.login-hint{font-size:13px;color:#bbb;margin-top:12px}
+.login-hint b{color:var(--brand);cursor:pointer}
+>>>>>>> d47683fd3908a1a1619e250d85ad91c34d133404
 /* OTP */
 .otp-art{width:72px;height:72px;border-radius:20px;background:var(--brand-light);display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 18px}
 .phone-disp{font-size:14px;color:#888;text-align:center;margin-bottom:6px;line-height:1.6}
@@ -74,6 +97,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
 .otp-timer-row{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:8px}
 .otp-timer{font-size:13px;color:#bbb}
 .otp-resend{font-size:13px;color:var(--brand);cursor:pointer;font-weight:500;display:none}
+<<<<<<< HEAD
 .status-box{padding:12px 14px;border-radius:12px;font-size:13px;margin-bottom:14px;display:flex;align-items:flex-start;gap:8px;line-height:1.5}
 .status-box.info{background:#EFF6FF;color:#1E5FA5;border:.5px solid #BFDBFE}
 .status-box.error{background:#FEF2F2;color:#991B1B;border:.5px solid #FECACA}
@@ -83,17 +107,44 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
 @keyframes sp{to{transform:rotate(360deg)}}
 
 /* 後續步驟 */
+=======
+/* 狀態框 */
+.status-box{padding:12px 14px;border-radius:12px;font-size:13px;margin-bottom:14px;display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.status-box.info{background:#EFF6FF;color:#1E5FA5;border:.5px solid #BFDBFE}
+.status-box.success{background:#F0FDF4;color:#166534;border:.5px solid #BBF7D0}
+.status-box.error{background:#FEF2F2;color:#991B1B;border:.5px solid #FECACA}
+.status-box.warn{background:#FFFBEB;color:#92400E;border:.5px solid #FDE68A}
+.status-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+/* 載入 */
+.spinner{width:18px;height:18px;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite;flex-shrink:0}
+@keyframes sp{to{transform:rotate(360deg)}}
+/* 成功頁 */
+.success-wrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 24px;text-align:center;overflow-y:auto}
+.success-art{font-size:72px;margin-bottom:16px;animation:pop .5s cubic-bezier(.175,.885,.32,1.275)}
+@keyframes pop{0%{transform:scale(0)}100%{transform:scale(1)}}
+.uid-box{width:100%;background:#f5f5f0;border-radius:12px;padding:12px 16px;margin:6px 0;font-size:12px;color:#888;word-break:break-all;text-align:left;border:.5px solid #e0e0e0}
+.uid-box b{color:#444;display:block;margin-bottom:4px;font-size:11px;text-transform:uppercase;letter-spacing:.4px}
+/* 後續步驟 */
+.gender-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+.g-card{padding:18px 8px;border:.5px solid #e0e0e0;border-radius:14px;background:#f9f9f8;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;transition:all .2s}
+.g-card.sel{border-color:var(--brand);background:var(--brand-light)}
+.g-emoji{font-size:28px}.g-label{font-size:13px;font-weight:600;color:#666}
+.g-card.sel .g-label{color:var(--brand-dark)}
+>>>>>>> d47683fd3908a1a1619e250d85ad91c34d133404
 .name-big{font-size:22px;font-weight:700;border:none;border-bottom:2.5px solid #e0e0e0;border-radius:0;background:transparent;width:100%;padding:8px 2px;color:#111;outline:none;text-align:center;margin-bottom:4px;font-family:inherit;transition:border-color .2s}
 .name-big:focus{border-bottom-color:var(--brand)}
 .age-display{font-size:44px;font-weight:700;color:var(--brand);text-align:center;margin-bottom:10px}
 .slider{width:100%;-webkit-appearance:none;height:4px;border-radius:2px;background:#e0e0e0;outline:none;cursor:pointer}
 .slider::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;border-radius:50%;background:var(--brand);cursor:pointer;border:3px solid #fff;box-shadow:0 2px 8px rgba(232,98,58,.35)}
 .age-range{display:flex;justify-content:space-between;font-size:11px;color:#bbb;margin-top:6px}
+<<<<<<< HEAD
 .gender-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
 .g-card{padding:18px 8px;border:.5px solid #e0e0e0;border-radius:14px;background:#f9f9f8;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;transition:all .2s}
 .g-card.sel{border-color:var(--brand);background:var(--brand-light)}
 .g-emoji{font-size:28px}.g-label{font-size:13px;font-weight:600;color:#666}
 .g-card.sel .g-label{color:var(--brand-dark)}
+=======
+>>>>>>> d47683fd3908a1a1619e250d85ad91c34d133404
 .tag-grid{display:flex;gap:8px;flex-wrap:wrap}
 .t-opt{padding:8px 14px;border-radius:20px;font-size:13px;border:.5px solid #e0e0e0;cursor:pointer;background:#f9f9f8;color:#666;display:flex;align-items:center;gap:5px;font-weight:500;transition:all .15s}
 .t-opt.sel{background:var(--brand-light);border-color:var(--brand);color:var(--brand-dark)}
@@ -101,6 +152,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
 .m-opt{padding:10px 4px;border-radius:10px;border:.5px solid #e0e0e0;background:#f9f9f8;font-size:12px;font-weight:700;color:#888;cursor:pointer;text-align:center;transition:all .15s}
 .m-opt.sel{background:#EEEDFE;border-color:#534AB7;color:#534AB7}
 .skip-link{font-size:13px;color:#bbb;text-align:center;margin-top:12px;cursor:pointer}
+<<<<<<< HEAD
 
 /* ===== 主 App ===== */
 .main-top{display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px;background:#fff;border-bottom:.5px solid #eee;flex-shrink:0}
@@ -204,6 +256,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
 .fade-in{animation:fi .3s ease}
 @keyframes fi{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 .toast{position:absolute;bottom:calc(70px + var(--sab));left:50%;transform:translateX(-50%);background:#111;color:#fff;font-size:13px;padding:9px 18px;border-radius:20px;opacity:0;pointer-events:none;transition:opacity .3s;white-space:nowrap;z-index:9999;font-weight:500}
+=======
+.fade-in{animation:fi .3s ease}
+@keyframes fi{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.toast{position:absolute;bottom:calc(80px + var(--sab));left:50%;transform:translateX(-50%);background:#111;color:#fff;font-size:13px;padding:9px 18px;border-radius:20px;opacity:0;pointer-events:none;transition:opacity .3s;white-space:nowrap;z-index:999;font-weight:500}
+>>>>>>> d47683fd3908a1a1619e250d85ad91c34d133404
 .toast.show{opacity:1}
 #recaptcha-container{position:absolute;bottom:0;left:0}
 </style>
@@ -232,7 +289,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
 
 <!-- S1 手機號碼 -->
 <div class="screen" id="s1">
+<<<<<<< HEAD
   <div class="nav-row"><div class="btn-back" onclick="go(0)">‹</div><div class="step-indicator">步驟 1 / 5</div><div style="width:38px"></div></div>
+=======
+  <div class="nav-row"><div class="btn-back" onclick="go(0)">‹</div><div class="step-indicator">步驟 1 / 6</div><div style="width:38px"></div></div>
+>>>>>>> d47683fd3908a1a1619e250d85ad91c34d133404
   <div class="scr-scroll fade-in">
     <div class="step-chip">帳號驗證</div>
     <div class="s-title">輸入手機號碼</div>
@@ -248,11 +309,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
       <div class="inp-hint" id="phoneHint">手機號碼僅用於驗證，不會顯示給其他用戶</div>
     </div>
     <div id="countryPicker" style="display:none;background:#f9f9f8;border:.5px solid #e0e0e0;border-radius:12px;margin-bottom:14px;overflow:hidden">
+<<<<<<< HEAD
       <div style="padding:10px 14px 6px;font-size:11px;font-weight:600;color:#aaa;text-transform:uppercase;">選擇國碼</div>
       <div id="countryList" style="max-height:180px;overflow-y:auto"></div>
     </div>
     <div class="status-box info" id="s1Info">
       <span style="font-size:16px;flex-shrink:0">ℹ️</span>
+=======
+      <div style="padding:10px 14px 6px;font-size:11px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px">選擇國碼</div>
+      <div id="countryList" style="max-height:180px;overflow-y:auto"></div>
+    </div>
+    <div class="status-box info" id="s1Info">
+      <span class="status-icon">ℹ️</span>
+>>>>>>> d47683fd3908a1a1619e250d85ad91c34d133404
       <span>首次使用將自動建立帳號，已有帳號則直接登入</span>
     </div>
   </div>
@@ -265,7 +334,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
 
 <!-- S2 OTP -->
 <div class="screen" id="s2">
+<<<<<<< HEAD
   <div class="nav-row"><div class="btn-back" onclick="goBackToPhone()">‹</div><div class="step-indicator">步驟 1 / 5</div><div style="width:38px"></div></div>
+=======
+  <div class="nav-row"><div class="btn-back" onclick="goBackToPhone()">‹</div><div class="step-indicator">步驟 1 / 6</div><div style="width:38px"></div></div>
+>>>>>>> d47683fd3908a1a1619e250d85ad91c34d133404
   <div class="scr-scroll fade-in">
     <div class="otp-art">📱</div>
     <div class="step-chip" style="display:block;text-align:center">輸入驗證碼</div>
@@ -295,7 +368,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
 
 <!-- S3 名字年齡 -->
 <div class="screen" id="s3">
+<<<<<<< HEAD
   <div class="nav-row"><div class="btn-back" onclick="go(0)">‹</div><div class="step-indicator">步驟 2 / 5</div><div style="width:38px"></div></div>
+=======
+  <div class="nav-row"><div class="btn-back" onclick="go(0)">‹</div><div class="step-indicator">步驟 2 / 6</div><div style="width:38px"></div></div>
+>>>>>>> d47683fd3908a1a1619e250d85ad91c34d133404
   <div class="scr-scroll fade-in">
     <div class="step-chip">基本資料</div>
     <div class="s-title">你叫什麼名字？</div>
@@ -311,6 +388,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
   <div class="scr-footer"><button class="btn-main" id="nameBtn" onclick="go(4)" disabled>→ 下一步</button></div>
 </div>
 
+<<<<<<< HEAD
 <!-- S4 性別 + 興趣 -->
 <div class="screen" id="s4">
   <div class="nav-row"><div class="btn-back" onclick="go(3)">‹</div><div class="step-indicator">步驟 3 / 5</div><div style="width:38px"></div></div>
@@ -319,25 +397,57 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
     <div class="s-title">性別 & 興趣</div>
     <div class="s-sub">讓別人更快認識你</div>
     <div style="font-size:13px;font-weight:600;color:#444;margin-bottom:10px">性別</div>
+=======
+<!-- S4 性別 -->
+<div class="screen" id="s4">
+  <div class="nav-row"><div class="btn-back" onclick="go(3)">‹</div><div class="step-indicator">步驟 3 / 6</div><div style="width:38px"></div></div>
+  <div class="scr-scroll fade-in">
+    <div class="step-chip">基本資料</div>
+    <div class="s-title">你的性別是？</div>
+    <div class="s-sub">有助於我們為你推薦更適合的對象</div>
+>>>>>>> d47683fd3908a1a1619e250d85ad91c34d133404
     <div class="gender-grid">
       <div class="g-card" id="gm" onclick="selG('male')"><div class="g-emoji">👨</div><div class="g-label">男生</div></div>
       <div class="g-card" id="gf" onclick="selG('female')"><div class="g-emoji">👩</div><div class="g-label">女生</div></div>
       <div class="g-card" id="go" onclick="selG('other')"><div class="g-emoji">🧑</div><div class="g-label">其他</div></div>
     </div>
+<<<<<<< HEAD
     <div style="font-size:13px;font-weight:600;color:#444;margin-bottom:8px">興趣標籤 <span style="color:#aaa;font-weight:400" id="tagCnt">（選 3～5 個）</span></div>
     <div class="tag-grid" id="tagGrid"></div>
+=======
+>>>>>>> d47683fd3908a1a1619e250d85ad91c34d133404
   </div>
   <div class="scr-footer"><button class="btn-main" id="gBtn" onclick="go(5)" disabled>→ 下一步</button></div>
 </div>
 
+<<<<<<< HEAD
 <!-- S5 MBTI -->
 <div class="screen" id="s5">
   <div class="nav-row"><div class="btn-back" onclick="go(4)">‹</div><div class="step-indicator">步驟 4 / 5</div><div style="width:38px"></div></div>
+=======
+<!-- S5 興趣 -->
+<div class="screen" id="s5">
+  <div class="nav-row"><div class="btn-back" onclick="go(4)">‹</div><div class="step-indicator">步驟 4 / 6</div><div style="width:38px"></div></div>
+  <div class="scr-scroll fade-in">
+    <div class="step-chip">興趣愛好</div>
+    <div class="s-title">選擇你的興趣</div>
+    <div class="s-sub">選 3～5 個，讓有緣人更容易找到你</div>
+    <div style="font-size:13px;color:#888;font-weight:500;margin-bottom:10px" id="tagCnt">已選 0 / 5</div>
+    <div class="tag-grid" id="tagGrid"></div>
+  </div>
+  <div class="scr-footer"><button class="btn-main" id="tagBtn" onclick="go(6)" disabled>→ 下一步</button></div>
+</div>
+
+<!-- S6 MBTI -->
+<div class="screen" id="s6">
+  <div class="nav-row"><div class="btn-back" onclick="go(5)">‹</div><div class="step-indicator">步驟 5 / 6</div><div style="width:38px"></div></div>
+>>>>>>> d47683fd3908a1a1619e250d85ad91c34d133404
   <div class="scr-scroll fade-in">
     <div class="step-chip">人格特質</div>
     <div class="s-title">你的 MBTI 是？</div>
     <div class="s-sub">讓別人快速了解你的個性</div>
     <div class="mbti-grid" id="mbtiGrid"></div>
+<<<<<<< HEAD
     <div class="skip-link" onclick="saveProfileAndEnter()">不確定，先跳過 →</div>
   </div>
   <div class="scr-footer"><button class="btn-main" id="mbtiBtn" onclick="saveProfileAndEnter()" disabled>🎉 完成設定，進入蜜友！</button></div>
@@ -415,12 +525,31 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
     <div class="tab-item" id="tab-profile" onclick="switchTab('profile')">
       <i class="ti ti-user-circle"></i><span>我的</span>
     </div>
+=======
+    <div class="skip-link" onclick="go(7)">不確定，先跳過 →</div>
+  </div>
+  <div class="scr-footer"><button class="btn-main" id="mbtiBtn" onclick="go(7)" disabled>🎉 完成設定！</button></div>
+</div>
+
+<!-- S7 完成 -->
+<div class="screen" id="s7">
+  <div class="success-wrap fade-in">
+    <div class="success-art">🎊</div>
+    <div style="font-size:22px;font-weight:700;color:#111;margin-bottom:6px">驗證成功！</div>
+    <div style="font-size:14px;color:#888;line-height:1.7;margin-bottom:16px" id="doneMsg"></div>
+    <div class="uid-box"><b>Firebase UID</b><span id="uidDisplay">—</span></div>
+    <div class="uid-box"><b>已驗證手機</b><span id="phoneVerified">—</span></div>
+    <div class="uid-box"><b>登入狀態</b><span style="color:#166534;font-weight:600">✓ 已透過 Firebase 驗證</span></div>
+    <button class="btn-main" style="margin-top:16px" onclick="T('進入 App！🌸')">🏠 開始探索附近的人</button>
+    <button class="btn-ghost" onclick="doSignOut()">登出並重新測試</button>
+>>>>>>> d47683fd3908a1a1619e250d85ad91c34d133404
   </div>
 </div>
 </div>
 <div class="toast" id="toast"></div>
 
 <script>
+<<<<<<< HEAD
 /* ===== Firebase 初始化 ===== */
 const firebaseConfig={
   apiKey:"AIzaSyD7MQGY4ywB4l4pWtCYqd2v-k9pO-KwNLM",
@@ -436,11 +565,19 @@ const db=firebase.firestore();
 auth.languageCode='zh-TW';
 
 /* ===== 常數 ===== */
+=======
+const firebaseConfig={apiKey:"AIzaSyD7MQGY4ywB4l4pWtCYqd2v-k9pO-KwNLM",authDomain:"miyu-otp.firebaseapp.com",projectId:"miyu-otp",storageBucket:"miyu-otp.firebasestorage.app",messagingSenderId:"830776803719",appId:"1:830776803719:web:25c9daf006fe3ffe5e9322"};
+firebase.initializeApp(firebaseConfig);
+const auth=firebase.auth();
+auth.languageCode='zh-TW';
+
+>>>>>>> d47683fd3908a1a1619e250d85ad91c34d133404
 const COUNTRIES=[
   {flag:'🇹🇼',name:'台灣',code:'+886',max:10},{flag:'🇨🇳',name:'中國',code:'+86',max:11},
   {flag:'🇭🇰',name:'香港',code:'+852',max:8},{flag:'🇲🇴',name:'澳門',code:'+853',max:8},
   {flag:'🇸🇬',name:'新加坡',code:'+65',max:8},{flag:'🇯🇵',name:'日本',code:'+81',max:11},
   {flag:'🇰🇷',name:'韓國',code:'+82',max:11},{flag:'🇺🇸',name:'美國',code:'+1',max:10},
+<<<<<<< HEAD
 ];
 const ALL_TAGS=[{l:'攝影',i:'📷'},{l:'咖啡',i:'☕'},{l:'旅遊',i:'✈️'},{l:'爬山',i:'⛰️'},{l:'健身',i:'💪'},{l:'音樂',i:'🎵'},{l:'閱讀',i:'📚'},{l:'插畫',i:'🎨'},{l:'桌遊',i:'🎲'},{l:'電影',i:'🎬'},{l:'料理',i:'🍳'},{l:'瑜珈',i:'🧘'},{l:'甜點',i:'🍰'},{l:'韓劇',i:'📺'},{l:'寵物',i:'🐾'},{l:'電玩',i:'🎮'},{l:'跑步',i:'🏃'},{l:'烘焙',i:'🍞'},{l:'植物',i:'🌿'},{l:'游泳',i:'🏊'}];
 const ALL_MBTI=['INTJ','INTP','ENTJ','ENTP','INFJ','INFP','ENFJ','ENFP','ISTJ','ISFJ','ESTJ','ESFJ','ISTP','ISFP','ESTP','ESFP'];
@@ -484,11 +621,35 @@ function go(n){
   if(show) document.getElementById('pf').style.width=PROG[n]+'%';
   if(n===4){initTags();initGenderCheck();}
   if(n===5) initMbti();
+=======
+  {flag:'🇬🇧',name:'英國',code:'+44',max:10},{flag:'🇦🇺',name:'澳洲',code:'+61',max:9},
+];
+const ALL_TAGS=[{l:'攝影',i:'📷'},{l:'咖啡',i:'☕'},{l:'旅遊',i:'✈️'},{l:'爬山',i:'⛰️'},{l:'健身',i:'💪'},{l:'音樂',i:'🎵'},{l:'閱讀',i:'📚'},{l:'插畫',i:'🎨'},{l:'桌遊',i:'🎲'},{l:'電影',i:'🎬'},{l:'料理',i:'🍳'},{l:'瑜珈',i:'🧘'},{l:'甜點',i:'🍰'},{l:'韓劇',i:'📺'},{l:'寵物',i:'🐾'},{l:'電玩',i:'🎮'},{l:'跑步',i:'🏃'},{l:'烘焙',i:'🍞'},{l:'植物',i:'🌿'},{l:'游泳',i:'🏊'}];
+const ALL_MBTI=['INTJ','INTP','ENTJ','ENTP','INFJ','INFP','ENFJ','ENFP','ISTJ','ISFJ','ESTJ','ESFJ','ISTP','ISFP','ESTP','ESFP'];
+const PROG={0:0,1:14,2:14,3:30,4:46,5:62,6:78,7:100};
+
+let selCountry=COUNTRIES[0],confirmResult=null,otpInt=null,otpSec=60,toastT=null;
+let selGender=null,selTags=new Set(),selMbti=null;
+
+/* 頁面切換 */
+function go(n){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('s'+n).classList.add('active');
+  const show=n>0&&n<7;
+  document.getElementById('pb').classList.toggle('show',show);
+  if(show) document.getElementById('pf').style.width=PROG[n]+'%';
+  if(n===5) initTags();
+  if(n===6) initMbti();
+>>>>>>> d47683fd3908a1a1619e250d85ad91c34d133404
   const sc=document.getElementById('s'+n)?.querySelector('.scr-scroll');
   if(sc) setTimeout(()=>sc.scrollTop=0,50);
 }
 
+<<<<<<< HEAD
 /* ===== 國碼 ===== */
+=======
+/* 國碼 */
+>>>>>>> d47683fd3908a1a1619e250d85ad91c34d133404
 function renderCountryList(){
   document.getElementById('countryList').innerHTML=COUNTRIES.map((c,i)=>`
     <div onclick="pickCountry(${i})" style="display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;font-size:14px;color:#333;${i>0?'border-top:.5px solid #f0f0f0':''}" onmouseover="this.style.background='#f0f0f0'" onmouseout="this.style.background=''">
@@ -509,7 +670,11 @@ function pickCountry(i){
   chkPhone();
 }
 
+<<<<<<< HEAD
 /* ===== OTP 流程 ===== */
+=======
+/* S1 */
+>>>>>>> d47683fd3908a1a1619e250d85ad91c34d133404
 function getFullPhone(){
   let num=document.getElementById('phoneInp').value.trim().replace(/-/g,'');
   if(selCountry.code==='+886'&&num.startsWith('0')) num=num.slice(1);
@@ -519,7 +684,15 @@ function chkPhone(){
   const ok=document.getElementById('phoneInp').value.trim().replace(/-/g,'').length>=8;
   document.getElementById('sendBtn').disabled=!ok;
   document.getElementById('phoneInp').classList.remove('error');
+<<<<<<< HEAD
 }
+=======
+  document.getElementById('phoneHint').textContent='手機號碼僅用於驗證，不會顯示給其他用戶';
+  document.getElementById('phoneHint').className='inp-hint';
+}
+
+/* reCAPTCHA */
+>>>>>>> d47683fd3908a1a1619e250d85ad91c34d133404
 function initRecaptcha(){
   if(window.recaptchaVerifier) return;
   window.recaptchaVerifier=new firebase.auth.RecaptchaVerifier('recaptcha-container',{
@@ -528,10 +701,20 @@ function initRecaptcha(){
   });
   window.recaptchaVerifier.render();
 }
+<<<<<<< HEAD
+=======
+
+/* 發送 OTP */
+>>>>>>> d47683fd3908a1a1619e250d85ad91c34d133404
 async function sendOtp(){
   const phone=getFullPhone();
   if(!phone||phone.length<8) return;
   setBtnLoading('sendBtn','sendBtnText',true,'傳送中...');
+<<<<<<< HEAD
+=======
+  setStatus('s1Info','','');
+  document.getElementById('phoneInp').classList.remove('error');
+>>>>>>> d47683fd3908a1a1619e250d85ad91c34d133404
   try{
     initRecaptcha();
     confirmResult=await auth.signInWithPhoneNumber(phone,window.recaptchaVerifier);
@@ -540,6 +723,7 @@ async function sendOtp(){
     startTimer();
     setTimeout(()=>document.getElementById('o0').focus(),400);
   }catch(err){
+<<<<<<< HEAD
     const m=errMsg(err.code,'send');
     setStatusEl('s1Info','error',m);
     document.getElementById('phoneInp').classList.add('error');
@@ -548,6 +732,22 @@ async function sendOtp(){
 }
 function startTimer(){
   clearInterval(otpInt);otpSec=60;
+=======
+    console.error(err);
+    const m=errMsg(err.code,'send');
+    setStatus('s1Info','error',m);
+    document.getElementById('phoneInp').classList.add('error');
+    window.recaptchaVerifier?.clear();
+    window.recaptchaVerifier=null;
+  }finally{
+    setBtnLoading('sendBtn','sendBtnText',false,'📨 發送驗證碼');
+  }
+}
+
+/* OTP 計時器 */
+function startTimer(){
+  clearInterval(otpInt); otpSec=60;
+>>>>>>> d47683fd3908a1a1619e250d85ad91c34d133404
   document.getElementById('otpTimer').style.display='inline';
   document.getElementById('otpResend').style.display='none';
   otpInt=setInterval(()=>{
@@ -564,13 +764,23 @@ function goBackToPhone(){
   document.getElementById('verifyBtn').disabled=true;
   go(1);
 }
+<<<<<<< HEAD
+=======
+
+/* OTP 輸入 */
+>>>>>>> d47683fd3908a1a1619e250d85ad91c34d133404
 function oI(i){
   const c=document.getElementById('o'+i);
   c.value=c.value.replace(/\D/g,'').slice(0,1);
   c.classList.toggle('filled',!!c.value);
   c.classList.remove('error');
   if(c.value&&i<5) document.getElementById('o'+(i+1)).focus();
+<<<<<<< HEAD
   let full=true;for(let j=0;j<6;j++) if(!document.getElementById('o'+j).value) full=false;
+=======
+  let full=true,code='';
+  for(let j=0;j<6;j++){const v=document.getElementById('o'+j).value;if(!v)full=false;code+=v;}
+>>>>>>> d47683fd3908a1a1619e250d85ad91c34d133404
   document.getElementById('verifyBtn').disabled=!full;
   document.getElementById('s2Status').innerHTML='';
   if(full) setTimeout(verifyOtp,150);
@@ -579,6 +789,7 @@ function oK(e,i){
   if(e.key==='Backspace'&&!document.getElementById('o'+i).value&&i>0) document.getElementById('o'+(i-1)).focus();
   if(e.key==='Enter') verifyOtp();
 }
+<<<<<<< HEAD
 async function verifyOtp(){
   let code='';for(let i=0;i<6;i++) code+=document.getElementById('o'+i).value;
   if(code.length<6||!confirmResult) return;
@@ -977,11 +1188,92 @@ function setStatusEl(id,type,msg){
   if(!msg){if(el.tagName==='DIV'&&el.className.includes('status-box'))el.style.display='none';else el.innerHTML='';return;}
   if(el.tagName==='DIV'&&el.className.includes('status-box')){el.style.display='flex';el.className=`status-box ${type}`;el.innerHTML=`<span style="font-size:16px;flex-shrink:0">${icons[type]||'ℹ️'}</span><span>${msg}</span>`;}
   else el.innerHTML=`<div class="status-box ${type}"><span style="font-size:16px;flex-shrink:0">${icons[type]||'ℹ️'}</span><span>${msg}</span></div>`;
+=======
+
+/* 驗證 OTP */
+async function verifyOtp(){
+  let code='';
+  for(let i=0;i<6;i++) code+=document.getElementById('o'+i).value;
+  if(code.length<6||!confirmResult) return;
+  setBtnLoading('verifyBtn','verifyBtnText',true,'驗證中...');
+  setStatusEl('s2Status','','');
+  try{
+    const result=await confirmResult.confirm(code);
+    const user=result.user;
+    clearInterval(otpInt);
+    document.getElementById('uidDisplay').textContent=user.uid;
+    document.getElementById('phoneVerified').textContent=user.phoneNumber;
+    const isNew=result.additionalUserInfo?.isNewUser;
+    document.getElementById('doneMsg').textContent=isNew?'歡迎加入蜜友！帳號已建立，接下來設定你的個人資料吧 🎉':'歡迎回來！已成功登入你的蜜友帳號 🌸';
+    go(isNew?3:7);
+  }catch(err){
+    console.error(err);
+    setStatusEl('s2Status','error',errMsg(err.code,'verify'));
+    for(let i=0;i<6;i++) document.getElementById('o'+i).classList.add('error');
+    setTimeout(()=>{for(let i=0;i<6;i++){const c=document.getElementById('o'+i);c.value='';c.classList.remove('filled','error');}document.getElementById('verifyBtn').disabled=true;document.getElementById('o0').focus();},800);
+  }finally{
+    setBtnLoading('verifyBtn','verifyBtnText',false,'✓ 確認驗證碼');
+  }
+}
+
+/* 錯誤訊息 */
+function errMsg(code,phase){
+  const map={
+    'auth/invalid-phone-number':'手機號碼格式不正確，請重新輸入',
+    'auth/too-many-requests':'請求次數過多，請稍後再試',
+    'auth/captcha-check-failed':'reCAPTCHA 驗證失敗，請重新整理頁面',
+    'auth/quota-exceeded':'今日簡訊配額已達上限，請明天再試',
+    'auth/billing-not-enabled':'Firebase 需升級到 Blaze 方案才能發送簡訊',
+    'auth/invalid-verification-code':'驗證碼不正確，請重新輸入',
+    'auth/code-expired':'驗證碼已過期，請重新發送',
+    'auth/missing-verification-code':'請輸入驗證碼',
+  };
+  return map[code]||(phase==='send'?'發送失敗，請稍後再試':'驗證失敗，請重新嘗試');
+}
+
+/* 工具 */
+function setStatus(id,type,msg){
+  const el=document.getElementById(id);
+  if(!msg){el.style.display='none';return;}
+  const icons={info:'ℹ️',error:'❌',success:'✅',warn:'⚠️'};
+  el.style.display='flex';el.className=`status-box ${type||'info'}`;
+  el.innerHTML=`<span class="status-icon">${icons[type]||'ℹ️'}</span><span>${msg}</span>`;
+}
+function setStatusEl(id,type,msg){
+  const el=document.getElementById(id);
+  if(!msg){el.innerHTML='';return;}
+  const icons={info:'ℹ️',error:'❌',success:'✅',warn:'⚠️'};
+  el.innerHTML=`<div class="status-box ${type||'info'}"><span class="status-icon">${icons[type]||'ℹ️'}</span><span>${msg}</span></div>`;
+>>>>>>> d47683fd3908a1a1619e250d85ad91c34d133404
 }
 function setBtnLoading(btnId,textId,loading,text){
   document.getElementById(btnId).disabled=loading;
   document.getElementById(textId).innerHTML=loading?`<div class="spinner"></div>${text}`:text;
 }
+<<<<<<< HEAD
+=======
+
+/* 後續步驟 */
+function chkName(){const v=document.getElementById('nameInp').value.trim();document.getElementById('nameLen').textContent=v.length+' / 10';document.getElementById('nameBtn').disabled=v.length<2;}
+function selG(g){selGender=g;['male','female','other'].forEach(x=>document.getElementById('g'+x[0]).classList.toggle('sel',x===g));document.getElementById('gBtn').disabled=false;}
+function initTags(){document.getElementById('tagGrid').innerHTML=ALL_TAGS.map(t=>`<div class="t-opt ${selTags.has(t.l)?'sel':''}" onclick="togT('${t.l}')">${t.i} ${t.l}</div>`).join('');updTagCnt();}
+function togT(t){if(selTags.has(t))selTags.delete(t);else if(selTags.size>=5){T('最多選 5 個標籤');return;}else selTags.add(t);document.querySelectorAll('.t-opt').forEach(el=>{const txt=el.textContent.trim().slice(2);el.classList.toggle('sel',selTags.has(txt));});updTagCnt();}
+function updTagCnt(){const n=selTags.size;document.getElementById('tagCnt').textContent=`已選 ${n} / 5`;document.getElementById('tagBtn').disabled=n<3;}
+function initMbti(){document.getElementById('mbtiGrid').innerHTML=ALL_MBTI.map(m=>`<div class="m-opt ${selMbti===m?'sel':''}" onclick="pickM('${m}')">${m}</div>`).join('');}
+function pickM(m){selMbti=m;document.querySelectorAll('.m-opt').forEach(el=>el.classList.toggle('sel',el.textContent===m));document.getElementById('mbtiBtn').disabled=false;}
+async function doSignOut(){await auth.signOut();confirmResult=null;window.recaptchaVerifier?.clear();window.recaptchaVerifier=null;document.getElementById('phoneInp').value='';go(0);T('已登出');}
+
+/* 自動登入偵測 */
+auth.onAuthStateChanged(user=>{
+  if(user&&document.getElementById('s0').classList.contains('active')){
+    document.getElementById('uidDisplay').textContent=user.uid;
+    document.getElementById('phoneVerified').textContent=user.phoneNumber||'—';
+    document.getElementById('doneMsg').textContent='你已登入，歡迎回到蜜友 🌸';
+    go(7);
+  }
+});
+
+>>>>>>> d47683fd3908a1a1619e250d85ad91c34d133404
 function T(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2500);}
 
 if('serviceWorker' in navigator){
