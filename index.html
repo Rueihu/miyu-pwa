@@ -30,7 +30,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
 .scr-scroll{flex:1;overflow-y:auto;padding:20px 20px 16px;-webkit-overflow-scrolling:touch}
 .scr-footer{padding:12px 20px;padding-bottom:calc(16px + var(--sab));flex-shrink:0;background:#fff}
 .nav-row{display:flex;align-items:center;padding:12px 16px 4px;flex-shrink:0}
-.btn-back{width:38px;height:38px;border-radius:50%;background:#f5f5f0;border:.5px solid #e0e0e0;display:flex;align-items:center;justify-content:center;color:#666;cursor:pointer;font-size:22px;transition:background .15s}
+.btn-back{width:38px;height:38px;border-radius:50%;background:#f5f5f0;border:.5px solid #e0e0e0;display:flex;align-items:center;justify-content:center;color:#666;cursor:pointer;font-size:22px}
 .step-indicator{flex:1;text-align:center;font-size:13px;color:#aaa;font-weight:500}
 .step-chip{display:inline-block;font-size:10px;font-weight:700;color:var(--brand);text-transform:uppercase;letter-spacing:.7px;background:var(--brand-light);padding:3px 10px;border-radius:20px;margin-bottom:10px;border:.5px solid var(--brand-border)}
 .s-title{font-size:22px;font-weight:700;color:#111;line-height:1.35;margin-bottom:5px}
@@ -39,8 +39,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
 .btn-main:hover{background:var(--brand-dark)}
 .btn-main:active{transform:scale(.98)}
 .btn-main:disabled{opacity:.4;cursor:default;transform:none}
-.btn-ghost{width:100%;padding:13px;background:#f5f5f0;color:#666;border:.5px solid #e0e0e0;border-radius:14px;font-size:14px;cursor:pointer;margin-top:8px;font-family:inherit;transition:background .15s}
-.btn-social{width:100%;padding:13px;border:.5px solid #e0e0e0;border-radius:12px;font-size:14px;cursor:pointer;background:#f9f9f8;color:#444;display:flex;align-items:center;justify-content:center;gap:9px;margin-bottom:8px;font-weight:500;transition:background .15s;font-family:inherit}
+.btn-ghost{width:100%;padding:13px;background:#f5f5f0;color:#666;border:.5px solid #e0e0e0;border-radius:14px;font-size:14px;cursor:pointer;margin-top:8px;font-family:inherit}
+.btn-social{width:100%;padding:13px;border:.5px solid #e0e0e0;border-radius:12px;font-size:14px;cursor:pointer;background:#f9f9f8;color:#444;display:flex;align-items:center;justify-content:center;gap:9px;margin-bottom:8px;font-weight:500;font-family:inherit}
 .inp{width:100%;padding:13px 14px;border:.5px solid #e0e0e0;border-radius:12px;background:#f9f9f8;color:#111;font-size:15px;font-family:inherit;outline:none;transition:all .2s}
 .inp:focus{border-color:var(--brand);background:#fff;box-shadow:0 0 0 3px rgba(232,98,58,.08)}
 .inp.error{border-color:#E24B4A;background:#FCEBEB}
@@ -77,12 +77,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
 .status-box{padding:12px 14px;border-radius:12px;font-size:13px;margin-bottom:14px;display:flex;align-items:flex-start;gap:8px;line-height:1.5}
 .status-box.info{background:#EFF6FF;color:#1E5FA5;border:.5px solid #BFDBFE}
 .status-box.error{background:#FEF2F2;color:#991B1B;border:.5px solid #FECACA}
-.status-box.success{background:#F0FDF4;color:#166534;border:.5px solid #BBF7D0}
-.status-box.warn{background:#FFFBEB;color:#92400E;border:.5px solid #FDE68A}
 .spinner{width:18px;height:18px;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite;flex-shrink:0}
 @keyframes sp{to{transform:rotate(360deg)}}
 
-/* 後續步驟 */
+/* 資料填寫 */
 .name-big{font-size:22px;font-weight:700;border:none;border-bottom:2.5px solid #e0e0e0;border-radius:0;background:transparent;width:100%;padding:8px 2px;color:#111;outline:none;text-align:center;margin-bottom:4px;font-family:inherit;transition:border-color .2s}
 .name-big:focus{border-bottom-color:var(--brand)}
 .age-display{font-size:44px;font-weight:700;color:var(--brand);text-align:center;margin-bottom:10px}
@@ -108,48 +106,35 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
 .main-logo span{color:#111}
 .main-top-icons{display:flex;gap:16px}
 .main-top-icons i{font-size:20px;color:#888;cursor:pointer}
-
-/* Tab Bar */
 .tab-bar{display:flex;background:#fff;border-top:.5px solid #eee;flex-shrink:0;padding-bottom:var(--sab)}
-.tab-item{flex:1;display:flex;flex-direction:column;align-items:center;padding:10px 0 6px;cursor:pointer;color:#bbb;transition:color .2s}
+.tab-item{flex:1;display:flex;flex-direction:column;align-items:center;padding:10px 0 6px;cursor:pointer;color:#bbb;transition:color .2s;position:relative}
 .tab-item.active{color:var(--brand)}
 .tab-item i{font-size:22px;margin-bottom:2px}
 .tab-item span{font-size:10px;font-weight:500}
+.tab-badge{position:absolute;top:6px;right:calc(50% - 18px);background:var(--brand);color:#fff;font-size:9px;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 4px;border:1.5px solid #fff}
 
 /* 附近頁 */
 .nearby-page{flex:1;display:flex;flex-direction:column;overflow:hidden}
-
-/* 篩選列 */
-.filter-bar{display:flex;align-items:center;gap:8px;padding:10px 14px;background:#fff;border-bottom:.5px solid #eee;flex-shrink:0;overflow-x:auto;scrollbar-width:none}
-.filter-bar::-webkit-scrollbar{display:none}
-.filter-chip{white-space:nowrap;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:500;border:.5px solid #e0e0e0;color:#666;cursor:pointer;background:#f9f9f8;transition:all .15s;display:flex;align-items:center;gap:4px}
+.loc-status{display:flex;align-items:center;gap:8px;padding:8px 14px;font-size:12px;flex-shrink:0;border-bottom:.5px solid #f0f0f0;background:#fff}
+.loc-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.loc-dot.ok{background:#22C55E}
+.loc-dot.loading{background:#F59E0B;animation:blink 1s infinite}
+.loc-dot.err{background:#EF4444}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.filter-bar{display:flex;align-items:center;padding:8px 14px;gap:8px;border-bottom:.5px solid #eee;flex-shrink:0;background:#fff}
+.dist-chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;flex:1}
+.dist-chips::-webkit-scrollbar{display:none}
+.filter-chip{white-space:nowrap;padding:6px 12px;border-radius:20px;font-size:12px;font-weight:500;border:.5px solid #e0e0e0;color:#666;cursor:pointer;background:#f9f9f8;transition:all .15s}
 .filter-chip.active{background:var(--brand-light);border-color:var(--brand);color:var(--brand-dark)}
-
-/* 距離範圍滑桿 */
-.range-bar{padding:10px 16px 12px;background:#f9f9f8;border-bottom:.5px solid #eee;flex-shrink:0}
-.range-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
-.range-label{font-size:12px;color:#666;font-weight:500}
-.range-val{font-size:12px;font-weight:700;color:var(--brand)}
-.range-slider{width:100%;-webkit-appearance:none;height:3px;border-radius:2px;background:#e0e0e0;outline:none;cursor:pointer}
-.range-slider::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--brand);cursor:pointer;border:2.5px solid #fff;box-shadow:0 1px 6px rgba(232,98,58,.35)}
-
-/* 切換按鈕（地圖/列表） */
-.view-toggle{display:flex;background:#f5f5f0;border-radius:10px;padding:3px;margin:0 14px 0 auto;flex-shrink:0}
-.vt-btn{padding:5px 12px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;color:#888;transition:all .2s;display:flex;align-items:center;gap:4px;border:none;background:transparent;font-family:inherit}
+.view-toggle{display:flex;background:#f5f5f0;border-radius:10px;padding:3px;flex-shrink:0}
+.vt-btn{padding:5px 10px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;color:#888;transition:all .2s;display:flex;align-items:center;gap:3px;border:none;background:transparent;font-family:inherit}
 .vt-btn.active{background:#fff;color:var(--brand);box-shadow:0 1px 4px rgba(0,0,0,.1)}
 .vt-btn i{font-size:14px}
-
-/* 地圖容器 */
-.map-container{flex:1;position:relative;overflow:hidden}
-#leafletMap{width:100%;height:100%}
-.map-overlay-btn{position:absolute;bottom:16px;right:16px;width:44px;height:44px;border-radius:50%;background:#fff;box-shadow:0 2px 12px rgba(0,0,0,.18);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:1000;border:none;font-size:20px;color:var(--brand)}
-
-/* 用戶列表 */
 .user-list{flex:1;overflow-y:auto}
 .user-card{display:flex;align-items:center;gap:12px;padding:12px 14px;background:#fff;border-bottom:.5px solid #f0f0f0;cursor:pointer;transition:background .15s}
 .user-card:hover{background:#fafafa}
-.u-avatar-wrap{position:relative;flex-shrink:0}
-.u-avatar{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700}
+.u-av-wrap{position:relative;flex-shrink:0}
+.u-av{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700}
 .u-online{width:13px;height:13px;border-radius:50%;background:#22C55E;border:2.5px solid #fff;position:absolute;bottom:1px;right:1px}
 .u-info{flex:1;min-width:0}
 .u-name{font-size:15px;font-weight:600;color:#111;display:flex;align-items:center;gap:6px}
@@ -160,46 +145,108 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
 .u-tag{font-size:10px;padding:2px 7px;border-radius:9px;background:#f5f5f0;border:.5px solid #e8e8e8;color:#666}
 .hi-btn{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:3px}
 .hi-circle{width:40px;height:40px;border-radius:50%;background:var(--brand-light);border:1px solid var(--brand-border);display:flex;align-items:center;justify-content:center;color:var(--brand);font-size:18px;cursor:pointer;transition:all .15s}
-.hi-circle:hover,.hi-circle.sent{background:var(--brand);color:#fff}
+.hi-circle:hover{background:var(--brand);color:#fff;transform:scale(1.08)}
+.hi-circle.sent{background:var(--brand);color:#fff}
+.hi-circle.matched{background:#22C55E;border-color:#22C55E;color:#fff}
 .hi-lbl{font-size:10px;color:#aaa}
-
-/* 位置狀態列 */
-.loc-status{display:flex;align-items:center;gap:8px;padding:8px 14px;font-size:12px;flex-shrink:0;border-bottom:.5px solid #f0f0f0}
-.loc-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.loc-dot.ok{background:#22C55E}
-.loc-dot.loading{background:#F59E0B;animation:blink 1s infinite}
-.loc-dot.err{background:#EF4444}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-
-/* 空狀態 */
+.map-container{flex:1;position:relative}
+#leafletMap{width:100%;height:100%}
+.map-loc-btn{position:absolute;bottom:16px;right:16px;width:44px;height:44px;border-radius:50%;background:#fff;box-shadow:0 2px 12px rgba(0,0,0,.18);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:1000;border:none;font-size:20px;color:var(--brand)}
+.my-marker-pulse{width:16px;height:16px;border-radius:50%;background:var(--brand);border:3px solid #fff;box-shadow:0 0 0 6px rgba(232,98,58,.2);animation:pm 2s infinite}
+@keyframes pm{0%,100%{box-shadow:0 0 0 6px rgba(232,98,58,.2)}50%{box-shadow:0 0 0 12px rgba(232,98,58,.05)}}
 .empty-state{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;text-align:center;color:#aaa}
 .empty-state i{font-size:52px;margin-bottom:14px;display:block}
 .empty-state p{font-size:14px;line-height:1.7}
 
-/* 個人頁 */
-.profile-page{flex:1;overflow-y:auto;padding-bottom:20px}
-.profile-cover{height:140px;background:linear-gradient(135deg,var(--brand),#F4A46A);position:relative;flex-shrink:0}
-.profile-av-row{display:flex;align-items:flex-end;justify-content:space-between;padding:0 16px;margin-top:-36px;margin-bottom:10px}
-.profile-av{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.15)}
-.profile-edit-btn{padding:8px 16px;background:var(--brand);color:#fff;border:none;border-radius:16px;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:4px;font-family:inherit}
-.profile-name{font-size:20px;font-weight:700;color:#111;padding:0 16px 4px}
-.profile-sub{font-size:13px;color:#888;padding:0 16px 10px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-.profile-sub span{display:flex;align-items:center;gap:3px}
-.v-badge{display:inline-flex;align-items:center;gap:3px;font-size:10px;color:var(--brand);background:var(--brand-light);padding:2px 7px;border-radius:8px;border:.5px solid var(--brand-border);font-weight:600}
-.profile-tags{display:flex;gap:6px;flex-wrap:wrap;padding:0 16px 14px}
-.p-tag{padding:5px 12px;border-radius:16px;font-size:12px;background:#f5f5f0;border:.5px solid #e8e8e8;color:#555}
-.profile-section{padding:0 16px;margin-bottom:14px}
-.profile-sec-title{font-size:12px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px}
-.loc-info-card{background:#f9f9f8;border:.5px solid #e8e8e8;border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:10px}
-.loc-info-card i{font-size:20px;color:var(--brand);flex-shrink:0}
-.loc-info-text{font-size:13px;color:#444;line-height:1.5}
-.loc-info-sub{font-size:11px;color:#aaa;margin-top:2px}
+/* ===== 配對頁 ===== */
+.match-page{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.match-header{padding:14px 16px;border-bottom:.5px solid #eee;flex-shrink:0}
+.match-header-title{font-size:16px;font-weight:700;color:#111}
+.match-header-sub{font-size:12px;color:#aaa;margin-top:2px}
+.match-section-label{font-size:11px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.4px;padding:12px 14px 6px}
+/* 待回應 */
+.pending-row{display:flex;gap:12px;padding:0 14px 12px;overflow-x:auto;scrollbar-width:none}
+.pending-row::-webkit-scrollbar{display:none}
+.pending-card{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer}
+.pending-av{width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;border:2px dashed var(--brand);position:relative}
+.pending-pulse{position:absolute;inset:-4px;border-radius:50%;border:2px solid var(--brand);opacity:.4;animation:pp 1.8s infinite}
+@keyframes pp{0%,100%{transform:scale(1);opacity:.4}50%{transform:scale(1.1);opacity:.1}}
+.pending-name{font-size:11px;color:#555;text-align:center}
+.pending-time{font-size:10px;color:#aaa}
+/* 已配對 */
+.matched-list{flex:1;overflow-y:auto}
+.matched-card{display:flex;align-items:center;gap:12px;padding:12px 14px;background:#fff;border-bottom:.5px solid #f0f0f0;cursor:pointer;transition:background .15s}
+.matched-card:hover{background:#fafafa}
+.matched-av{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;border:2px solid #22C55E;flex-shrink:0}
+.matched-info{flex:1;min-width:0}
+.matched-name{font-size:15px;font-weight:600;color:#111}
+.matched-preview{font-size:12px;color:#aaa;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.matched-time{font-size:11px;color:#bbb;flex-shrink:0}
+.match-badge{display:inline-flex;align-items:center;gap:3px;font-size:10px;color:#22C55E;background:#F0FDF4;padding:2px 8px;border-radius:8px;border:.5px solid #BBF7D0;font-weight:600}
 
-/* Leaflet 自訂 */
-.custom-marker{background:var(--brand);color:#fff;border-radius:50% 50% 50% 0;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;border:2.5px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.25);transform:rotate(-45deg)}
-.custom-marker-inner{transform:rotate(45deg)}
-.my-marker-pulse{width:16px;height:16px;border-radius:50%;background:var(--brand);border:3px solid #fff;box-shadow:0 0 0 6px rgba(232,98,58,.2);animation:pulse-map 2s infinite}
-@keyframes pulse-map{0%,100%{box-shadow:0 0 0 6px rgba(232,98,58,.2)}50%{box-shadow:0 0 0 12px rgba(232,98,58,.05)}}
+/* ===== 聊天室 ===== */
+.chat-header{display:flex;align-items:center;gap:10px;padding:12px 14px;background:#fff;border-bottom:.5px solid #eee;flex-shrink:0}
+.chat-back{width:36px;height:36px;border-radius:50%;background:#f5f5f0;border:.5px solid #e0e0e0;display:flex;align-items:center;justify-content:center;color:#666;cursor:pointer;font-size:20px}
+.chat-header-av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;flex-shrink:0}
+.chat-header-info{flex:1}
+.chat-header-name{font-size:15px;font-weight:600;color:#111}
+.chat-header-status{font-size:11px;color:#aaa}
+.chat-messages{flex:1;overflow-y:auto;padding:14px 14px;display:flex;flex-direction:column;gap:8px;background:#f9f9f8}
+.sys-msg{text-align:center;font-size:11px;color:#aaa;padding:4px 0}
+.sys-msg span{background:#eee;padding:3px 12px;border-radius:10px}
+.brow{display:flex;align-items:flex-end;gap:6px}
+.brow.me{flex-direction:row-reverse}
+.b-av{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.bubble{max-width:70%;padding:9px 13px;border-radius:16px;font-size:14px;line-height:1.5;word-break:break-word}
+.bubble.them{background:#fff;color:#111;border-bottom-left-radius:4px;border:.5px solid #eee}
+.bubble.me{background:var(--brand);color:#fff;border-bottom-right-radius:4px}
+.b-time{font-size:10px;color:#bbb;margin-top:3px}
+.b-time.me-t{text-align:right}
+.b-time.th-t{margin-left:34px}
+.chat-input-bar{display:flex;align-items:center;gap:8px;padding:10px 12px;padding-bottom:calc(10px + var(--sab));background:#fff;border-top:.5px solid #eee;flex-shrink:0}
+.chat-inp{flex:1;padding:10px 14px;border-radius:22px;border:.5px solid #e0e0e0;background:#f9f9f8;font-size:14px;font-family:inherit;color:#111;outline:none}
+.chat-inp:focus{border-color:var(--brand);background:#fff}
+.chat-send{width:38px;height:38px;border-radius:50%;background:var(--brand);border:none;color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.chat-send:hover{background:var(--brand-dark)}
+.eq-row{display:flex;gap:6px;padding:0 12px 6px;overflow-x:auto;scrollbar-width:none}
+.eq-row::-webkit-scrollbar{display:none}
+.eq{font-size:20px;cursor:pointer;transition:transform .1s}
+.eq:hover{transform:scale(1.2)}
+
+/* ===== 個人頁 ===== */
+.profile-page{flex:1;overflow-y:auto}
+.profile-cover{height:130px;background:linear-gradient(135deg,var(--brand),#F4A46A);flex-shrink:0}
+.profile-av-row{display:flex;align-items:flex-end;justify-content:space-between;padding:0 16px;margin-top:-34px;margin-bottom:10px}
+.profile-av{width:68px;height:68px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.profile-edit-btn{padding:7px 14px;background:var(--brand);color:#fff;border:none;border-radius:14px;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:4px;font-family:inherit}
+.profile-name{font-size:19px;font-weight:700;color:#111;padding:0 16px 3px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.v-badge{display:inline-flex;align-items:center;gap:3px;font-size:10px;color:var(--brand);background:var(--brand-light);padding:2px 7px;border-radius:8px;border:.5px solid var(--brand-border);font-weight:600}
+.profile-sub{font-size:13px;color:#888;padding:0 16px 10px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.profile-tags{display:flex;gap:6px;flex-wrap:wrap;padding:0 16px 14px}
+.p-tag{padding:5px 12px;border-radius:14px;font-size:12px;background:#f5f5f0;border:.5px solid #e8e8e8;color:#555}
+.profile-sec{padding:0 16px;margin-bottom:14px}
+.profile-sec-title{font-size:11px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px}
+.info-card{background:#f9f9f8;border:.5px solid #e8e8e8;border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.info-card i{font-size:20px;color:var(--brand);flex-shrink:0}
+.info-card-text{font-size:13px;color:#444;line-height:1.5}
+.info-card-sub{font-size:11px;color:#aaa;margin-top:2px}
+
+/* ===== 配對成功動畫 ===== */
+.match-overlay{position:absolute;inset:0;z-index:300;background:rgba(0,0,0,.75);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
+.match-overlay.show{opacity:1;pointer-events:all}
+.match-title{font-size:32px;font-weight:800;color:#fff;margin-bottom:4px;letter-spacing:-1px}
+.match-sub{font-size:14px;color:rgba(255,255,255,.75);margin-bottom:28px;text-align:center;padding:0 30px}
+.match-avatars{display:flex;align-items:center;margin-bottom:28px}
+.m-av{width:76px;height:76px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:700;border:3.5px solid #fff}
+.m-heart{width:38px;height:38px;background:var(--brand);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;margin:0 -5px;z-index:1;animation:hb .8s infinite}
+@keyframes hb{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
+.match-btn-chat{padding:14px 44px;background:var(--brand);color:#fff;border:none;border-radius:26px;font-size:16px;font-weight:700;cursor:pointer;margin-bottom:12px;font-family:inherit}
+.match-btn-chat:hover{background:var(--brand-dark)}
+.match-btn-later{font-size:13px;color:rgba(255,255,255,.55);cursor:pointer}
+/* 煙火 */
+.confetti-wrap{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.confetti-dot{position:absolute;border-radius:50%;animation:cffall linear forwards}
+@keyframes cffall{0%{opacity:1}100%{transform:translateY(700px) rotate(720deg);opacity:0}}
 
 .fade-in{animation:fi .3s ease}
 @keyframes fi{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
@@ -230,7 +277,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
   </div>
 </div>
 
-<!-- S1 手機號碼 -->
+<!-- S1 手機 -->
 <div class="screen" id="s1">
   <div class="nav-row"><div class="btn-back" onclick="go(0)">‹</div><div class="step-indicator">步驟 1 / 5</div><div style="width:38px"></div></div>
   <div class="scr-scroll fade-in">
@@ -245,10 +292,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
         </div>
         <input class="inp" id="phoneInp" type="tel" placeholder="09XX-XXX-XXX" maxlength="10" oninput="chkPhone()" onkeydown="if(event.key==='Enter')sendOtp()" style="flex:1"/>
       </div>
-      <div class="inp-hint" id="phoneHint">手機號碼僅用於驗證，不會顯示給其他用戶</div>
+      <div class="inp-hint">手機號碼僅用於驗證，不會顯示給其他用戶</div>
     </div>
     <div id="countryPicker" style="display:none;background:#f9f9f8;border:.5px solid #e0e0e0;border-radius:12px;margin-bottom:14px;overflow:hidden">
-      <div style="padding:10px 14px 6px;font-size:11px;font-weight:600;color:#aaa;text-transform:uppercase;">選擇國碼</div>
+      <div style="padding:10px 14px 6px;font-size:11px;font-weight:600;color:#aaa;text-transform:uppercase">選擇國碼</div>
       <div id="countryList" style="max-height:180px;overflow-y:auto"></div>
     </div>
     <div class="status-box info" id="s1Info">
@@ -256,11 +303,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
       <span>首次使用將自動建立帳號，已有帳號則直接登入</span>
     </div>
   </div>
-  <div class="scr-footer">
-    <button class="btn-main" id="sendBtn" onclick="sendOtp()" disabled>
-      <span id="sendBtnText">📨 發送驗證碼</span>
-    </button>
-  </div>
+  <div class="scr-footer"><button class="btn-main" id="sendBtn" onclick="sendOtp()" disabled><span id="sendBtnText">📨 發送驗證碼</span></button></div>
 </div>
 
 <!-- S2 OTP -->
@@ -286,11 +329,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
     </div>
     <div id="s2Status"></div>
   </div>
-  <div class="scr-footer">
-    <button class="btn-main" id="verifyBtn" onclick="verifyOtp()" disabled>
-      <span id="verifyBtnText">✓ 確認驗證碼</span>
-    </button>
-  </div>
+  <div class="scr-footer"><button class="btn-main" id="verifyBtn" onclick="verifyOtp()" disabled><span id="verifyBtnText">✓ 確認驗證碼</span></button></div>
 </div>
 
 <!-- S3 名字年齡 -->
@@ -338,9 +377,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
     <div class="s-title">你的 MBTI 是？</div>
     <div class="s-sub">讓別人快速了解你的個性</div>
     <div class="mbti-grid" id="mbtiGrid"></div>
-    <div class="skip-link" onclick="saveProfileAndEnter()">不確定，先跳過 →</div>
+    <div class="skip-link" onclick="saveAndEnter()">不確定，先跳過 →</div>
   </div>
-  <div class="scr-footer"><button class="btn-main" id="mbtiBtn" onclick="saveProfileAndEnter()" disabled>🎉 完成設定，進入蜜友！</button></div>
+  <div class="scr-footer"><button class="btn-main" id="mbtiBtn" onclick="saveAndEnter()" disabled>🎉 完成設定，進入蜜友！</button></div>
 </div>
 
 <!-- ===== 主 App ===== -->
@@ -355,124 +394,149 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
 
   <!-- 附近頁 -->
   <div class="nearby-page" id="nearbyPage">
-    <!-- 位置狀態 -->
     <div class="loc-status" id="locStatus">
       <div class="loc-dot loading" id="locDot"></div>
       <span id="locText" style="color:#666">正在取得你的位置...</span>
-      <button onclick="refreshLocation()" style="margin-left:auto;font-size:11px;color:var(--brand);background:none;border:none;cursor:pointer;font-weight:600">重新整理</button>
+      <button onclick="refreshLoc()" style="margin-left:auto;font-size:11px;color:var(--brand);background:none;border:none;cursor:pointer;font-weight:600">重新整理</button>
     </div>
-
-    <!-- 篩選 + 視圖切換列 -->
-    <div style="display:flex;align-items:center;padding:8px 14px;gap:8px;border-bottom:.5px solid #eee;flex-shrink:0;background:#fff">
-      <div class="filter-bar" style="flex:1;padding:0;border:none">
-        <div class="filter-chip active" id="fc-all" onclick="setDistFilter(200)">全部（200公里）</div>
-        <div class="filter-chip" id="fc-50" onclick="setDistFilter(50)">50公里內</div>
-        <div class="filter-chip" id="fc-20" onclick="setDistFilter(20)">20公里內</div>
-        <div class="filter-chip" id="fc-5" onclick="setDistFilter(5)">5公里內</div>
-        <div class="filter-chip" id="fc-1" onclick="setDistFilter(1)">1公里內</div>
+    <div class="filter-bar">
+      <div class="dist-chips">
+        <div class="filter-chip active" id="fc-200" onclick="setDist(200)">全部</div>
+        <div class="filter-chip" id="fc-50" onclick="setDist(50)">50公里</div>
+        <div class="filter-chip" id="fc-20" onclick="setDist(20)">20公里</div>
+        <div class="filter-chip" id="fc-5" onclick="setDist(5)">5公里</div>
+        <div class="filter-chip" id="fc-1" onclick="setDist(1)">1公里</div>
       </div>
       <div class="view-toggle">
         <button class="vt-btn active" id="vt-list" onclick="setView('list')"><i class="ti ti-list"></i>列表</button>
         <button class="vt-btn" id="vt-map" onclick="setView('map')"><i class="ti ti-map"></i>地圖</button>
       </div>
     </div>
-
-    <!-- 列表視圖 -->
     <div id="listView" style="flex:1;display:flex;flex-direction:column;overflow:hidden">
       <div class="user-list" id="userList">
-        <div class="empty-state">
-          <i class="ti ti-map-pin-off"></i>
-          <p>正在搜尋附近的人...<br>請稍候</p>
+        <div class="empty-state"><i class="ti ti-map-pin-off"></i><p>正在搜尋附近的人...</p></div>
+      </div>
+    </div>
+    <div id="mapView" style="flex:1;display:none;position:relative">
+      <div id="leafletMap"></div>
+      <button class="map-loc-btn" onclick="centerMap()"><i class="ti ti-current-location"></i></button>
+    </div>
+  </div>
+
+  <!-- 配對頁 -->
+  <div class="nearby-page" id="matchPage" style="display:none">
+    <div class="match-header">
+      <div class="match-header-title">我的配對</div>
+      <div class="match-header-sub" id="matchHeaderSub">尚未有配對</div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;overflow:hidden">
+      <!-- 待回應 -->
+      <div id="pendingSection" style="display:none">
+        <div class="match-section-label">⏳ 等待對方回應</div>
+        <div class="pending-row" id="pendingRow"></div>
+      </div>
+      <!-- 已配對 -->
+      <div id="matchedSection" style="flex:1;display:flex;flex-direction:column;overflow:hidden">
+        <div class="match-section-label" id="matchedLabel" style="display:none">💚 已配對</div>
+        <div class="matched-list" id="matchedList"></div>
+        <div class="empty-state" id="matchEmptyState">
+          <i class="ti ti-heart-off"></i>
+          <p>還沒有配對<br>去附近向喜歡的人打個招呼吧！</p>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- 地圖視圖 -->
-    <div id="mapView" style="flex:1;display:none;position:relative">
-      <div id="leafletMap"></div>
-      <button class="map-overlay-btn" onclick="centerMyLocation()" title="回到我的位置">
-        <i class="ti ti-current-location"></i>
-      </button>
+  <!-- 聊天室 -->
+  <div class="nearby-page" id="chatPage" style="display:none">
+    <div class="chat-header">
+      <div class="chat-back" onclick="closeChat()">‹</div>
+      <div class="chat-header-av" id="chatHdrAv"></div>
+      <div class="chat-header-info">
+        <div class="chat-header-name" id="chatHdrName"></div>
+        <div class="chat-header-status" id="chatHdrStatus"></div>
+      </div>
+    </div>
+    <div class="chat-messages" id="chatMessages"></div>
+    <div class="eq-row" id="eqRow"></div>
+    <div class="chat-input-bar">
+      <input class="chat-inp" id="chatInp" placeholder="傳送訊息..." maxlength="500" onkeydown="if(event.key==='Enter')sendMsg()"/>
+      <button class="chat-send" onclick="sendMsg()"><i class="ti ti-send"></i></button>
     </div>
   </div>
 
   <!-- 個人頁 -->
-  <div class="nearby-page" id="profilePageMain" style="display:none">
+  <div class="nearby-page" id="profilePage" style="display:none">
     <div class="profile-page" id="profileContent"></div>
   </div>
 
   <!-- Tab Bar -->
   <div class="tab-bar">
-    <div class="tab-item active" id="tab-nearby" onclick="switchTab('nearby')">
-      <i class="ti ti-map-pin"></i><span>附近</span>
+    <div class="tab-item active" id="tab-nearby" onclick="switchTab('nearby')"><i class="ti ti-map-pin"></i><span>附近</span></div>
+    <div class="tab-item" id="tab-match" onclick="switchTab('match')"><i class="ti ti-heart"></i><span>配對</span><div class="tab-badge" id="matchBadge" style="display:none">0</div></div>
+    <div class="tab-item" id="tab-msg" onclick="T('即將上線')"><i class="ti ti-message-circle"></i><span>訊息</span></div>
+    <div class="tab-item" id="tab-profile" onclick="switchTab('profile')"><i class="ti ti-user-circle"></i><span>我的</span></div>
+  </div>
+
+  <!-- 配對成功動畫 -->
+  <div class="match-overlay" id="matchOverlay">
+    <div class="confetti-wrap" id="confettiWrap"></div>
+    <div class="match-title">配對成功！🎉</div>
+    <div class="match-sub" id="matchOverlaySub"></div>
+    <div class="match-avatars">
+      <div class="m-av" id="mAvMe"></div>
+      <div class="m-heart"><i class="ti ti-heart"></i></div>
+      <div class="m-av" id="mAvThem"></div>
     </div>
-    <div class="tab-item" id="tab-act" onclick="T('活動功能即將上線')">
-      <i class="ti ti-calendar-event"></i><span>活動</span>
-    </div>
-    <div class="tab-item" id="tab-match" onclick="T('配對功能即將上線')">
-      <i class="ti ti-heart"></i><span>配對</span>
-    </div>
-    <div class="tab-item" id="tab-profile" onclick="switchTab('profile')">
-      <i class="ti ti-user-circle"></i><span>我的</span>
-    </div>
+    <button class="match-btn-chat" onclick="openChatFromOverlay()">💬 開始聊天</button>
+    <div class="match-btn-later" onclick="closeMatchOverlay()">稍後再說</div>
   </div>
 </div>
 </div>
 <div class="toast" id="toast"></div>
 
 <script>
-/* ===== Firebase 初始化 ===== */
-const firebaseConfig={
-  apiKey:"AIzaSyD7MQGY4ywB4l4pWtCYqd2v-k9pO-KwNLM",
-  authDomain:"miyu-otp.firebaseapp.com",
-  projectId:"miyu-otp",
-  storageBucket:"miyu-otp.firebasestorage.app",
-  messagingSenderId:"830776803719",
-  appId:"1:830776803719:web:25c9daf006fe3ffe5e9322"
-};
+/* ===== Firebase ===== */
+const firebaseConfig={apiKey:"AIzaSyD7MQGY4ywB4l4pWtCYqd2v-k9pO-KwNLM",authDomain:"miyu-otp.firebaseapp.com",projectId:"miyu-otp",storageBucket:"miyu-otp.firebasestorage.app",messagingSenderId:"830776803719",appId:"1:830776803719:web:25c9daf006fe3ffe5e9322"};
 firebase.initializeApp(firebaseConfig);
 const auth=firebase.auth();
 const db=firebase.firestore();
 auth.languageCode='zh-TW';
 
 /* ===== 常數 ===== */
-const COUNTRIES=[
-  {flag:'🇹🇼',name:'台灣',code:'+886',max:10},{flag:'🇨🇳',name:'中國',code:'+86',max:11},
-  {flag:'🇭🇰',name:'香港',code:'+852',max:8},{flag:'🇲🇴',name:'澳門',code:'+853',max:8},
-  {flag:'🇸🇬',name:'新加坡',code:'+65',max:8},{flag:'🇯🇵',name:'日本',code:'+81',max:11},
-  {flag:'🇰🇷',name:'韓國',code:'+82',max:11},{flag:'🇺🇸',name:'美國',code:'+1',max:10},
-];
+const COUNTRIES=[{flag:'🇹🇼',name:'台灣',code:'+886',max:10},{flag:'🇨🇳',name:'中國',code:'+86',max:11},{flag:'🇭🇰',name:'香港',code:'+852',max:8},{flag:'🇸🇬',name:'新加坡',code:'+65',max:8},{flag:'🇯🇵',name:'日本',code:'+81',max:11},{flag:'🇺🇸',name:'美國',code:'+1',max:10}];
 const ALL_TAGS=[{l:'攝影',i:'📷'},{l:'咖啡',i:'☕'},{l:'旅遊',i:'✈️'},{l:'爬山',i:'⛰️'},{l:'健身',i:'💪'},{l:'音樂',i:'🎵'},{l:'閱讀',i:'📚'},{l:'插畫',i:'🎨'},{l:'桌遊',i:'🎲'},{l:'電影',i:'🎬'},{l:'料理',i:'🍳'},{l:'瑜珈',i:'🧘'},{l:'甜點',i:'🍰'},{l:'韓劇',i:'📺'},{l:'寵物',i:'🐾'},{l:'電玩',i:'🎮'},{l:'跑步',i:'🏃'},{l:'烘焙',i:'🍞'},{l:'植物',i:'🌿'},{l:'游泳',i:'🏊'}];
 const ALL_MBTI=['INTJ','INTP','ENTJ','ENTP','INFJ','INFP','ENFJ','ENFP','ISTJ','ISFJ','ESTJ','ESFJ','ISTP','ISFP','ESTP','ESFP'];
 const COLORS=['background:#E1F5EE;color:#0F6E56','background:#FAECE7;color:#993C1D','background:#EEEDFE;color:#534AB7','background:#FAEEDA;color:#854F0B','background:#E6F1FB;color:#185FA5'];
 const PROG={0:0,1:14,2:14,3:30,4:55,5:80};
+const EMOJIS=['😊','😄','🌸','☕','🎵','📷'];
 
 /* ===== 狀態 ===== */
 let selCountry=COUNTRIES[0],confirmResult=null,otpInt=null,otpSec=60,toastT=null;
 let selGender=null,selTags=new Set(),selMbti=null;
 let currentUser=null,myProfile=null;
-let myLat=null,myLng=null,locWatchId=null,locUpdateTimer=null;
+let myLat=null,myLng=null,locTimer=null;
 let allUsers=[],distFilter=200,currentView='list';
 let leafletMap=null,myMarker=null,userMarkers=[];
-const hiSent=new Set();
+// 配對相關
+let myHiSent=new Set();   // 我打招呼給誰
+let myMatches=new Set();  // 已配對的 uid
+let matchedProfiles={};   // uid -> profile
+let chatTarget=null;      // 目前聊天對象
+let chatUnsubscribe=null; // Firestore 即時監聽取消函式
+let prevTab='nearby';
+let newMatchUid=null;     // 剛配對成功的 uid
 
-/* ===== 距離計算（Haversine 公式）===== */
+/* ===== 距離計算 ===== */
 function calcDist(lat1,lng1,lat2,lng2){
-  const R=6371; // 地球半徑 km
-  const dLat=(lat2-lat1)*Math.PI/180;
-  const dLng=(lng2-lng1)*Math.PI/180;
-  const a=Math.sin(dLat/2)*Math.sin(dLat/2)+
-    Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*
-    Math.sin(dLng/2)*Math.sin(dLng/2);
+  const R=6371,dLat=(lat2-lat1)*Math.PI/180,dLng=(lng2-lng1)*Math.PI/180;
+  const a=Math.sin(dLat/2)**2+Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLng/2)**2;
   return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
 }
-
-/* ===== 距離顯示格式 ===== */
 function fmtDist(km){
   if(km<1) return Math.round(km*1000)+'m 內';
   if(km<10) return km.toFixed(1)+' 公里內';
-  if(km<100) return Math.round(km)+' 公里內';
-  return Math.round(km/10)*10+' 公里內';
+  return Math.round(km)+' 公里內';
 }
 
 /* ===== 頁面切換 ===== */
@@ -482,7 +546,7 @@ function go(n){
   const show=n>0&&n<6;
   document.getElementById('pb').classList.toggle('show',show);
   if(show) document.getElementById('pf').style.width=PROG[n]+'%';
-  if(n===4){initTags();initGenderCheck();}
+  if(n===4){initTags();checkGBtn();}
   if(n===5) initMbti();
   const sc=document.getElementById('s'+n)?.querySelector('.scr-scroll');
   if(sc) setTimeout(()=>sc.scrollTop=0,50);
@@ -491,170 +555,63 @@ function go(n){
 /* ===== 國碼 ===== */
 function renderCountryList(){
   document.getElementById('countryList').innerHTML=COUNTRIES.map((c,i)=>`
-    <div onclick="pickCountry(${i})" style="display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;font-size:14px;color:#333;${i>0?'border-top:.5px solid #f0f0f0':''}" onmouseover="this.style.background='#f0f0f0'" onmouseout="this.style.background=''">
+    <div onclick="pickCountry(${i})" style="display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;font-size:14px;${i>0?'border-top:.5px solid #f0f0f0':''}" onmouseover="this.style.background='#f0f0f0'" onmouseout="this.style.background=''">
       <span style="font-size:20px">${c.flag}</span><span style="flex:1">${c.name}</span><span style="color:#aaa;font-size:13px">${c.code}</span>
     </div>`).join('');
 }
-function toggleCountry(){
-  const p=document.getElementById('countryPicker');
-  p.style.display=p.style.display==='none'?'block':'none';
-  if(p.style.display==='block') renderCountryList();
-}
-function pickCountry(i){
-  selCountry=COUNTRIES[i];
-  document.getElementById('countryFlag').textContent=selCountry.flag;
-  document.getElementById('countryCode').textContent=selCountry.code;
-  document.getElementById('countryPicker').style.display='none';
-  document.getElementById('phoneInp').maxLength=selCountry.max;
-  chkPhone();
-}
+function toggleCountry(){const p=document.getElementById('countryPicker');p.style.display=p.style.display==='none'?'block':'none';if(p.style.display==='block')renderCountryList();}
+function pickCountry(i){selCountry=COUNTRIES[i];document.getElementById('countryFlag').textContent=selCountry.flag;document.getElementById('countryCode').textContent=selCountry.code;document.getElementById('countryPicker').style.display='none';document.getElementById('phoneInp').maxLength=selCountry.max;chkPhone();}
 
-/* ===== OTP 流程 ===== */
-function getFullPhone(){
-  let num=document.getElementById('phoneInp').value.trim().replace(/-/g,'');
-  if(selCountry.code==='+886'&&num.startsWith('0')) num=num.slice(1);
-  return selCountry.code+num;
-}
-function chkPhone(){
-  const ok=document.getElementById('phoneInp').value.trim().replace(/-/g,'').length>=8;
-  document.getElementById('sendBtn').disabled=!ok;
-  document.getElementById('phoneInp').classList.remove('error');
-}
-function initRecaptcha(){
-  if(window.recaptchaVerifier) return;
-  window.recaptchaVerifier=new firebase.auth.RecaptchaVerifier('recaptcha-container',{
-    size:'invisible',callback:()=>{},
-    'expired-callback':()=>{window.recaptchaVerifier?.clear();window.recaptchaVerifier=null;initRecaptcha();}
-  });
-  window.recaptchaVerifier.render();
-}
+/* ===== OTP ===== */
+function getFullPhone(){let n=document.getElementById('phoneInp').value.trim().replace(/-/g,'');if(selCountry.code==='+886'&&n.startsWith('0'))n=n.slice(1);return selCountry.code+n;}
+function chkPhone(){document.getElementById('sendBtn').disabled=document.getElementById('phoneInp').value.trim().replace(/-/g,'').length<8;}
+function initRecaptcha(){if(window.recaptchaVerifier)return;window.recaptchaVerifier=new firebase.auth.RecaptchaVerifier('recaptcha-container',{size:'invisible',callback:()=>{},'expired-callback':()=>{window.recaptchaVerifier?.clear();window.recaptchaVerifier=null;initRecaptcha();}});window.recaptchaVerifier.render();}
 async function sendOtp(){
-  const phone=getFullPhone();
-  if(!phone||phone.length<8) return;
-  setBtnLoading('sendBtn','sendBtnText',true,'傳送中...');
-  try{
-    initRecaptcha();
-    confirmResult=await auth.signInWithPhoneNumber(phone,window.recaptchaVerifier);
-    document.getElementById('phoneDisp').innerHTML=`${selCountry.flag} ${selCountry.code} ${document.getElementById('phoneInp').value.trim()}`;
-    go(2);
-    startTimer();
-    setTimeout(()=>document.getElementById('o0').focus(),400);
-  }catch(err){
-    const m=errMsg(err.code,'send');
-    setStatusEl('s1Info','error',m);
-    document.getElementById('phoneInp').classList.add('error');
-    window.recaptchaVerifier?.clear();window.recaptchaVerifier=null;
-  }finally{setBtnLoading('sendBtn','sendBtnText',false,'📨 發送驗證碼');}
+  setBtnL('sendBtn','sendBtnText',true,'傳送中...');
+  try{initRecaptcha();confirmResult=await auth.signInWithPhoneNumber(getFullPhone(),window.recaptchaVerifier);document.getElementById('phoneDisp').innerHTML=`${selCountry.flag} ${selCountry.code} ${document.getElementById('phoneInp').value.trim()}`;go(2);startTimer();setTimeout(()=>document.getElementById('o0').focus(),400);}
+  catch(e){setStEl('s1Info','error',errMsg(e.code,'send'));window.recaptchaVerifier?.clear();window.recaptchaVerifier=null;}
+  finally{setBtnL('sendBtn','sendBtnText',false,'📨 發送驗證碼');}
 }
-function startTimer(){
-  clearInterval(otpInt);otpSec=60;
-  document.getElementById('otpTimer').style.display='inline';
-  document.getElementById('otpResend').style.display='none';
-  otpInt=setInterval(()=>{
-    otpSec--;
-    document.getElementById('otpTimer').textContent=`${otpSec} 秒後可重新發送`;
-    if(otpSec<=0){clearInterval(otpInt);document.getElementById('otpTimer').style.display='none';document.getElementById('otpResend').style.display='inline';}
-  },1000);
-}
+function startTimer(){clearInterval(otpInt);otpSec=60;document.getElementById('otpTimer').style.display='inline';document.getElementById('otpResend').style.display='none';otpInt=setInterval(()=>{otpSec--;document.getElementById('otpTimer').textContent=`${otpSec} 秒後可重新發送`;if(otpSec<=0){clearInterval(otpInt);document.getElementById('otpTimer').style.display='none';document.getElementById('otpResend').style.display='inline';}},1000);}
 function resendOtp(){go(1);setTimeout(sendOtp,100);}
-function goBackToPhone(){
-  clearInterval(otpInt);confirmResult=null;
-  for(let i=0;i<6;i++){const c=document.getElementById('o'+i);c.value='';c.classList.remove('filled','error');}
-  document.getElementById('s2Status').innerHTML='';
-  document.getElementById('verifyBtn').disabled=true;
-  go(1);
-}
-function oI(i){
-  const c=document.getElementById('o'+i);
-  c.value=c.value.replace(/\D/g,'').slice(0,1);
-  c.classList.toggle('filled',!!c.value);
-  c.classList.remove('error');
-  if(c.value&&i<5) document.getElementById('o'+(i+1)).focus();
-  let full=true;for(let j=0;j<6;j++) if(!document.getElementById('o'+j).value) full=false;
-  document.getElementById('verifyBtn').disabled=!full;
-  document.getElementById('s2Status').innerHTML='';
-  if(full) setTimeout(verifyOtp,150);
-}
-function oK(e,i){
-  if(e.key==='Backspace'&&!document.getElementById('o'+i).value&&i>0) document.getElementById('o'+(i-1)).focus();
-  if(e.key==='Enter') verifyOtp();
-}
+function goBackToPhone(){clearInterval(otpInt);confirmResult=null;for(let i=0;i<6;i++){const c=document.getElementById('o'+i);c.value='';c.classList.remove('filled','error');}document.getElementById('s2Status').innerHTML='';document.getElementById('verifyBtn').disabled=true;go(1);}
+function oI(i){const c=document.getElementById('o'+i);c.value=c.value.replace(/\D/g,'').slice(0,1);c.classList.toggle('filled',!!c.value);c.classList.remove('error');if(c.value&&i<5)document.getElementById('o'+(i+1)).focus();let f=true;for(let j=0;j<6;j++)if(!document.getElementById('o'+j).value)f=false;document.getElementById('verifyBtn').disabled=!f;document.getElementById('s2Status').innerHTML='';if(f)setTimeout(verifyOtp,150);}
+function oK(e,i){if(e.key==='Backspace'&&!document.getElementById('o'+i).value&&i>0)document.getElementById('o'+(i-1)).focus();if(e.key==='Enter')verifyOtp();}
 async function verifyOtp(){
-  let code='';for(let i=0;i<6;i++) code+=document.getElementById('o'+i).value;
-  if(code.length<6||!confirmResult) return;
-  setBtnLoading('verifyBtn','verifyBtnText',true,'驗證中...');
+  let code='';for(let i=0;i<6;i++)code+=document.getElementById('o'+i).value;
+  if(code.length<6||!confirmResult)return;
+  setBtnL('verifyBtn','verifyBtnText',true,'驗證中...');
   try{
     const result=await confirmResult.confirm(code);
-    currentUser=result.user;
-    clearInterval(otpInt);
-    const isNew=result.additionalUserInfo?.isNewUser;
-    if(isNew){go(3);}
-    else{
-      // 老用戶直接載入資料進入主畫面
-      await loadUserProfile(currentUser.uid);
-      enterApp();
-    }
-  }catch(err){
-    setStatusEl('s2Status','error',errMsg(err.code,'verify'));
-    for(let i=0;i<6;i++) document.getElementById('o'+i).classList.add('error');
+    currentUser=result.user;clearInterval(otpInt);
+    if(result.additionalUserInfo?.isNewUser)go(3);
+    else{await loadProfile(currentUser.uid);enterApp();}
+  }catch(e){
+    setStEl('s2Status','error',errMsg(e.code,'verify'));
+    for(let i=0;i<6;i++)document.getElementById('o'+i).classList.add('error');
     setTimeout(()=>{for(let i=0;i<6;i++){const c=document.getElementById('o'+i);c.value='';c.classList.remove('filled','error');}document.getElementById('verifyBtn').disabled=true;document.getElementById('o0').focus();},800);
-  }finally{setBtnLoading('verifyBtn','verifyBtnText',false,'✓ 確認驗證碼');}
+  }finally{setBtnL('verifyBtn','verifyBtnText',false,'✓ 確認驗證碼');}
 }
 
 /* ===== 資料填寫 ===== */
 function chkName(){const v=document.getElementById('nameInp').value.trim();document.getElementById('nameLen').textContent=v.length+' / 10';document.getElementById('nameBtn').disabled=v.length<2;}
 function selG(g){selGender=g;['male','female','other'].forEach(x=>document.getElementById('g'+x[0]).classList.toggle('sel',x===g));checkGBtn();}
-function initGenderCheck(){checkGBtn();}
 function checkGBtn(){document.getElementById('gBtn').disabled=!(selGender&&selTags.size>=3);}
-function initTags(){
-  document.getElementById('tagGrid').innerHTML=ALL_TAGS.map(t=>`<div class="t-opt ${selTags.has(t.l)?'sel':''}" onclick="togT('${t.l}')">${t.i} ${t.l}</div>`).join('');
-  updTagCnt();
-}
-function togT(t){
-  if(selTags.has(t)) selTags.delete(t);
-  else if(selTags.size>=5){T('最多選 5 個標籤');return;}
-  else selTags.add(t);
-  document.querySelectorAll('.t-opt').forEach(el=>{const txt=el.textContent.trim().slice(2);el.classList.toggle('sel',selTags.has(txt));});
-  updTagCnt();checkGBtn();
-}
-function updTagCnt(){document.getElementById('tagCnt').textContent=`（已選 ${selTags.size}/5，至少選 3 個）`;}
+function initTags(){document.getElementById('tagGrid').innerHTML=ALL_TAGS.map(t=>`<div class="t-opt ${selTags.has(t.l)?'sel':''}" onclick="togT('${t.l}')">${t.i} ${t.l}</div>`).join('');updTagCnt();}
+function togT(t){if(selTags.has(t))selTags.delete(t);else if(selTags.size>=5){T('最多選 5 個');return;}else selTags.add(t);document.querySelectorAll('.t-opt').forEach(el=>{const txt=el.textContent.trim().slice(2);el.classList.toggle('sel',selTags.has(txt));});updTagCnt();checkGBtn();}
+function updTagCnt(){document.getElementById('tagCnt').textContent=`（已選 ${selTags.size}/5，至少 3 個）`;}
 function initMbti(){document.getElementById('mbtiGrid').innerHTML=ALL_MBTI.map(m=>`<div class="m-opt ${selMbti===m?'sel':''}" onclick="pickM('${m}')">${m}</div>`).join('');}
 function pickM(m){selMbti=m;document.querySelectorAll('.m-opt').forEach(el=>el.classList.toggle('sel',el.textContent===m));document.getElementById('mbtiBtn').disabled=false;}
 
-/* ===== 儲存資料到 Firestore ===== */
-async function saveProfileAndEnter(){
-  if(!currentUser) return;
-  const profile={
-    uid:currentUser.uid,
-    phone:currentUser.phoneNumber,
-    name:document.getElementById('nameInp').value.trim()||'蜜友用戶',
-    age:parseInt(document.getElementById('ageSlider').value)||22,
-    city:document.getElementById('cityInp').value.trim()||'',
-    gender:selGender,
-    tags:[...selTags],
-    mbti:selMbti||'',
-    emoji:['😊','🌟','🦋','🐱','🌸','☕'][Math.floor(Math.random()*6)],
-    colorIdx:Math.floor(Math.random()*COLORS.length),
-    createdAt:firebase.firestore.FieldValue.serverTimestamp(),
-    updatedAt:firebase.firestore.FieldValue.serverTimestamp(),
-    online:true,
-    location:null, // 進入主畫面後再更新
-  };
-  try{
-    await db.collection('users').doc(currentUser.uid).set(profile);
-    myProfile=profile;
-    enterApp();
-  }catch(err){
-    T('儲存失敗，請重試');console.error(err);
-  }
+/* ===== 儲存資料 ===== */
+async function saveAndEnter(){
+  if(!currentUser)return;
+  const profile={uid:currentUser.uid,phone:currentUser.phoneNumber,name:document.getElementById('nameInp').value.trim()||'蜜友用戶',age:parseInt(document.getElementById('ageSlider').value)||22,city:document.getElementById('cityInp').value.trim()||'',gender:selGender,tags:[...selTags],mbti:selMbti||'',emoji:EMOJIS[Math.floor(Math.random()*EMOJIS.length)],colorIdx:Math.floor(Math.random()*COLORS.length),createdAt:firebase.firestore.FieldValue.serverTimestamp(),updatedAt:firebase.firestore.FieldValue.serverTimestamp(),online:true,location:null};
+  try{await db.collection('users').doc(currentUser.uid).set(profile);myProfile=profile;enterApp();}
+  catch(e){T('儲存失敗，請重試');}
 }
-
-/* ===== 載入用戶資料 ===== */
-async function loadUserProfile(uid){
-  try{
-    const doc=await db.collection('users').doc(uid).get();
-    if(doc.exists) myProfile=doc.data();
-  }catch(err){console.error(err);}
+async function loadProfile(uid){
+  try{const doc=await db.collection('users').doc(uid).get();if(doc.exists)myProfile=doc.data();}catch(e){console.error(e);}
 }
 
 /* ===== 進入主 App ===== */
@@ -662,331 +619,142 @@ function enterApp(){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('sApp').classList.add('active');
   document.getElementById('pb').classList.remove('show');
-  startLocationTracking();
+  startLocTracking();
   loadNearbyUsers();
+  listenMatches();     // 監聽配對狀態
+  loadMyHiSent();      // 載入我已打招呼的紀錄
 }
 
 /* ===== 地理位置 ===== */
-function startLocationTracking(){
-  if(!navigator.geolocation){
-    setLocStatus('err','你的瀏覽器不支援地理位置功能');return;
-  }
-  setLocStatus('loading','正在取得你的位置...');
-
-  // 立即取得位置
-  navigator.geolocation.getCurrentPosition(onLocSuccess, onLocError, {
-    enableHighAccuracy:true, timeout:10000, maximumAge:60000
-  });
-
-  // 每 10 分鐘自動更新
-  locUpdateTimer=setInterval(()=>{
-    navigator.geolocation.getCurrentPosition(onLocSuccess, onLocError, {
-      enableHighAccuracy:false, timeout:8000, maximumAge:300000
-    });
-  }, 10*60*1000);
+function startLocTracking(){
+  if(!navigator.geolocation){setLocSt('err','瀏覽器不支援地理位置');return;}
+  setLocSt('loading','正在取得你的位置...');
+  navigator.geolocation.getCurrentPosition(onLocOk,onLocErr,{enableHighAccuracy:true,timeout:10000,maximumAge:60000});
+  locTimer=setInterval(()=>navigator.geolocation.getCurrentPosition(onLocOk,onLocErr,{enableHighAccuracy:false,timeout:8000,maximumAge:300000}),10*60*1000);
 }
-
-async function onLocSuccess(pos){
-  myLat=pos.coords.latitude;
-  myLng=pos.coords.longitude;
-  const acc=Math.round(pos.coords.accuracy);
-  setLocStatus('ok',`位置已更新・精確度 ${acc}m`);
-
-  // 更新到 Firestore
+async function onLocOk(pos){
+  myLat=pos.coords.latitude;myLng=pos.coords.longitude;
+  setLocSt('ok',`位置已更新・精確度 ${Math.round(pos.coords.accuracy)}m`);
   if(currentUser){
-    try{
-      await db.collection('users').doc(currentUser.uid).update({
-        location:{lat:myLat,lng:myLng},
-        locationUpdatedAt:firebase.firestore.FieldValue.serverTimestamp(),
-        online:true,
-      });
-    }catch(e){console.warn('位置更新失敗',e);}
+    try{await db.collection('users').doc(currentUser.uid).update({location:{lat:myLat,lng:myLng},locationUpdatedAt:firebase.firestore.FieldValue.serverTimestamp(),online:true});}catch(e){}
   }
-
-  renderUserList();
-  updateMyMapMarker();
+  renderUserList();updateMyMarker();
 }
-
-function onLocError(err){
-  const msgs={1:'請允許位置存取權限，才能看到附近的人',2:'無法取得位置，請確認 GPS 已開啟',3:'位置取得逾時，請重試'};
-  setLocStatus('err', msgs[err.code]||'位置取得失敗');
-}
-
-function setLocStatus(type,msg){
-  const dot=document.getElementById('locDot');
-  const text=document.getElementById('locText');
-  dot.className='loc-dot '+type;
-  text.textContent=msg;
-  text.style.color=type==='ok'?'#22C55E':type==='err'?'#EF4444':'#666';
-}
-
-function refreshLocation(){
-  setLocStatus('loading','重新取得位置...');
-  navigator.geolocation.getCurrentPosition(onLocSuccess,onLocError,{enableHighAccuracy:true,timeout:10000,maximumAge:0});
-}
+function onLocErr(e){const m={1:'請允許位置權限',2:'無法取得位置，請開啟 GPS',3:'位置取得逾時'};setLocSt('err',m[e.code]||'位置取得失敗');}
+function setLocSt(t,msg){document.getElementById('locDot').className='loc-dot '+t;const el=document.getElementById('locText');el.textContent=msg;el.style.color=t==='ok'?'#22C55E':t==='err'?'#EF4444':'#666';}
+function refreshLoc(){setLocSt('loading','重新取得位置...');navigator.geolocation.getCurrentPosition(onLocOk,onLocErr,{enableHighAccuracy:true,timeout:10000,maximumAge:0});}
 
 /* ===== 載入附近用戶 ===== */
 async function loadNearbyUsers(){
   try{
-    // 從 Firestore 讀取所有有位置的用戶（除了自己）
-    const snapshot=await db.collection('users')
-      .where('location','!=',null)
-      .limit(100)
-      .get();
+    const snap=await db.collection('users').where('location','!=',null).limit(100).get();
     allUsers=[];
-    snapshot.forEach(doc=>{
-      const d=doc.data();
-      if(d.uid!==currentUser?.uid && d.location){
-        allUsers.push(d);
-      }
-    });
-    // 加入示範用戶（讓畫面不是空的）
-    if(allUsers.length===0) allUsers=getDemoUsers();
-    renderUserList();
-    renderMapMarkers();
-  }catch(err){
-    console.error('載入用戶失敗',err);
-    allUsers=getDemoUsers();
-    renderUserList();
-    renderMapMarkers();
-  }
+    snap.forEach(doc=>{const d=doc.data();if(d.uid!==currentUser?.uid&&d.location)allUsers.push(d);});
+    if(allUsers.length===0)allUsers=demoUsers();
+  }catch(e){allUsers=demoUsers();}
+  renderUserList();renderMapMarkers();
 }
-
-/* ===== 示範用戶（Firestore 沒資料時使用）===== */
-function getDemoUsers(){
-  const base={lat:myLat||25.0330,lng:myLng||121.5654};
+function demoUsers(){
+  const b={lat:myLat||25.0330,lng:myLng||121.5654};
   return[
-    {uid:'demo1',name:'小妍',age:24,emoji:'妍',colorIdx:0,online:true,tags:['攝影','咖啡','旅遊'],location:{lat:base.lat+0.008,lng:base.lng+0.005}},
-    {uid:'demo2',name:'阿楷',age:27,emoji:'楷',colorIdx:1,online:true,tags:['爬山','健身','音樂'],location:{lat:base.lat-0.012,lng:base.lng+0.015}},
-    {uid:'demo3',name:'芷雯',age:23,emoji:'雯',colorIdx:2,online:false,tags:['貓咪','閱讀','插畫'],location:{lat:base.lat+0.02,lng:base.lng-0.01}},
-    {uid:'demo4',name:'建翔',age:26,emoji:'翔',colorIdx:3,online:false,tags:['桌遊','電影','料理'],location:{lat:base.lat-0.005,lng:base.lng+0.022}},
-    {uid:'demo5',name:'欣蕾',age:25,emoji:'蕾',colorIdx:4,online:true,tags:['瑜珈','甜點','韓劇'],location:{lat:base.lat+0.035,lng:base.lng+0.008}},
+    {uid:'demo1',name:'小妍',age:24,emoji:'😊',colorIdx:0,online:true,tags:['攝影','咖啡','旅遊'],location:{lat:b.lat+0.008,lng:b.lng+0.005}},
+    {uid:'demo2',name:'阿楷',age:27,emoji:'😄',colorIdx:1,online:true,tags:['爬山','健身','音樂'],location:{lat:b.lat-0.012,lng:b.lng+0.015}},
+    {uid:'demo3',name:'芷雯',age:23,emoji:'🌸',colorIdx:2,online:false,tags:['貓咪','閱讀','插畫'],location:{lat:b.lat+0.02,lng:b.lng-0.01}},
+    {uid:'demo4',name:'建翔',age:26,emoji:'☕',colorIdx:3,online:false,tags:['桌遊','電影','料理'],location:{lat:b.lat-0.005,lng:b.lng+0.022}},
   ];
 }
 
 /* ===== 渲染用戶列表 ===== */
 function renderUserList(){
   const list=document.getElementById('userList');
-  if(!myLat||!myLng){
-    list.innerHTML=`<div class="empty-state"><i class="ti ti-map-pin-off"></i><p>需要位置權限才能<br>顯示附近的人</p></div>`;
-    return;
-  }
-
-  // 計算距離並篩選
-  let users=allUsers.map(u=>{
-    const dist=calcDist(myLat,myLng,u.location.lat,u.location.lng);
-    return{...u,dist};
-  }).filter(u=>u.dist<=distFilter).sort((a,b)=>a.dist-b.dist);
-
-  if(!users.length){
-    list.innerHTML=`<div class="empty-state"><i class="ti ti-users-minus"></i><p>${distFilter}公里內暫時沒有人<br>試著擴大搜尋範圍</p></div>`;
-    return;
-  }
-
+  if(!myLat||!myLng){list.innerHTML=`<div class="empty-state"><i class="ti ti-map-pin-off"></i><p>需要位置權限<br>才能顯示附近的人</p></div>`;return;}
+  let users=allUsers.map(u=>({...u,dist:calcDist(myLat,myLng,u.location.lat,u.location.lng)})).filter(u=>u.dist<=distFilter).sort((a,b)=>a.dist-b.dist);
+  if(!users.length){list.innerHTML=`<div class="empty-state"><i class="ti ti-users-minus"></i><p>${distFilter}公里內暫時沒有人<br>試著擴大範圍</p></div>`;return;}
   list.innerHTML=users.map(u=>{
-    const color=COLORS[u.colorIdx%COLORS.length]||COLORS[0];
-    const sentHi=hiSent.has(u.uid);
-    return`<div class="user-card">
-      <div class="u-avatar-wrap">
-        <div class="u-avatar" style="${color}">${u.emoji}</div>
+    const c=COLORS[u.colorIdx%COLORS.length];
+    const isMatched=myMatches.has(u.uid);
+    const sentHi=myHiSent.has(u.uid);
+    let circleClass='hi-circle',lbl='打招呼',icon='ti-hand-stop';
+    if(isMatched){circleClass='hi-circle matched';lbl='已配對';icon='ti-heart';}
+    else if(sentHi){circleClass='hi-circle sent';lbl='已打招呼';icon='ti-check';}
+    return`<div class="user-card" onclick="showUserDetail('${u.uid}')">
+      <div class="u-av-wrap">
+        <div class="u-av" style="${c}">${u.emoji}</div>
         ${u.online?'<div class="u-online"></div>':''}
       </div>
       <div class="u-info">
-        <div class="u-name">${u.name}<span class="u-age">${u.age}歲</span></div>
+        <div class="u-name">${u.name}<span class="u-age">${u.age}歲</span>${isMatched?'<span class="match-badge">💚 已配對</span>':''}</div>
         <div class="u-dist"><i class="ti ti-map-pin"></i>${fmtDist(u.dist)} · ${u.online?'<span style="color:#22C55E">線上</span>':'剛剛上線'}</div>
         <div class="u-tags">${(u.tags||[]).slice(0,3).map(t=>`<span class="u-tag">${t}</span>`).join('')}</div>
       </div>
-      <div class="hi-btn" onclick="sendHi('${u.uid}','${u.name}')">
-        <div class="hi-circle ${sentHi?'sent':''}"><i class="ti ti-hand-stop"></i></div>
-        <div class="hi-lbl">${sentHi?'已打招呼':'打招呼'}</div>
+      <div class="hi-btn" onclick="event.stopPropagation();sendHi('${u.uid}','${u.name}','${u.emoji}','${u.colorIdx}')">
+        <div class="${circleClass}"><i class="ti ${icon}"></i></div>
+        <div class="hi-lbl">${lbl}</div>
       </div>
     </div>`;
   }).join('');
 }
 
-/* ===== 地圖 ===== */
-function initMap(){
-  if(leafletMap) return;
-  const lat=myLat||25.0330, lng=myLng||121.5654;
-  leafletMap=L.map('leafletMap',{zoomControl:false}).setView([lat,lng],13);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-    attribution:'© OpenStreetMap contributors',maxZoom:18
-  }).addTo(leafletMap);
-  L.control.zoom({position:'bottomright'}).addTo(leafletMap);
-  updateMyMapMarker();
-  renderMapMarkers();
-}
+/* ===== 打招呼 → 配對邏輯 ===== */
+async function sendHi(targetUid,targetName,targetEmoji,targetColorIdx){
+  if(!currentUser){T('請先登入');return;}
+  if(myMatches.has(targetUid)){openChat(targetUid);return;}
+  if(myHiSent.has(targetUid)){T(`已向 ${targetName} 打過招呼了`);return;}
 
-function updateMyMapMarker(){
-  if(!leafletMap||!myLat||!myLng) return;
-  if(myMarker) myMarker.remove();
-  const icon=L.divIcon({className:'',html:`<div class="my-marker-pulse"></div>`,iconSize:[16,16],iconAnchor:[8,8]});
-  myMarker=L.marker([myLat,myLng],{icon,zIndexOffset:1000}).addTo(leafletMap);
-  myMarker.bindPopup('📍 這是你的位置');
-}
+  myHiSent.add(targetUid);
+  renderUserList();
 
-function renderMapMarkers(){
-  if(!leafletMap) return;
-  userMarkers.forEach(m=>m.remove());
-  userMarkers=[];
-  if(!myLat||!myLng) return;
+  const myUid=currentUser.uid;
+  const helloId=`${myUid}_${targetUid}`;
+  const reverseId=`${targetUid}_${myUid}`;
 
-  allUsers.forEach(u=>{
-    if(!u.location) return;
-    const dist=calcDist(myLat,myLng,u.location.lat,u.location.lng);
-    if(dist>distFilter) return;
-    const color=COLORS[u.colorIdx%COLORS.length]||COLORS[0];
-    const bg=color.split(';')[0].replace('background:','');
-    const textC=color.split(';')[1]?.replace('color:','');
-    const icon=L.divIcon({
-      className:'',
-      html:`<div style="background:${bg};color:${textC};width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border:2.5px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.25)">${u.emoji}</div>`,
-      iconSize:[36,36],iconAnchor:[18,18]
+  try{
+    // 1. 寫入我的打招呼紀錄
+    await db.collection('hellos').doc(helloId).set({
+      from:myUid,to:targetUid,
+      fromName:myProfile?.name||'蜜友用戶',
+      toName:targetName,
+      createdAt:firebase.firestore.FieldValue.serverTimestamp()
     });
-    const m=L.marker([u.location.lat,u.location.lng],{icon})
-      .addTo(leafletMap)
-      .bindPopup(`<b>${u.name}</b>，${u.age}歲<br>📍 ${fmtDist(dist)}<br>${(u.tags||[]).join(' · ')}`);
-    userMarkers.push(m);
-  });
-}
 
-function centerMyLocation(){
-  if(!leafletMap||!myLat||!myLng){T('尚未取得位置');return;}
-  leafletMap.setView([myLat,myLng],14,{animate:true});
-}
+    // 2. 檢查對方有沒有打招呼給我
+    const reverseDoc=await db.collection('hellos').doc(reverseId).get();
 
-/* ===== 視圖切換 ===== */
-function setView(v){
-  currentView=v;
-  document.getElementById('listView').style.display=v==='list'?'flex':'none';
-  document.getElementById('mapView').style.display=v==='map'?'block':'none';
-  document.getElementById('vt-list').classList.toggle('active',v==='list');
-  document.getElementById('vt-map').classList.toggle('active',v==='map');
-  if(v==='map'){
-    setTimeout(()=>{
-      initMap();
-      if(leafletMap) leafletMap.invalidateSize();
-    },100);
+    if(reverseDoc.exists){
+      // 🎉 雙向配對！寫入 matches 集合
+      const matchId=[myUid,targetUid].sort().join('_');
+      await db.collection('matches').doc(matchId).set({
+        users:[myUid,targetUid],
+        userNames:{[myUid]:myProfile?.name||'我',[targetUid]:targetName},
+        userEmojis:{[myUid]:myProfile?.emoji||'😊',[targetUid]:targetEmoji},
+        userColorIdx:{[myUid]:myProfile?.colorIdx||0,[targetUid]:parseInt(targetColorIdx)},
+        createdAt:firebase.firestore.FieldValue.serverTimestamp(),
+        lastMsg:'',lastMsgAt:null
+      });
+
+      // 更新本地狀態
+      myMatches.add(targetUid);
+      matchedProfiles[targetUid]={uid:targetUid,name:targetName,emoji:targetEmoji,colorIdx:parseInt(targetColorIdx),online:true};
+
+      // 觸發動畫
+      newMatchUid=targetUid;
+      showMatchOverlay(targetName,targetEmoji,parseInt(targetColorIdx));
+      updateMatchBadge();
+      renderUserList();
+
+    } else {
+      T(`已向 ${targetName} 打招呼 👋`);
+    }
+  }catch(e){
+    console.error('sendHi error',e);
+    myHiSent.delete(targetUid);
+    T('發送失敗，請重試');
+    renderUserList();
   }
 }
 
-/* ===== 距離篩選 ===== */
-function setDistFilter(km){
-  distFilter=km;
-  document.querySelectorAll('[id^="fc-"]').forEach(el=>el.classList.remove('active'));
-  const map={200:'fc-all',50:'fc-50',20:'fc-20',5:'fc-5',1:'fc-1'};
-  document.getElementById(map[km])?.classList.add('active');
-  renderUserList();
-  renderMapMarkers();
-}
-
-/* ===== Tab 切換 ===== */
-function switchTab(tab){
-  document.querySelectorAll('.tab-item').forEach(t=>t.classList.remove('active'));
-  document.getElementById('tab-'+tab)?.classList.add('active');
-  document.getElementById('nearbyPage').style.display=tab==='nearby'?'flex':'none';
-  document.getElementById('profilePageMain').style.display=tab==='profile'?'flex':'none';
-  if(tab==='profile') renderProfilePage();
-}
-
-/* ===== 個人頁面 ===== */
-function renderProfilePage(){
-  const p=myProfile;
-  if(!p){document.getElementById('profileContent').innerHTML='<div style="padding:20px;color:#aaa;text-align:center">載入中...</div>';return;}
-  const color=COLORS[p.colorIdx%COLORS.length]||COLORS[0];
-  const locTxt=myLat?`${myLat.toFixed(4)}, ${myLng.toFixed(4)}`:'尚未取得';
-  document.getElementById('profileContent').innerHTML=`
-    <div class="profile-cover"></div>
-    <div class="profile-av-row">
-      <div class="profile-av" style="${color}">${p.emoji||'😊'}</div>
-      <button class="profile-edit-btn" onclick="T('編輯功能即將上線')">✏️ 編輯資料</button>
-    </div>
-    <div class="profile-name">${p.name}，${p.age}歲 <span class="v-badge">✓ 已驗證</span></div>
-    <div class="profile-sub">
-      <span>📍 ${p.city||'台灣'}</span>
-      ${p.gender?`<span>· ${p.gender==='male'?'👨 男生':p.gender==='female'?'👩 女生':'🧑 其他'}</span>`:''}
-      ${p.mbti?`<span>· 🧠 ${p.mbti}</span>`:''}
-    </div>
-    <div class="profile-tags">${(p.tags||[]).map(t=>`<div class="p-tag">${t}</div>`).join('')}</div>
-    <div class="profile-section">
-      <div class="profile-sec-title">📍 地理位置</div>
-      <div class="loc-info-card">
-        <i class="ti ti-map-pin"></i>
-        <div>
-          <div class="loc-info-text">${myLat?'位置已啟用，其他人可以看到你':'尚未取得位置'}</div>
-          <div class="loc-info-sub">座標：${locTxt}</div>
-          <div class="loc-info-sub">每 10 分鐘自動更新</div>
-        </div>
-      </div>
-    </div>
-    <div class="profile-section">
-      <div class="profile-sec-title">帳號資訊</div>
-      <div class="loc-info-card">
-        <i class="ti ti-phone"></i>
-        <div>
-          <div class="loc-info-text">${p.phone||currentUser?.phoneNumber||'—'}</div>
-          <div class="loc-info-sub">Firebase UID: ${p.uid?.slice(0,16)}...</div>
-        </div>
-      </div>
-    </div>
-    <div style="padding:0 16px;margin-top:8px">
-      <button class="btn-ghost" onclick="doSignOut()">登出</button>
-    </div>
-  `;
-}
-
-/* ===== 打招呼 ===== */
-function sendHi(uid,name){
-  if(hiSent.has(uid)){T(`已向 ${name} 打過招呼了`);return;}
-  hiSent.add(uid);
-  renderUserList();
-  T(`已向 ${name} 打招呼 👋`);
-}
-
-/* ===== 登出 ===== */
-async function doSignOut(){
-  clearInterval(locUpdateTimer);
-  if(locWatchId) navigator.geolocation.clearWatch(locWatchId);
-  if(currentUser){
-    try{await db.collection('users').doc(currentUser.uid).update({online:false});}catch(e){}
-  }
-  await auth.signOut();
-  currentUser=null;myProfile=null;myLat=null;myLng=null;
-  window.recaptchaVerifier?.clear();window.recaptchaVerifier=null;
-  document.getElementById('phoneInp').value='';
-  go(0);T('已登出');
-}
-
-/* ===== 自動登入偵測 ===== */
-auth.onAuthStateChanged(async user=>{
-  if(user&&document.getElementById('s0').classList.contains('active')){
-    currentUser=user;
-    await loadUserProfile(user.uid);
-    enterApp();
-  }
-});
-
-/* ===== 工具 ===== */
-function errMsg(code,phase){
-  const map={'auth/invalid-phone-number':'手機號碼格式不正確','auth/too-many-requests':'請求次數過多，請稍後再試','auth/captcha-check-failed':'reCAPTCHA 驗證失敗，請重新整理','auth/invalid-verification-code':'驗證碼不正確','auth/code-expired':'驗證碼已過期，請重新發送'};
-  return map[code]||(phase==='send'?'發送失敗，請稍後再試':'驗證失敗，請重新嘗試');
-}
-function setStatusEl(id,type,msg){
-  const el=document.getElementById(id);if(!el) return;
-  const icons={info:'ℹ️',error:'❌',success:'✅',warn:'⚠️'};
-  if(!msg){if(el.tagName==='DIV'&&el.className.includes('status-box'))el.style.display='none';else el.innerHTML='';return;}
-  if(el.tagName==='DIV'&&el.className.includes('status-box')){el.style.display='flex';el.className=`status-box ${type}`;el.innerHTML=`<span style="font-size:16px;flex-shrink:0">${icons[type]||'ℹ️'}</span><span>${msg}</span>`;}
-  else el.innerHTML=`<div class="status-box ${type}"><span style="font-size:16px;flex-shrink:0">${icons[type]||'ℹ️'}</span><span>${msg}</span></div>`;
-}
-function setBtnLoading(btnId,textId,loading,text){
-  document.getElementById(btnId).disabled=loading;
-  document.getElementById(textId).innerHTML=loading?`<div class="spinner"></div>${text}`:text;
-}
-function T(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2500);}
-
-if('serviceWorker' in navigator){
-  window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(e=>console.warn(e)));
-}
-</script>
-</body>
-</html>
+/* ===== 載入我打過的招呼 ===== */
+async function loadMyHiSent(){
+  if(!currentUser)return;
+  try{
+    const snap=await db.collection('hel
