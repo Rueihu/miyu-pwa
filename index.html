@@ -36,9 +36,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
 .s-title{font-size:22px;font-weight:700;color:#111;line-height:1.35;margin-bottom:5px}
 .s-sub{font-size:13px;color:#888;line-height:1.65;margin-bottom:20px}
 .btn-main{width:100%;padding:15px;background:var(--brand);color:#fff;border:none;border-radius:14px;font-size:16px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .15s;font-family:inherit}
-.btn-main:hover{background:var(--brand-dark)}
-.btn-main:active{transform:scale(.98)}
-.btn-main:disabled{opacity:.4;cursor:default;transform:none}
+.btn-main:hover{background:var(--brand-dark)}.btn-main:active{transform:scale(.98)}.btn-main:disabled{opacity:.4;cursor:default;transform:none}
 .btn-ghost{width:100%;padding:13px;background:#f5f5f0;color:#666;border:.5px solid #e0e0e0;border-radius:14px;font-size:14px;cursor:pointer;margin-top:8px;font-family:inherit}
 .btn-social{width:100%;padding:13px;border:.5px solid #e0e0e0;border-radius:12px;font-size:14px;cursor:pointer;background:#f9f9f8;color:#444;display:flex;align-items:center;justify-content:center;gap:9px;margin-bottom:8px;font-weight:500;font-family:inherit}
 .inp{width:100%;padding:13px 14px;border:.5px solid #e0e0e0;border-radius:12px;background:#f9f9f8;color:#111;font-size:15px;font-family:inherit;outline:none;transition:all .2s}
@@ -47,8 +45,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
 .inp-label{font-size:12px;color:#888;margin-bottom:5px;font-weight:600}
 .inp-group{margin-bottom:14px}
 .inp-hint{font-size:11px;color:#bbb;margin-top:5px}
-
-/* 歡迎 */
 .welcome-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 24px;text-align:center;overflow-y:auto}
 .logo{font-size:46px;font-weight:800;color:var(--brand);letter-spacing:-1px}
 .logo span{color:#111}
@@ -60,8 +56,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
 .social-div span{font-size:12px;color:#bbb;white-space:nowrap}
 .terms{font-size:11px;color:#bbb;margin-top:14px;line-height:1.7}
 .terms b{color:var(--brand);cursor:pointer}
-
-/* OTP */
 .otp-art{width:72px;height:72px;border-radius:20px;background:var(--brand-light);display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 18px}
 .phone-disp{font-size:14px;color:#888;text-align:center;margin-bottom:6px;line-height:1.6}
 .phone-change{font-size:13px;color:var(--brand);text-align:center;cursor:pointer;margin-bottom:20px;font-weight:500}
@@ -79,8 +73,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
 .status-box.error{background:#FEF2F2;color:#991B1B;border:.5px solid #FECACA}
 .spinner{width:18px;height:18px;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite;flex-shrink:0}
 @keyframes sp{to{transform:rotate(360deg)}}
-
-/* 資料填寫 */
 .name-big{font-size:22px;font-weight:700;border:none;border-bottom:2.5px solid #e0e0e0;border-radius:0;background:transparent;width:100%;padding:8px 2px;color:#111;outline:none;text-align:center;margin-bottom:4px;font-family:inherit;transition:border-color .2s}
 .name-big:focus{border-bottom-color:var(--brand)}
 .age-display{font-size:44px;font-weight:700;color:var(--brand);text-align:center;margin-bottom:10px}
@@ -100,7 +92,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
 .m-opt.sel{background:#EEEDFE;border-color:#534AB7;color:#534AB7}
 .skip-link{font-size:13px;color:#bbb;text-align:center;margin-top:12px;cursor:pointer}
 
-/* ===== 主 App ===== */
+/* 主 App */
 .main-top{display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px;background:#fff;border-bottom:.5px solid #eee;flex-shrink:0}
 .main-logo{font-size:20px;font-weight:800;color:var(--brand)}
 .main-logo span{color:#111}
@@ -112,14 +104,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
 .tab-item i{font-size:22px;margin-bottom:2px}
 .tab-item span{font-size:10px;font-weight:500}
 .tab-badge{position:absolute;top:6px;right:calc(50% - 18px);background:var(--brand);color:#fff;font-size:9px;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 4px;border:1.5px solid #fff}
-
-/* 附近頁 */
 .nearby-page{flex:1;display:flex;flex-direction:column;overflow:hidden}
+
+/* 附近 */
 .loc-status{display:flex;align-items:center;gap:8px;padding:8px 14px;font-size:12px;flex-shrink:0;border-bottom:.5px solid #f0f0f0;background:#fff}
 .loc-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.loc-dot.ok{background:#22C55E}
-.loc-dot.loading{background:#F59E0B;animation:blink 1s infinite}
-.loc-dot.err{background:#EF4444}
+.loc-dot.ok{background:#22C55E}.loc-dot.loading{background:#F59E0B;animation:blink 1s infinite}.loc-dot.err{background:#EF4444}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
 .filter-bar{display:flex;align-items:center;padding:8px 14px;gap:8px;border-bottom:.5px solid #eee;flex-shrink:0;background:#fff}
 .dist-chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;flex:1}
@@ -137,7 +127,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
 .u-av{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700}
 .u-online{width:13px;height:13px;border-radius:50%;background:#22C55E;border:2.5px solid #fff;position:absolute;bottom:1px;right:1px}
 .u-info{flex:1;min-width:0}
-.u-name{font-size:15px;font-weight:600;color:#111;display:flex;align-items:center;gap:6px}
+.u-name{font-size:15px;font-weight:600;color:#111;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .u-age{font-size:11px;color:#aaa;font-weight:400}
 .u-dist{font-size:12px;color:#888;margin-top:2px;display:flex;align-items:center;gap:4px}
 .u-dist i{font-size:12px;color:var(--brand)}
@@ -158,13 +148,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
 .empty-state i{font-size:52px;margin-bottom:14px;display:block}
 .empty-state p{font-size:14px;line-height:1.7}
 
-/* ===== 配對頁 ===== */
-.match-page{flex:1;display:flex;flex-direction:column;overflow:hidden}
+/* 配對頁 */
 .match-header{padding:14px 16px;border-bottom:.5px solid #eee;flex-shrink:0}
 .match-header-title{font-size:16px;font-weight:700;color:#111}
 .match-header-sub{font-size:12px;color:#aaa;margin-top:2px}
 .match-section-label{font-size:11px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.4px;padding:12px 14px 6px}
-/* 待回應 */
 .pending-row{display:flex;gap:12px;padding:0 14px 12px;overflow-x:auto;scrollbar-width:none}
 .pending-row::-webkit-scrollbar{display:none}
 .pending-card{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer}
@@ -172,8 +160,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
 .pending-pulse{position:absolute;inset:-4px;border-radius:50%;border:2px solid var(--brand);opacity:.4;animation:pp 1.8s infinite}
 @keyframes pp{0%,100%{transform:scale(1);opacity:.4}50%{transform:scale(1.1);opacity:.1}}
 .pending-name{font-size:11px;color:#555;text-align:center}
-.pending-time{font-size:10px;color:#aaa}
-/* 已配對 */
 .matched-list{flex:1;overflow-y:auto}
 .matched-card{display:flex;align-items:center;gap:12px;padding:12px 14px;background:#fff;border-bottom:.5px solid #f0f0f0;cursor:pointer;transition:background .15s}
 .matched-card:hover{background:#fafafa}
@@ -181,28 +167,119 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
 .matched-info{flex:1;min-width:0}
 .matched-name{font-size:15px;font-weight:600;color:#111}
 .matched-preview{font-size:12px;color:#aaa;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.matched-time{font-size:11px;color:#bbb;flex-shrink:0}
 .match-badge{display:inline-flex;align-items:center;gap:3px;font-size:10px;color:#22C55E;background:#F0FDF4;padding:2px 8px;border-radius:8px;border:.5px solid #BBF7D0;font-weight:600}
 
-/* ===== 聊天室 ===== */
+/* ===== 活動頁 ===== */
+.act-top{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:.5px solid #eee;flex-shrink:0;background:#fff}
+.act-top-title{font-size:15px;font-weight:700;color:#111}
+.act-create-btn{display:flex;align-items:center;gap:4px;padding:7px 14px;background:var(--brand);color:#fff;border:none;border-radius:16px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit}
+.act-create-btn:hover{background:var(--brand-dark)}
+.cat-bar{display:flex;gap:8px;padding:8px 14px;overflow-x:auto;scrollbar-width:none;border-bottom:.5px solid #eee;flex-shrink:0;background:#fff}
+.cat-bar::-webkit-scrollbar{display:none}
+.cat-chip{white-space:nowrap;padding:6px 12px;border-radius:20px;font-size:12px;font-weight:500;border:.5px solid #e0e0e0;color:#666;cursor:pointer;background:#f9f9f8;display:flex;align-items:center;gap:4px;transition:all .15s}
+.cat-chip i{font-size:12px}
+.cat-chip.active{background:var(--brand-light);border-color:var(--brand);color:var(--brand-dark)}
+.act-list{flex:1;overflow-y:auto}
+.act-card{background:#fff;border-bottom:.5px solid #f0f0f0;cursor:pointer;padding:14px;transition:background .15s}
+.act-card:hover{background:#fafafa}
+.act-card-top{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px}
+.act-icon{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.act-card-info{flex:1}
+.act-title{font-size:15px;font-weight:600;color:#111;line-height:1.3;margin-bottom:4px}
+.act-host-row{font-size:12px;color:#aaa;display:flex;align-items:center;gap:4px}
+.act-meta{display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.act-meta-item{display:flex;align-items:center;gap:4px;font-size:12px;color:#666}
+.act-meta-item i{font-size:13px;color:var(--brand)}
+.act-footer{display:flex;align-items:center;justify-content:space-between}
+.att-row{display:flex;align-items:center}
+.att-av{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;border:2px solid #fff;margin-right:-6px}
+.att-count{font-size:12px;color:#aaa;margin-left:12px}
+.join-btn{padding:7px 16px;background:var(--brand);color:#fff;border:none;border-radius:16px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s}
+.join-btn:hover{background:var(--brand-dark)}
+.join-btn.joined{background:#f5f5f0;color:#666;border:.5px solid #e0e0e0}
+.joined-badge{display:flex;align-items:center;gap:4px;font-size:12px;color:#22C55E;font-weight:600}
+
+/* 活動詳情 */
+.act-detail-page{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.act-detail-scroll{flex:1;overflow-y:auto;padding-bottom:80px}
+.act-detail-banner{height:110px;display:flex;align-items:center;justify-content:center;font-size:52px;flex-shrink:0}
+.act-detail-title{font-size:18px;font-weight:700;color:#111;padding:14px 16px 4px;line-height:1.3}
+.act-detail-host{font-size:13px;color:#aaa;padding:0 16px 12px;display:flex;align-items:center;gap:6px}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 16px;margin-bottom:14px}
+.info-card{background:#f9f9f8;border:.5px solid #e8e8e8;border-radius:12px;padding:11px 12px;display:flex;align-items:center;gap:8px}
+.info-card i{font-size:18px;color:var(--brand);flex-shrink:0}
+.info-card-label{font-size:11px;color:#aaa}
+.info-card-val{font-size:13px;font-weight:600;color:#111;line-height:1.3}
+.act-desc-section{padding:0 16px;margin-bottom:14px}
+.section-label{font-size:11px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px}
+.act-desc-text{font-size:14px;color:#555;line-height:1.65}
+
+/* 群組聊天入口 */
+.group-chat-btn{margin:0 16px 14px;padding:13px;background:#f9f9f8;border:.5px solid #e8e8e8;border-radius:12px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:background .15s}
+.group-chat-btn:hover{background:#f0f0f0}
+.gc-icon{width:42px;height:42px;border-radius:10px;background:var(--brand);display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;flex-shrink:0}
+.gc-name{font-size:14px;font-weight:600;color:#111}
+.gc-sub{font-size:12px;color:#aaa;margin-top:2px}
+.unread-pill{background:var(--brand);color:#fff;font-size:10px;font-weight:600;min-width:18px;height:18px;border-radius:9px;display:flex;align-items:center;justify-content:center;padding:0 5px}
+
+/* 參加者 */
+.att-section{padding:0 16px;margin-bottom:14px}
+.att-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.att-person{display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer}
+.att-person-av{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;border:2px solid #f0f0f0;transition:transform .15s;position:relative}
+.att-person:hover .att-person-av{transform:scale(1.08)}
+.att-person-av.is-me{border-color:var(--brand)}
+.hi-ring{position:absolute;inset:-3px;border-radius:50%;border:2px solid var(--brand);animation:hr 1.6s infinite}
+@keyframes hr{0%,100%{opacity:.6;transform:scale(1)}50%{opacity:.2;transform:scale(1.08)}}
+.att-person-name{font-size:11px;color:#555;text-align:center;max-width:56px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.att-person-state{font-size:10px;text-align:center;color:#aaa}
+.att-person-state.hi-s{color:var(--brand)}.att-person-state.match-s{color:#22C55E}
+
+/* 底部固定按鈕 */
+.act-detail-footer{position:absolute;bottom:calc(56px + var(--sab));left:0;right:0;max-width:430px;margin:auto;padding:10px 16px;background:#fff;border-top:.5px solid #eee}
+.act-join-big{width:100%;padding:13px;background:var(--brand);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-family:inherit}
+.act-join-big:hover{background:var(--brand-dark)}
+.act-join-big.joined{background:#f5f5f0;color:#666;border:.5px solid #e0e0e0}
+
+/* 發起活動 Modal */
+.modal-bg{position:absolute;inset:0;background:rgba(0,0,0,.5);z-index:150;display:none;align-items:flex-end}
+.modal-bg.open{display:flex}
+.modal{background:#fff;border-radius:20px 20px 0 0;padding:0;padding-bottom:calc(20px + var(--sab));width:100%;max-height:85%;display:flex;flex-direction:column}
+.modal-handle{width:36px;height:4px;background:#e0e0e0;border-radius:2px;margin:10px auto 14px;flex-shrink:0}
+.modal-title{font-size:16px;font-weight:700;color:#111;padding:0 20px;margin-bottom:14px;flex-shrink:0}
+.modal-scroll{overflow-y:auto;flex:1;padding:0 0 4px}
+.form-group{padding:0 20px;margin-bottom:12px}
+.form-label{font-size:12px;color:#888;margin-bottom:5px;font-weight:600}
+.form-input{width:100%;padding:11px 13px;border:.5px solid #e0e0e0;border-radius:12px;background:#f9f9f8;color:#111;font-size:14px;font-family:inherit;outline:none}
+.form-input:focus{border-color:var(--brand);background:#fff}
+.cat-sel-row{display:flex;gap:6px;flex-wrap:wrap}
+.csr{padding:6px 12px;border-radius:16px;border:.5px solid #e0e0e0;font-size:12px;cursor:pointer;background:#f9f9f8;color:#666;font-family:inherit;transition:all .15s}
+.csr.active{background:var(--brand-light);border-color:var(--brand);color:var(--brand-dark)}
+.modal-footer{padding:12px 20px 0;display:flex;gap:8px;flex-shrink:0}
+.btn-cancel{flex:1;padding:11px;border:.5px solid #e0e0e0;border-radius:12px;background:#f5f5f0;color:#666;font-size:14px;cursor:pointer;font-family:inherit}
+.btn-submit{flex:2;padding:11px;background:var(--brand);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit}
+.btn-submit:hover{background:var(--brand-dark)}
+
+/* 聊天室 */
 .chat-header{display:flex;align-items:center;gap:10px;padding:12px 14px;background:#fff;border-bottom:.5px solid #eee;flex-shrink:0}
 .chat-back{width:36px;height:36px;border-radius:50%;background:#f5f5f0;border:.5px solid #e0e0e0;display:flex;align-items:center;justify-content:center;color:#666;cursor:pointer;font-size:20px}
 .chat-header-av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;flex-shrink:0}
+.chat-header-av.group{border-radius:10px;background:var(--brand);color:#fff;font-size:16px}
 .chat-header-info{flex:1}
 .chat-header-name{font-size:15px;font-weight:600;color:#111}
 .chat-header-status{font-size:11px;color:#aaa}
-.chat-messages{flex:1;overflow-y:auto;padding:14px 14px;display:flex;flex-direction:column;gap:8px;background:#f9f9f8}
+.chat-messages{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:8px;background:#f9f9f8}
 .sys-msg{text-align:center;font-size:11px;color:#aaa;padding:4px 0}
 .sys-msg span{background:#eee;padding:3px 12px;border-radius:10px}
 .brow{display:flex;align-items:flex-end;gap:6px}
 .brow.me{flex-direction:row-reverse}
 .b-av{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.bubble-sender{font-size:11px;color:#aaa;margin-bottom:2px;margin-left:34px}
 .bubble{max-width:70%;padding:9px 13px;border-radius:16px;font-size:14px;line-height:1.5;word-break:break-word}
 .bubble.them{background:#fff;color:#111;border-bottom-left-radius:4px;border:.5px solid #eee}
 .bubble.me{background:var(--brand);color:#fff;border-bottom-right-radius:4px}
 .b-time{font-size:10px;color:#bbb;margin-top:3px}
-.b-time.me-t{text-align:right}
-.b-time.th-t{margin-left:34px}
+.b-time.me-t{text-align:right}.b-time.th-t{margin-left:34px}
 .chat-input-bar{display:flex;align-items:center;gap:8px;padding:10px 12px;padding-bottom:calc(10px + var(--sab));background:#fff;border-top:.5px solid #eee;flex-shrink:0}
 .chat-inp{flex:1;padding:10px 14px;border-radius:22px;border:.5px solid #e0e0e0;background:#f9f9f8;font-size:14px;font-family:inherit;color:#111;outline:none}
 .chat-inp:focus{border-color:var(--brand);background:#fff}
@@ -213,7 +290,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
 .eq{font-size:20px;cursor:pointer;transition:transform .1s}
 .eq:hover{transform:scale(1.2)}
 
-/* ===== 個人頁 ===== */
+/* 個人頁 */
 .profile-page{flex:1;overflow-y:auto}
 .profile-cover{height:130px;background:linear-gradient(135deg,var(--brand),#F4A46A);flex-shrink:0}
 .profile-av-row{display:flex;align-items:flex-end;justify-content:space-between;padding:0 16px;margin-top:-34px;margin-bottom:10px}
@@ -226,12 +303,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
 .p-tag{padding:5px 12px;border-radius:14px;font-size:12px;background:#f5f5f0;border:.5px solid #e8e8e8;color:#555}
 .profile-sec{padding:0 16px;margin-bottom:14px}
 .profile-sec-title{font-size:11px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px}
-.info-card{background:#f9f9f8;border:.5px solid #e8e8e8;border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:10px;margin-bottom:8px}
-.info-card i{font-size:20px;color:var(--brand);flex-shrink:0}
-.info-card-text{font-size:13px;color:#444;line-height:1.5}
-.info-card-sub{font-size:11px;color:#aaa;margin-top:2px}
+.p-info-card{background:#f9f9f8;border:.5px solid #e8e8e8;border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.p-info-card i{font-size:20px;color:var(--brand);flex-shrink:0}
+.p-info-text{font-size:13px;color:#444;line-height:1.5}
+.p-info-sub{font-size:11px;color:#aaa;margin-top:2px}
 
-/* ===== 配對成功動畫 ===== */
+/* 配對動畫 */
 .match-overlay{position:absolute;inset:0;z-index:300;background:rgba(0,0,0,.75);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
 .match-overlay.show{opacity:1;pointer-events:all}
 .match-title{font-size:32px;font-weight:800;color:#fff;margin-bottom:4px;letter-spacing:-1px}
@@ -243,7 +320,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
 .match-btn-chat{padding:14px 44px;background:var(--brand);color:#fff;border:none;border-radius:26px;font-size:16px;font-weight:700;cursor:pointer;margin-bottom:12px;font-family:inherit}
 .match-btn-chat:hover{background:var(--brand-dark)}
 .match-btn-later{font-size:13px;color:rgba(255,255,255,.55);cursor:pointer}
-/* 煙火 */
 .confetti-wrap{position:absolute;inset:0;pointer-events:none;overflow:hidden}
 .confetti-dot{position:absolute;border-radius:50%;animation:cffall linear forwards}
 @keyframes cffall{0%{opacity:1}100%{transform:translateY(700px) rotate(720deg);opacity:0}}
@@ -260,7 +336,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
 <div id="recaptcha-container"></div>
 <div class="progress-bar" id="pb"><div class="progress-fill" id="pf" style="width:0%"></div></div>
 
-<!-- S0 歡迎 -->
+<!-- 歡迎 -->
 <div class="screen active" id="s0">
   <div class="welcome-body">
     <div class="logo">蜜<span>友</span></div>
@@ -277,13 +353,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
   </div>
 </div>
 
-<!-- S1 手機 -->
+<!-- 手機號碼 -->
 <div class="screen" id="s1">
   <div class="nav-row"><div class="btn-back" onclick="go(0)">‹</div><div class="step-indicator">步驟 1 / 5</div><div style="width:38px"></div></div>
   <div class="scr-scroll fade-in">
     <div class="step-chip">帳號驗證</div>
     <div class="s-title">輸入手機號碼</div>
-    <div class="s-sub">我們將傳送簡訊驗證碼，確保你是真人用戶</div>
+    <div class="s-sub">我們將傳送簡訊驗證碼</div>
     <div class="inp-group">
       <div class="inp-label">手機號碼</div>
       <div style="display:flex;gap:8px">
@@ -292,21 +368,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
         </div>
         <input class="inp" id="phoneInp" type="tel" placeholder="09XX-XXX-XXX" maxlength="10" oninput="chkPhone()" onkeydown="if(event.key==='Enter')sendOtp()" style="flex:1"/>
       </div>
-      <div class="inp-hint">手機號碼僅用於驗證，不會顯示給其他用戶</div>
+      <div class="inp-hint">手機號碼僅用於驗證</div>
     </div>
     <div id="countryPicker" style="display:none;background:#f9f9f8;border:.5px solid #e0e0e0;border-radius:12px;margin-bottom:14px;overflow:hidden">
       <div style="padding:10px 14px 6px;font-size:11px;font-weight:600;color:#aaa;text-transform:uppercase">選擇國碼</div>
       <div id="countryList" style="max-height:180px;overflow-y:auto"></div>
     </div>
-    <div class="status-box info" id="s1Info">
-      <span style="font-size:16px;flex-shrink:0">ℹ️</span>
-      <span>首次使用將自動建立帳號，已有帳號則直接登入</span>
-    </div>
+    <div class="status-box info" id="s1Info"><span style="font-size:16px;flex-shrink:0">ℹ️</span><span>首次使用將自動建立帳號，已有帳號則直接登入</span></div>
   </div>
   <div class="scr-footer"><button class="btn-main" id="sendBtn" onclick="sendOtp()" disabled><span id="sendBtnText">📨 發送驗證碼</span></button></div>
 </div>
 
-<!-- S2 OTP -->
+<!-- OTP -->
 <div class="screen" id="s2">
   <div class="nav-row"><div class="btn-back" onclick="goBackToPhone()">‹</div><div class="step-indicator">步驟 1 / 5</div><div style="width:38px"></div></div>
   <div class="scr-scroll fade-in">
@@ -323,22 +396,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
       <input class="otp-cell" id="o4" maxlength="1" type="tel" inputmode="numeric" oninput="oI(4)" onkeydown="oK(event,4)"/>
       <input class="otp-cell" id="o5" maxlength="1" type="tel" inputmode="numeric" oninput="oI(5)" onkeydown="oK(event,5)"/>
     </div>
-    <div class="otp-timer-row">
-      <span class="otp-timer" id="otpTimer">60 秒後可重新發送</span>
-      <span class="otp-resend" id="otpResend" onclick="resendOtp()">重新發送</span>
-    </div>
+    <div class="otp-timer-row"><span class="otp-timer" id="otpTimer">60 秒後可重新發送</span><span class="otp-resend" id="otpResend" onclick="resendOtp()">重新發送</span></div>
     <div id="s2Status"></div>
   </div>
   <div class="scr-footer"><button class="btn-main" id="verifyBtn" onclick="verifyOtp()" disabled><span id="verifyBtnText">✓ 確認驗證碼</span></button></div>
 </div>
 
-<!-- S3 名字年齡 -->
+<!-- 名字年齡 -->
 <div class="screen" id="s3">
   <div class="nav-row"><div class="btn-back" onclick="go(0)">‹</div><div class="step-indicator">步驟 2 / 5</div><div style="width:38px"></div></div>
   <div class="scr-scroll fade-in">
     <div class="step-chip">基本資料</div>
     <div class="s-title">你叫什麼名字？</div>
-    <div class="s-sub">這是其他人看到你的稱呼，可以使用暱稱</div>
+    <div class="s-sub">其他人看到你的稱呼，可以使用暱稱</div>
     <input class="name-big" id="nameInp" placeholder="輸入暱稱" maxlength="10" oninput="chkName()"/>
     <div style="font-size:11px;color:#bbb;text-align:right;margin-bottom:22px" id="nameLen">0 / 10</div>
     <div style="font-size:13px;font-weight:600;color:#444;margin-bottom:10px">你的年齡</div>
@@ -350,7 +420,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
   <div class="scr-footer"><button class="btn-main" id="nameBtn" onclick="go(4)" disabled>→ 下一步</button></div>
 </div>
 
-<!-- S4 性別 + 興趣 -->
+<!-- 性別 + 興趣 -->
 <div class="screen" id="s4">
   <div class="nav-row"><div class="btn-back" onclick="go(3)">‹</div><div class="step-indicator">步驟 3 / 5</div><div style="width:38px"></div></div>
   <div class="scr-scroll fade-in">
@@ -369,7 +439,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
   <div class="scr-footer"><button class="btn-main" id="gBtn" onclick="go(5)" disabled>→ 下一步</button></div>
 </div>
 
-<!-- S5 MBTI -->
+<!-- MBTI -->
 <div class="screen" id="s5">
   <div class="nav-row"><div class="btn-back" onclick="go(4)">‹</div><div class="step-indicator">步驟 4 / 5</div><div style="width:38px"></div></div>
   <div class="scr-scroll fade-in">
@@ -387,8 +457,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
   <div class="main-top">
     <div class="main-logo">蜜<span>友</span></div>
     <div class="main-top-icons">
-      <i class="ti ti-search" onclick="T('搜尋功能即將上線')"></i>
-      <i class="ti ti-bell" onclick="T('通知功能即將上線')"></i>
+      <i class="ti ti-search" onclick="T('搜尋即將上線')"></i>
+      <i class="ti ti-bell" onclick="T('通知即將上線')"></i>
     </div>
   </div>
 
@@ -413,13 +483,33 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
       </div>
     </div>
     <div id="listView" style="flex:1;display:flex;flex-direction:column;overflow:hidden">
-      <div class="user-list" id="userList">
-        <div class="empty-state"><i class="ti ti-map-pin-off"></i><p>正在搜尋附近的人...</p></div>
-      </div>
+      <div class="user-list" id="userList"><div class="empty-state"><i class="ti ti-map-pin-off"></i><p>正在搜尋附近的人...</p></div></div>
     </div>
     <div id="mapView" style="flex:1;display:none;position:relative">
       <div id="leafletMap"></div>
       <button class="map-loc-btn" onclick="centerMap()"><i class="ti ti-current-location"></i></button>
+    </div>
+  </div>
+
+  <!-- 活動頁 -->
+  <div class="nearby-page" id="actPage" style="display:none">
+    <div class="act-top">
+      <div class="act-top-title">附近的活動</div>
+      <button class="act-create-btn" onclick="openCreateModal()"><i class="ti ti-plus"></i>發起活動</button>
+    </div>
+    <div class="cat-bar" id="catBar"></div>
+    <div class="act-list" id="actList"></div>
+  </div>
+
+  <!-- 活動詳情 -->
+  <div class="nearby-page" id="actDetailPage" style="display:none">
+    <div class="act-detail-page">
+      <div class="chat-header">
+        <div class="chat-back" onclick="closeActDetail()">‹</div>
+        <div class="chat-header-info"><div class="chat-header-name" id="actDetailTitle">活動詳情</div><div class="chat-header-status" id="actDetailSub"></div></div>
+      </div>
+      <div class="act-detail-scroll" id="actDetailBody"></div>
+      <div class="act-detail-footer" id="actDetailFooter"></div>
     </div>
   </div>
 
@@ -430,24 +520,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
       <div class="match-header-sub" id="matchHeaderSub">尚未有配對</div>
     </div>
     <div style="flex:1;display:flex;flex-direction:column;overflow:hidden">
-      <!-- 待回應 -->
       <div id="pendingSection" style="display:none">
         <div class="match-section-label">⏳ 等待對方回應</div>
         <div class="pending-row" id="pendingRow"></div>
       </div>
-      <!-- 已配對 -->
-      <div id="matchedSection" style="flex:1;display:flex;flex-direction:column;overflow:hidden">
-        <div class="match-section-label" id="matchedLabel" style="display:none">💚 已配對</div>
-        <div class="matched-list" id="matchedList"></div>
-        <div class="empty-state" id="matchEmptyState">
-          <i class="ti ti-heart-off"></i>
-          <p>還沒有配對<br>去附近向喜歡的人打個招呼吧！</p>
-        </div>
-      </div>
+      <div class="match-section-label" id="matchedLabel" style="display:none">💚 已配對</div>
+      <div class="matched-list" id="matchedList"></div>
+      <div class="empty-state" id="matchEmptyState"><i class="ti ti-heart-off"></i><p>還沒有配對<br>去附近向喜歡的人打招呼吧！</p></div>
     </div>
   </div>
 
-  <!-- 聊天室 -->
+  <!-- 聊天室 (私訊 & 活動群組共用) -->
   <div class="nearby-page" id="chatPage" style="display:none">
     <div class="chat-header">
       <div class="chat-back" onclick="closeChat()">‹</div>
@@ -460,7 +543,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
     <div class="chat-messages" id="chatMessages"></div>
     <div class="eq-row" id="eqRow"></div>
     <div class="chat-input-bar">
-      <input class="chat-inp" id="chatInp" placeholder="傳送訊息..." maxlength="500" onkeydown="if(event.key==='Enter')sendMsg()"/>
+      <input class="chat-inp" id="chatInp" placeholder="傳送訊息..." maxlength="500" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMsg();}"/>
       <button class="chat-send" onclick="sendMsg()"><i class="ti ti-send"></i></button>
     </div>
   </div>
@@ -473,8 +556,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
   <!-- Tab Bar -->
   <div class="tab-bar">
     <div class="tab-item active" id="tab-nearby" onclick="switchTab('nearby')"><i class="ti ti-map-pin"></i><span>附近</span></div>
+    <div class="tab-item" id="tab-act" onclick="switchTab('act')"><i class="ti ti-calendar-event"></i><span>活動</span></div>
     <div class="tab-item" id="tab-match" onclick="switchTab('match')"><i class="ti ti-heart"></i><span>配對</span><div class="tab-badge" id="matchBadge" style="display:none">0</div></div>
-    <div class="tab-item" id="tab-msg" onclick="T('即將上線')"><i class="ti ti-message-circle"></i><span>訊息</span></div>
     <div class="tab-item" id="tab-profile" onclick="switchTab('profile')"><i class="ti ti-user-circle"></i><span>我的</span></div>
   </div>
 
@@ -491,84 +574,90 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
     <button class="match-btn-chat" onclick="openChatFromOverlay()">💬 開始聊天</button>
     <div class="match-btn-later" onclick="closeMatchOverlay()">稍後再說</div>
   </div>
+
+  <!-- 發起活動 Modal -->
+  <div class="modal-bg" id="createModal" onclick="closeCreateModal()">
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal-handle"></div>
+      <div class="modal-title">發起活動</div>
+      <div class="modal-scroll">
+        <div class="form-group"><div class="form-label">活動名稱</div><input class="form-input" id="nTitle" placeholder="例：週末咖啡廳聊天"/></div>
+        <div class="form-group"><div class="form-label">類別</div><div class="cat-sel-row" id="catSel"></div></div>
+        <div class="form-group"><div class="form-label">地點</div><input class="form-input" id="nLoc" placeholder="例：台北市大安區某咖啡廳"/></div>
+        <div class="form-group"><div class="form-label">時間</div><input class="form-input" id="nTime" placeholder="例：週六下午 2:00"/></div>
+        <div class="form-group"><div class="form-label">人數上限</div><input class="form-input" id="nMax" type="number" value="8" min="2" max="50"/></div>
+        <div class="form-group"><div class="form-label">活動說明</div><textarea class="form-input" id="nDesc" rows="3" style="resize:none" placeholder="簡單介紹這個活動…"></textarea></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" onclick="closeCreateModal()">取消</button>
+        <button class="btn-submit" onclick="submitCreate()">發起活動</button>
+      </div>
+    </div>
+  </div>
 </div>
 </div>
 <div class="toast" id="toast"></div>
 
 <script>
-/* ===== Firebase ===== */
+/* Firebase */
 const firebaseConfig={apiKey:"AIzaSyD7MQGY4ywB4l4pWtCYqd2v-k9pO-KwNLM",authDomain:"miyu-otp.firebaseapp.com",projectId:"miyu-otp",storageBucket:"miyu-otp.firebasestorage.app",messagingSenderId:"830776803719",appId:"1:830776803719:web:25c9daf006fe3ffe5e9322"};
 firebase.initializeApp(firebaseConfig);
 const auth=firebase.auth();
 const db=firebase.firestore();
 auth.languageCode='zh-TW';
 
-/* ===== 常數 ===== */
+/* 常數 */
 const COUNTRIES=[{flag:'🇹🇼',name:'台灣',code:'+886',max:10},{flag:'🇨🇳',name:'中國',code:'+86',max:11},{flag:'🇭🇰',name:'香港',code:'+852',max:8},{flag:'🇸🇬',name:'新加坡',code:'+65',max:8},{flag:'🇯🇵',name:'日本',code:'+81',max:11},{flag:'🇺🇸',name:'美國',code:'+1',max:10}];
 const ALL_TAGS=[{l:'攝影',i:'📷'},{l:'咖啡',i:'☕'},{l:'旅遊',i:'✈️'},{l:'爬山',i:'⛰️'},{l:'健身',i:'💪'},{l:'音樂',i:'🎵'},{l:'閱讀',i:'📚'},{l:'插畫',i:'🎨'},{l:'桌遊',i:'🎲'},{l:'電影',i:'🎬'},{l:'料理',i:'🍳'},{l:'瑜珈',i:'🧘'},{l:'甜點',i:'🍰'},{l:'韓劇',i:'📺'},{l:'寵物',i:'🐾'},{l:'電玩',i:'🎮'},{l:'跑步',i:'🏃'},{l:'烘焙',i:'🍞'},{l:'植物',i:'🌿'},{l:'游泳',i:'🏊'}];
 const ALL_MBTI=['INTJ','INTP','ENTJ','ENTP','INFJ','INFP','ENFJ','ENFP','ISTJ','ISFJ','ESTJ','ESFJ','ISTP','ISFP','ESTP','ESFP'];
 const COLORS=['background:#E1F5EE;color:#0F6E56','background:#FAECE7;color:#993C1D','background:#EEEDFE;color:#534AB7','background:#FAEEDA;color:#854F0B','background:#E6F1FB;color:#185FA5'];
+const CATS=[{id:'all',label:'全部',icon:'ti-layout-grid'},{id:'food',label:'美食',icon:'ti-tools-kitchen-2',emoji:'🍜',bg:'background:#FFF0E6'},{id:'sport',label:'運動',icon:'ti-run',emoji:'🏃',bg:'background:#E8F5EE'},{id:'game',label:'桌遊',icon:'ti-chess',emoji:'🎲',bg:'background:#EEF0FE'},{id:'music',label:'音樂',icon:'ti-music',emoji:'🎸',bg:'background:#FEF9E0'},{id:'cafe',label:'咖啡',icon:'ti-coffee',emoji:'☕',bg:'background:#F5F0E8'},{id:'photo',label:'攝影',icon:'ti-camera',emoji:'📷',bg:'background:#FCE8E8'},{id:'hike',label:'爬山',icon:'ti-mountain',emoji:'⛰️',bg:'background:#EAF3DE'}];
 const PROG={0:0,1:14,2:14,3:30,4:55,5:80};
 const EMOJIS=['😊','😄','🌸','☕','🎵','📷'];
 
-/* ===== 狀態 ===== */
+/* 狀態 */
 let selCountry=COUNTRIES[0],confirmResult=null,otpInt=null,otpSec=60,toastT=null;
 let selGender=null,selTags=new Set(),selMbti=null;
 let currentUser=null,myProfile=null;
 let myLat=null,myLng=null,locTimer=null;
 let allUsers=[],distFilter=200,currentView='list';
 let leafletMap=null,myMarker=null,userMarkers=[];
-// 配對相關
-let myHiSent=new Set();   // 我打招呼給誰
-let myMatches=new Set();  // 已配對的 uid
-let matchedProfiles={};   // uid -> profile
-let chatTarget=null;      // 目前聊天對象
-let chatUnsubscribe=null; // Firestore 即時監聽取消函式
-let prevTab='nearby';
-let newMatchUid=null;     // 剛配對成功的 uid
+let myHiSent=new Set(),myMatches=new Set(),matchedProfiles={};
+let chatTarget=null,chatMode='private',chatUnsubscribe=null;
+let prevTab='nearby',newMatchUid=null;
+/* 活動 */
+let activities=[],activeCat='all',createCat='cafe',currentActId=null;
 
-/* ===== 距離計算 ===== */
-function calcDist(lat1,lng1,lat2,lng2){
-  const R=6371,dLat=(lat2-lat1)*Math.PI/180,dLng=(lng2-lng1)*Math.PI/180;
-  const a=Math.sin(dLat/2)**2+Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLng/2)**2;
-  return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
-}
-function fmtDist(km){
-  if(km<1) return Math.round(km*1000)+'m 內';
-  if(km<10) return km.toFixed(1)+' 公里內';
-  return Math.round(km)+' 公里內';
-}
+/* 距離 */
+function calcDist(a,b,c,d){const R=6371,dL=(c-a)*Math.PI/180,dG=(d-b)*Math.PI/180,x=Math.sin(dL/2)**2+Math.cos(a*Math.PI/180)*Math.cos(c*Math.PI/180)*Math.sin(dG/2)**2;return R*2*Math.atan2(Math.sqrt(x),Math.sqrt(1-x));}
+function fmtDist(k){if(k<1)return Math.round(k*1000)+'m 內';if(k<10)return k.toFixed(1)+' 公里內';return Math.round(k)+' 公里內';}
+function ft(d){if(!d)return'';const t=d.toDate?d.toDate():new Date(d);return t.getHours().toString().padStart(2,'0')+':'+t.getMinutes().toString().padStart(2,'0');}
+function esc(t){return(t||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
-/* ===== 頁面切換 ===== */
+/* 頁面切換 */
 function go(n){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('s'+n).classList.add('active');
   const show=n>0&&n<6;
   document.getElementById('pb').classList.toggle('show',show);
-  if(show) document.getElementById('pf').style.width=PROG[n]+'%';
-  if(n===4){initTags();checkGBtn();}
-  if(n===5) initMbti();
+  if(show)document.getElementById('pf').style.width=PROG[n]+'%';
+  if(n===4){initTags();checkGBtn();}if(n===5)initMbti();
   const sc=document.getElementById('s'+n)?.querySelector('.scr-scroll');
-  if(sc) setTimeout(()=>sc.scrollTop=0,50);
+  if(sc)setTimeout(()=>sc.scrollTop=0,50);
 }
 
-/* ===== 國碼 ===== */
-function renderCountryList(){
-  document.getElementById('countryList').innerHTML=COUNTRIES.map((c,i)=>`
-    <div onclick="pickCountry(${i})" style="display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;font-size:14px;${i>0?'border-top:.5px solid #f0f0f0':''}" onmouseover="this.style.background='#f0f0f0'" onmouseout="this.style.background=''">
-      <span style="font-size:20px">${c.flag}</span><span style="flex:1">${c.name}</span><span style="color:#aaa;font-size:13px">${c.code}</span>
-    </div>`).join('');
-}
+/* 國碼 */
+function renderCountryList(){document.getElementById('countryList').innerHTML=COUNTRIES.map((c,i)=>`<div onclick="pickCountry(${i})" style="display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;font-size:14px;${i>0?'border-top:.5px solid #f0f0f0':''}" onmouseover="this.style.background='#f0f0f0'" onmouseout="this.style.background=''"><span style="font-size:20px">${c.flag}</span><span style="flex:1">${c.name}</span><span style="color:#aaa;font-size:13px">${c.code}</span></div>`).join('');}
 function toggleCountry(){const p=document.getElementById('countryPicker');p.style.display=p.style.display==='none'?'block':'none';if(p.style.display==='block')renderCountryList();}
 function pickCountry(i){selCountry=COUNTRIES[i];document.getElementById('countryFlag').textContent=selCountry.flag;document.getElementById('countryCode').textContent=selCountry.code;document.getElementById('countryPicker').style.display='none';document.getElementById('phoneInp').maxLength=selCountry.max;chkPhone();}
 
-/* ===== OTP ===== */
+/* OTP */
 function getFullPhone(){let n=document.getElementById('phoneInp').value.trim().replace(/-/g,'');if(selCountry.code==='+886'&&n.startsWith('0'))n=n.slice(1);return selCountry.code+n;}
 function chkPhone(){document.getElementById('sendBtn').disabled=document.getElementById('phoneInp').value.trim().replace(/-/g,'').length<8;}
-function initRecaptcha(){if(window.recaptchaVerifier)return;window.recaptchaVerifier=new firebase.auth.RecaptchaVerifier('recaptcha-container',{size:'invisible',callback:()=>{},'expired-callback':()=>{window.recaptchaVerifier?.clear();window.recaptchaVerifier=null;initRecaptcha();}});window.recaptchaVerifier.render();}
+function initRcap(){if(window.recaptchaVerifier)return;window.recaptchaVerifier=new firebase.auth.RecaptchaVerifier('recaptcha-container',{size:'invisible',callback:()=>{},'expired-callback':()=>{window.recaptchaVerifier?.clear();window.recaptchaVerifier=null;initRcap();}});window.recaptchaVerifier.render();}
 async function sendOtp(){
   setBtnL('sendBtn','sendBtnText',true,'傳送中...');
-  try{initRecaptcha();confirmResult=await auth.signInWithPhoneNumber(getFullPhone(),window.recaptchaVerifier);document.getElementById('phoneDisp').innerHTML=`${selCountry.flag} ${selCountry.code} ${document.getElementById('phoneInp').value.trim()}`;go(2);startTimer();setTimeout(()=>document.getElementById('o0').focus(),400);}
+  try{initRcap();confirmResult=await auth.signInWithPhoneNumber(getFullPhone(),window.recaptchaVerifier);document.getElementById('phoneDisp').innerHTML=`${selCountry.flag} ${selCountry.code} ${document.getElementById('phoneInp').value.trim()}`;go(2);startTimer();setTimeout(()=>document.getElementById('o0').focus(),400);}
   catch(e){setStEl('s1Info','error',errMsg(e.code,'send'));window.recaptchaVerifier?.clear();window.recaptchaVerifier=null;}
   finally{setBtnL('sendBtn','sendBtnText',false,'📨 發送驗證碼');}
 }
@@ -581,19 +670,12 @@ async function verifyOtp(){
   let code='';for(let i=0;i<6;i++)code+=document.getElementById('o'+i).value;
   if(code.length<6||!confirmResult)return;
   setBtnL('verifyBtn','verifyBtnText',true,'驗證中...');
-  try{
-    const result=await confirmResult.confirm(code);
-    currentUser=result.user;clearInterval(otpInt);
-    if(result.additionalUserInfo?.isNewUser)go(3);
-    else{await loadProfile(currentUser.uid);enterApp();}
-  }catch(e){
-    setStEl('s2Status','error',errMsg(e.code,'verify'));
-    for(let i=0;i<6;i++)document.getElementById('o'+i).classList.add('error');
-    setTimeout(()=>{for(let i=0;i<6;i++){const c=document.getElementById('o'+i);c.value='';c.classList.remove('filled','error');}document.getElementById('verifyBtn').disabled=true;document.getElementById('o0').focus();},800);
-  }finally{setBtnL('verifyBtn','verifyBtnText',false,'✓ 確認驗證碼');}
+  try{const r=await confirmResult.confirm(code);currentUser=r.user;clearInterval(otpInt);if(r.additionalUserInfo?.isNewUser)go(3);else{await loadProfile(currentUser.uid);enterApp();}}
+  catch(e){setStEl('s2Status','error',errMsg(e.code,'verify'));for(let i=0;i<6;i++)document.getElementById('o'+i).classList.add('error');setTimeout(()=>{for(let i=0;i<6;i++){const c=document.getElementById('o'+i);c.value='';c.classList.remove('filled','error');}document.getElementById('verifyBtn').disabled=true;document.getElementById('o0').focus();},800);}
+  finally{setBtnL('verifyBtn','verifyBtnText',false,'✓ 確認驗證碼');}
 }
 
-/* ===== 資料填寫 ===== */
+/* 資料填寫 */
 function chkName(){const v=document.getElementById('nameInp').value.trim();document.getElementById('nameLen').textContent=v.length+' / 10';document.getElementById('nameBtn').disabled=v.length<2;}
 function selG(g){selGender=g;['male','female','other'].forEach(x=>document.getElementById('g'+x[0]).classList.toggle('sel',x===g));checkGBtn();}
 function checkGBtn(){document.getElementById('gBtn').disabled=!(selGender&&selTags.size>=3);}
@@ -603,292 +685,355 @@ function updTagCnt(){document.getElementById('tagCnt').textContent=`（已選 ${
 function initMbti(){document.getElementById('mbtiGrid').innerHTML=ALL_MBTI.map(m=>`<div class="m-opt ${selMbti===m?'sel':''}" onclick="pickM('${m}')">${m}</div>`).join('');}
 function pickM(m){selMbti=m;document.querySelectorAll('.m-opt').forEach(el=>el.classList.toggle('sel',el.textContent===m));document.getElementById('mbtiBtn').disabled=false;}
 
-/* ===== 儲存資料 ===== */
+/* 儲存資料 */
 async function saveAndEnter(){
   if(!currentUser)return;
-  const profile={uid:currentUser.uid,phone:currentUser.phoneNumber,name:document.getElementById('nameInp').value.trim()||'蜜友用戶',age:parseInt(document.getElementById('ageSlider').value)||22,city:document.getElementById('cityInp').value.trim()||'',gender:selGender,tags:[...selTags],mbti:selMbti||'',emoji:EMOJIS[Math.floor(Math.random()*EMOJIS.length)],colorIdx:Math.floor(Math.random()*COLORS.length),createdAt:firebase.firestore.FieldValue.serverTimestamp(),updatedAt:firebase.firestore.FieldValue.serverTimestamp(),online:true,location:null};
-  try{await db.collection('users').doc(currentUser.uid).set(profile);myProfile=profile;enterApp();}
-  catch(e){T('儲存失敗，請重試');}
+  const p={uid:currentUser.uid,phone:currentUser.phoneNumber,name:document.getElementById('nameInp').value.trim()||'蜜友用戶',age:parseInt(document.getElementById('ageSlider').value)||22,city:document.getElementById('cityInp').value.trim()||'',gender:selGender,tags:[...selTags],mbti:selMbti||'',emoji:EMOJIS[Math.floor(Math.random()*EMOJIS.length)],colorIdx:Math.floor(Math.random()*COLORS.length),createdAt:firebase.firestore.FieldValue.serverTimestamp(),updatedAt:firebase.firestore.FieldValue.serverTimestamp(),online:true,location:null};
+  try{await db.collection('users').doc(currentUser.uid).set(p);myProfile=p;enterApp();}catch(e){T('儲存失敗，請重試');}
 }
-async function loadProfile(uid){
-  try{const doc=await db.collection('users').doc(uid).get();if(doc.exists)myProfile=doc.data();}catch(e){console.error(e);}
-}
+async function loadProfile(uid){try{const d=await db.collection('users').doc(uid).get();if(d.exists)myProfile=d.data();}catch(e){}}
 
-/* ===== 進入主 App ===== */
+/* 進入主 App */
 function enterApp(){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('sApp').classList.add('active');
   document.getElementById('pb').classList.remove('show');
-  startLocTracking();
-  loadNearbyUsers();
-  listenMatches();     // 監聽配對狀態
-  loadMyHiSent();      // 載入我已打招呼的紀錄
+  startLocTracking();loadNearbyUsers();listenMatches();loadMyHiSent();
+  loadActivities();renderCatBar();
 }
 
-/* ===== 地理位置 ===== */
+/* 位置 */
 function startLocTracking(){
   if(!navigator.geolocation){setLocSt('err','瀏覽器不支援地理位置');return;}
-  setLocSt('loading','正在取得你的位置...');
+  setLocSt('loading','正在取得位置...');
   navigator.geolocation.getCurrentPosition(onLocOk,onLocErr,{enableHighAccuracy:true,timeout:10000,maximumAge:60000});
   locTimer=setInterval(()=>navigator.geolocation.getCurrentPosition(onLocOk,onLocErr,{enableHighAccuracy:false,timeout:8000,maximumAge:300000}),10*60*1000);
 }
 async function onLocOk(pos){
   myLat=pos.coords.latitude;myLng=pos.coords.longitude;
   setLocSt('ok',`位置已更新・精確度 ${Math.round(pos.coords.accuracy)}m`);
-  if(currentUser){
-    try{await db.collection('users').doc(currentUser.uid).update({location:{lat:myLat,lng:myLng},locationUpdatedAt:firebase.firestore.FieldValue.serverTimestamp(),online:true});}catch(e){}
-  }
+  if(currentUser){try{await db.collection('users').doc(currentUser.uid).update({location:{lat:myLat,lng:myLng},locationUpdatedAt:firebase.firestore.FieldValue.serverTimestamp(),online:true});}catch(e){}}
   renderUserList();updateMyMarker();
 }
 function onLocErr(e){const m={1:'請允許位置權限',2:'無法取得位置，請開啟 GPS',3:'位置取得逾時'};setLocSt('err',m[e.code]||'位置取得失敗');}
 function setLocSt(t,msg){document.getElementById('locDot').className='loc-dot '+t;const el=document.getElementById('locText');el.textContent=msg;el.style.color=t==='ok'?'#22C55E':t==='err'?'#EF4444':'#666';}
 function refreshLoc(){setLocSt('loading','重新取得位置...');navigator.geolocation.getCurrentPosition(onLocOk,onLocErr,{enableHighAccuracy:true,timeout:10000,maximumAge:0});}
 
-/* ===== 載入附近用戶 ===== */
+/* 附近用戶 */
 async function loadNearbyUsers(){
-  try{
-    const snap=await db.collection('users').where('location','!=',null).limit(100).get();
-    allUsers=[];
-    snap.forEach(doc=>{const d=doc.data();if(d.uid!==currentUser?.uid&&d.location)allUsers.push(d);});
-    if(allUsers.length===0)allUsers=demoUsers();
-  }catch(e){allUsers=demoUsers();}
+  try{const s=await db.collection('users').where('location','!=',null).limit(100).get();allUsers=[];s.forEach(d=>{const v=d.data();if(v.uid!==currentUser?.uid&&v.location)allUsers.push(v);});if(!allUsers.length)allUsers=demoUsers();}
+  catch(e){allUsers=demoUsers();}
   renderUserList();renderMapMarkers();
 }
-function demoUsers(){
-  const b={lat:myLat||25.0330,lng:myLng||121.5654};
-  return[
-    {uid:'demo1',name:'小妍',age:24,emoji:'😊',colorIdx:0,online:true,tags:['攝影','咖啡','旅遊'],location:{lat:b.lat+0.008,lng:b.lng+0.005}},
-    {uid:'demo2',name:'阿楷',age:27,emoji:'😄',colorIdx:1,online:true,tags:['爬山','健身','音樂'],location:{lat:b.lat-0.012,lng:b.lng+0.015}},
-    {uid:'demo3',name:'芷雯',age:23,emoji:'🌸',colorIdx:2,online:false,tags:['貓咪','閱讀','插畫'],location:{lat:b.lat+0.02,lng:b.lng-0.01}},
-    {uid:'demo4',name:'建翔',age:26,emoji:'☕',colorIdx:3,online:false,tags:['桌遊','電影','料理'],location:{lat:b.lat-0.005,lng:b.lng+0.022}},
-  ];
-}
+function demoUsers(){const b={lat:myLat||25.0330,lng:myLng||121.5654};return[{uid:'d1',name:'小妍',age:24,emoji:'😊',colorIdx:0,online:true,tags:['攝影','咖啡','旅遊'],location:{lat:b.lat+0.008,lng:b.lng+0.005}},{uid:'d2',name:'阿楷',age:27,emoji:'😄',colorIdx:1,online:true,tags:['爬山','健身','音樂'],location:{lat:b.lat-0.012,lng:b.lng+0.015}},{uid:'d3',name:'芷雯',age:23,emoji:'🌸',colorIdx:2,online:false,tags:['貓咪','閱讀','插畫'],location:{lat:b.lat+0.02,lng:b.lng-0.01}},{uid:'d4',name:'建翔',age:26,emoji:'☕',colorIdx:3,online:false,tags:['桌遊','電影','料理'],location:{lat:b.lat-0.005,lng:b.lng+0.022}}];}
 
-/* ===== 渲染用戶列表 ===== */
 function renderUserList(){
   const list=document.getElementById('userList');
-  if(!myLat||!myLng){list.innerHTML=`<div class="empty-state"><i class="ti ti-map-pin-off"></i><p>需要位置權限<br>才能顯示附近的人</p></div>`;return;}
+  if(!myLat||!myLng){list.innerHTML='<div class="empty-state"><i class="ti ti-map-pin-off"></i><p>需要位置權限<br>才能顯示附近的人</p></div>';return;}
   let users=allUsers.map(u=>({...u,dist:calcDist(myLat,myLng,u.location.lat,u.location.lng)})).filter(u=>u.dist<=distFilter).sort((a,b)=>a.dist-b.dist);
-  if(!users.length){list.innerHTML=`<div class="empty-state"><i class="ti ti-users-minus"></i><p>${distFilter}公里內暫時沒有人<br>試著擴大範圍</p></div>`;return;}
+  if(!users.length){list.innerHTML=`<div class="empty-state"><i class="ti ti-users-minus"></i><p>${distFilter}公里內暫時沒有人</p></div>`;return;}
   list.innerHTML=users.map(u=>{
     const c=COLORS[u.colorIdx%COLORS.length];
-    const isMatched=myMatches.has(u.uid);
-    const sentHi=myHiSent.has(u.uid);
-    let circleClass='hi-circle',lbl='打招呼',icon='ti-hand-stop';
-    if(isMatched){circleClass='hi-circle matched';lbl='已配對';icon='ti-heart';}
-    else if(sentHi){circleClass='hi-circle sent';lbl='已打招呼';icon='ti-check';}
-    return`<div class="user-card" onclick="showUserDetail('${u.uid}')">
-      <div class="u-av-wrap">
-        <div class="u-av" style="${c}">${u.emoji}</div>
-        ${u.online?'<div class="u-online"></div>':''}
-      </div>
+    const isM=myMatches.has(u.uid),sentH=myHiSent.has(u.uid);
+    let cc='hi-circle',lb='打招呼',ic='ti-hand-stop';
+    if(isM){cc='hi-circle matched';lb='已配對';ic='ti-heart';}
+    else if(sentH){cc='hi-circle sent';lb='已打招呼';ic='ti-check';}
+    return`<div class="user-card">
+      <div class="u-av-wrap"><div class="u-av" style="${c}">${u.emoji}</div>${u.online?'<div class="u-online"></div>':''}</div>
       <div class="u-info">
-        <div class="u-name">${u.name}<span class="u-age">${u.age}歲</span>${isMatched?'<span class="match-badge">💚 已配對</span>':''}</div>
+        <div class="u-name">${u.name}<span class="u-age">${u.age}歲</span>${isM?'<span class="match-badge">💚 已配對</span>':''}</div>
         <div class="u-dist"><i class="ti ti-map-pin"></i>${fmtDist(u.dist)} · ${u.online?'<span style="color:#22C55E">線上</span>':'剛剛上線'}</div>
         <div class="u-tags">${(u.tags||[]).slice(0,3).map(t=>`<span class="u-tag">${t}</span>`).join('')}</div>
       </div>
-      <div class="hi-btn" onclick="event.stopPropagation();sendHi('${u.uid}','${u.name}','${u.emoji}','${u.colorIdx}')">
-        <div class="${circleClass}"><i class="ti ${icon}"></i></div>
-        <div class="hi-lbl">${lbl}</div>
+      <div class="hi-btn" onclick="sendHi('${u.uid}','${u.name}','${u.emoji}','${u.colorIdx}')">
+        <div class="${cc}"><i class="ti ${ic}"></i></div>
+        <div class="hi-lbl">${lb}</div>
       </div>
     </div>`;
   }).join('');
 }
 
-/* ===== 打招呼 → 配對邏輯 ===== */
-async function sendHi(targetUid,targetName,targetEmoji,targetColorIdx){
+/* 打招呼 → 配對 */
+async function sendHi(tid,tname,temoji,tci){
   if(!currentUser){T('請先登入');return;}
-  if(myMatches.has(targetUid)){openChat(targetUid);return;}
-  if(myHiSent.has(targetUid)){T(`已向 ${targetName} 打過招呼了`);return;}
-
-  myHiSent.add(targetUid);
-  renderUserList();
-
-  const myUid=currentUser.uid;
-  const helloId=`${myUid}_${targetUid}`;
-  const reverseId=`${targetUid}_${myUid}`;
-
+  if(myMatches.has(tid)){openPrivateChat(tid);return;}
+  if(myHiSent.has(tid)){T(`已向 ${tname} 打過招呼了`);return;}
+  myHiSent.add(tid);renderUserList();
+  const myUid=currentUser.uid,hid=`${myUid}_${tid}`,rid=`${tid}_${myUid}`;
   try{
-    // 1. 寫入我的打招呼紀錄
-    await db.collection('hellos').doc(helloId).set({
-      from:myUid,to:targetUid,
-      fromName:myProfile?.name||'蜜友用戶',
-      toName:targetName,
-      createdAt:firebase.firestore.FieldValue.serverTimestamp()
-    });
-
-    // 2. 檢查對方有沒有打招呼給我
-    const reverseDoc=await db.collection('hellos').doc(reverseId).get();
-
-    if(reverseDoc.exists){
-      // 🎉 雙向配對！寫入 matches 集合
-      const matchId=[myUid,targetUid].sort().join('_');
-      await db.collection('matches').doc(matchId).set({
-        users:[myUid,targetUid],
-        userNames:{[myUid]:myProfile?.name||'我',[targetUid]:targetName},
-        userEmojis:{[myUid]:myProfile?.emoji||'😊',[targetUid]:targetEmoji},
-        userColorIdx:{[myUid]:myProfile?.colorIdx||0,[targetUid]:parseInt(targetColorIdx)},
-        createdAt:firebase.firestore.FieldValue.serverTimestamp(),
-        lastMsg:'',lastMsgAt:null
-      });
-
-      // 更新本地狀態
-      myMatches.add(targetUid);
-      matchedProfiles[targetUid]={uid:targetUid,name:targetName,emoji:targetEmoji,colorIdx:parseInt(targetColorIdx),online:true};
-
-      // 觸發動畫
-      newMatchUid=targetUid;
-      showMatchOverlay(targetName,targetEmoji,parseInt(targetColorIdx));
-      updateMatchBadge();
-      renderUserList();
-
-    } else {
-      T(`已向 ${targetName} 打招呼 👋`);
-    }
-  }catch(e){
-    console.error('sendHi error',e);
-    myHiSent.delete(targetUid);
-    T('發送失敗，請重試');
-    renderUserList();
-  }
+    await db.collection('hellos').doc(hid).set({from:myUid,to:tid,fromName:myProfile?.name||'蜜友用戶',toName:tname,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+    const rdoc=await db.collection('hellos').doc(rid).get();
+    if(rdoc.exists){
+      const matchId=[myUid,tid].sort().join('_');
+      await db.collection('matches').doc(matchId).set({users:[myUid,tid],userNames:{[myUid]:myProfile?.name||'我',[tid]:tname},userEmojis:{[myUid]:myProfile?.emoji||'😊',[tid]:temoji},userColorIdx:{[myUid]:myProfile?.colorIdx||0,[tid]:parseInt(tci)},createdAt:firebase.firestore.FieldValue.serverTimestamp(),lastMsg:'',lastMsgAt:null});
+      myMatches.add(tid);matchedProfiles[tid]={uid:tid,name:tname,emoji:temoji,colorIdx:parseInt(tci),online:true};
+      newMatchUid=tid;showMatchOverlay(tname,temoji,parseInt(tci));updateMatchBadge();renderUserList();
+    } else T(`已向 ${tname} 打招呼 👋`);
+  }catch(e){myHiSent.delete(tid);T('發送失敗，請重試');renderUserList();}
 }
-
-/* ===== 載入我打過的招呼 ===== */
-async function loadMyHiSent(){
-  if(!currentUser)return;
-  try{
-    const snap=await db.collection('hellos').where('from','==',currentUser.uid).get();
-    snap.forEach(doc=>myHiSent.add(doc.data().to));
-  }catch(e){}
-}
-
-/* ===== 監聽配對（即時）===== */
+async function loadMyHiSent(){if(!currentUser)return;try{const s=await db.collection('hellos').where('from','==',currentUser.uid).get();s.forEach(d=>myHiSent.add(d.data().to));}catch(e){}}
 function listenMatches(){
   if(!currentUser)return;
-  db.collection('matches').where('users','array-contains',currentUser.uid)
-    .onSnapshot(snap=>{
-      snap.docChanges().forEach(change=>{
-        const d=change.doc.data();
-        const otherUid=d.users.find(u=>u!==currentUser.uid);
-        if(change.type==='added'){
-          myMatches.add(otherUid);
-          matchedProfiles[otherUid]={
-            uid:otherUid,
-            name:d.userNames[otherUid],
-            emoji:d.userEmojis[otherUid],
-            colorIdx:d.userColorIdx[otherUid],
-            matchId:change.doc.id,
-            lastMsg:d.lastMsg||'',
-            lastMsgAt:d.lastMsgAt
-          };
-        }
-      });
-      updateMatchBadge();
-      renderUserList();
-      renderMatchPage();
+  db.collection('matches').where('users','array-contains',currentUser.uid).onSnapshot(snap=>{
+    snap.docChanges().forEach(ch=>{
+      if(ch.type==='added'){const d=ch.doc.data();const ou=d.users.find(u=>u!==currentUser.uid);myMatches.add(ou);matchedProfiles[ou]={uid:ou,name:d.userNames[ou],emoji:d.userEmojis[ou],colorIdx:d.userColorIdx[ou],matchId:ch.doc.id,lastMsg:d.lastMsg||'',lastMsgAt:d.lastMsgAt};}
     });
+    updateMatchBadge();renderUserList();renderMatchPage();
+  });
 }
 
-/* ===== 配對成功動畫 ===== */
-function showMatchOverlay(name,emoji,colorIdx){
+/* 配對動畫 */
+function showMatchOverlay(n,e,ci){
   const me=myProfile;
-  const mAvMe=document.getElementById('mAvMe');
-  const mAvThem=document.getElementById('mAvThem');
-  mAvMe.style.cssText=COLORS[me?.colorIdx%COLORS.length||0];
-  mAvMe.textContent=me?.emoji||'😊';
-  mAvThem.style.cssText=COLORS[colorIdx%COLORS.length];
-  mAvThem.textContent=emoji;
-  document.getElementById('matchOverlaySub').textContent=`你和 ${name} 互相打了招呼！`;
-  launchConfetti();
-  document.getElementById('matchOverlay').classList.add('show');
+  const ma=document.getElementById('mAvMe');ma.style.cssText=COLORS[me?.colorIdx%COLORS.length||0];ma.textContent=me?.emoji||'😊';
+  const ta=document.getElementById('mAvThem');ta.style.cssText=COLORS[ci%COLORS.length];ta.textContent=e;
+  document.getElementById('matchOverlaySub').textContent=`你和 ${n} 互相打了招呼！`;
+  launchConfetti();document.getElementById('matchOverlay').classList.add('show');
 }
 function closeMatchOverlay(){document.getElementById('matchOverlay').classList.remove('show');newMatchUid=null;}
-function openChatFromOverlay(){closeMatchOverlay();if(newMatchUid)openChat(newMatchUid);}
+function openChatFromOverlay(){closeMatchOverlay();if(newMatchUid)openPrivateChat(newMatchUid);}
+function launchConfetti(){const c=document.getElementById('confettiWrap');c.innerHTML='';const cols=['#E8623A','#F4C0A4','#fff','#534AB7','#22C55E','#F4C029','#FF6B9D'];for(let i=0;i<50;i++){const d=document.createElement('div');d.className='confetti-dot';d.style.cssText=`left:${Math.random()*100}%;top:${-10-Math.random()*20}px;background:${cols[~~(Math.random()*cols.length)]};width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;animation-duration:${1+Math.random()*1.5}s;animation-delay:${Math.random()*0.5}s;`;c.appendChild(d);}}
 
-function launchConfetti(){
-  const c=document.getElementById('confettiWrap');c.innerHTML='';
-  const cols=['#E8623A','#F4C0A4','#fff','#534AB7','#22C55E','#F4C029','#FF6B9D'];
-  for(let i=0;i<50;i++){
-    const d=document.createElement('div');d.className='confetti-dot';
-    d.style.cssText=`left:${Math.random()*100}%;top:${-10-Math.random()*20}px;background:${cols[~~(Math.random()*cols.length)]};width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;animation-duration:${1+Math.random()*1.5}s;animation-delay:${Math.random()*0.5}s;`;
-    c.appendChild(d);
-  }
-}
-
-/* ===== 配對頁渲染 ===== */
+/* 配對頁 */
 function renderMatchPage(){
   const matched=Object.values(matchedProfiles);
-  // 待回應（我打過招呼但還沒配對）
-  const pending=[...myHiSent].filter(uid=>!myMatches.has(uid));
-  const pendingSec=document.getElementById('pendingSection');
-  const pendingRow=document.getElementById('pendingRow');
-  if(pending.length){
-    pendingSec.style.display='block';
-    pendingRow.innerHTML=pending.map(uid=>`
-      <div class="pending-card">
-        <div class="pending-av" style="background:#f5f5f0;color:#888">
-          <span style="font-size:20px">👋</span>
-          <div class="pending-pulse"></div>
-        </div>
-        <div class="pending-name">等待回應</div>
-        <div class="pending-time">剛剛</div>
-      </div>`).join('');
-  } else pendingSec.style.display='none';
-
-  // 已配對
-  const matchedLabel=document.getElementById('matchedLabel');
-  const matchedList=document.getElementById('matchedList');
-  const emptyState=document.getElementById('matchEmptyState');
-  const sub=document.getElementById('matchHeaderSub');
-
-  if(matched.length){
-    matchedLabel.style.display='block';
-    emptyState.style.display='none';
-    sub.textContent=`你有 ${matched.length} 個配對！`;
-    matchedList.innerHTML=matched.map(p=>{
-      const c=COLORS[p.colorIdx%COLORS.length];
-      const preview=p.lastMsg||'點擊開始聊天 💬';
-      return`<div class="matched-card" onclick="openChat('${p.uid}')">
-        <div class="matched-av" style="${c}">${p.emoji}</div>
-        <div class="matched-info">
-          <div class="matched-name">${p.name}</div>
-          <div class="matched-preview">${preview}</div>
-        </div>
-        <span class="matched-time">💚</span>
-      </div>`;
-    }).join('');
-  } else if(!pending.length){
-    matchedLabel.style.display='none';
-    matchedList.innerHTML='';
-    emptyState.style.display='flex';
-    sub.textContent='尚未有配對';
-  } else {
-    matchedLabel.style.display='none';
-    matchedList.innerHTML='';
-    emptyState.style.display='none';
-    sub.textContent='等待對方回應中...';
-  }
+  const pending=[...myHiSent].filter(u=>!myMatches.has(u));
+  const ps=document.getElementById('pendingSection');const pr=document.getElementById('pendingRow');
+  if(pending.length){ps.style.display='block';pr.innerHTML=pending.map(()=>`<div class="pending-card"><div class="pending-av" style="background:#f5f5f0"><span style="font-size:20px">👋</span><div class="pending-pulse"></div></div><div class="pending-name">等待回應</div></div>`).join('');}
+  else ps.style.display='none';
+  const ml=document.getElementById('matchedLabel');const mlist=document.getElementById('matchedList');const mes=document.getElementById('matchEmptyState');const sub=document.getElementById('matchHeaderSub');
+  if(matched.length){ml.style.display='block';mes.style.display='none';sub.textContent=`你有 ${matched.length} 個配對！`;
+    mlist.innerHTML=matched.map(p=>{const c=COLORS[p.colorIdx%COLORS.length];return`<div class="matched-card" onclick="openPrivateChat('${p.uid}')"><div class="matched-av" style="${c}">${p.emoji}</div><div class="matched-info"><div class="matched-name">${p.name}</div><div class="matched-preview">${p.lastMsg||'點擊開始聊天 💬'}</div></div><span>💚</span></div>`;}).join('');
+  }else if(!pending.length){ml.style.display='none';mlist.innerHTML='';mes.style.display='flex';sub.textContent='尚未有配對';}
+  else{ml.style.display='none';mlist.innerHTML='';mes.style.display='none';sub.textContent='等待對方回應中...';}
 }
 
-/* ===== 聊天室 ===== */
-function openChat(uid){
-  const p=matchedProfiles[uid];if(!p)return;
-  chatTarget=uid;prevTab=getCurrentTab();
-  // 頭部
-  const c=COLORS[p.colorIdx%COLORS.length];
-  const hdrAv=document.getElementById('chatHdrAv');
-  hdrAv.style.cssText=c;hdrAv.textContent=p.emoji;
-  document.getElementById('chatHdrName').textContent=p.name;
-  document.getElementById('chatHdrStatus').textContent='配對成功 💚';
-  // Emoji 快捷
-  document.getElementById('eqRow').innerHTML=['😊','❤️','👋','😄','🎉','☕','🌸','😂'].map(e=>`<span class="eq" onclick="appendEmoji('${e}')">${e}</span>`).join('');
-  // 切換到聊天頁
+/* ===== 活動功能 ===== */
+/* 預設示範活動 */
+function getDefaultActivities(){
+  const b={lat:myLat||25.0330,lng:myLng||121.5654};
+  return[
+    {id:'a1',title:'台大附近咖啡廳午後閒聊',cat:'cafe',emoji:'☕',loc:'公館 Brew 咖啡',time:'週六 14:00',max:8,desc:'找幾個有趣的人，點杯咖啡聊聊天，不限話題，輕鬆認識新朋友！',hostUid:'d1',hostName:'小妍',hostEmoji:'😊',hostColorIdx:0,attendees:['d1','d2','d3'],createdAt:new Date()},
+    {id:'a2',title:'信義區象山爬山趣',cat:'hike',emoji:'⛰️',loc:'象山步道入口',time:'週日 07:30',max:12,desc:'一起爬象山看台北市景！輕鬆步行即可，爬完一起吃早午餐。',hostUid:'d2',hostName:'阿楷',hostEmoji:'😄',hostColorIdx:1,attendees:['d2','d4'],createdAt:new Date()},
+    {id:'a3',title:'東區桌遊馬拉松之夜',cat:'game',emoji:'🎲',loc:'東區 Play 桌遊咖啡館',time:'週五 19:00',max:10,desc:'一群人玩各種桌遊，老手新手都歡迎！主辦準備熱門桌遊十款。',hostUid:'d4',hostName:'建翔',hostEmoji:'☕',hostColorIdx:3,attendees:['d1','d3','d4'],createdAt:new Date()},
+    {id:'a4',title:'中山區街頭攝影 Walk',cat:'photo',emoji:'📷',loc:'中山站周邊',time:'週六 16:00',max:6,desc:'帶著相機或手機漫步中山街頭，捕捉城市光影。拍完一起喝一杯！',hostUid:'d3',hostName:'芷雯',hostEmoji:'🌸',hostColorIdx:2,attendees:['d1','d2','d4'],createdAt:new Date()},
+  ];
+}
+
+async function loadActivities(){
+  // demo 版：使用預設資料，不連 Firestore
+  activities=getDefaultActivities();
+  renderActList();
+}
+
+/* 類別列 */
+function renderCatBar(){
+  document.getElementById('catBar').innerHTML=CATS.map(c=>`<div class="cat-chip ${activeCat===c.id?'active':''}" onclick="setCat('${c.id}')"><i class="ti ${c.icon}"></i>${c.label}</div>`).join('');
+}
+function setCat(id){activeCat=id;renderCatBar();renderActList();}
+
+/* 活動列表 */
+function renderActList(){
+  const list=activities.filter(a=>activeCat==='all'||a.cat===activeCat);
+  const cat=CATS.find(c=>c.id===activeCat)||CATS[0];
+  if(!list.length){document.getElementById('actList').innerHTML='<div class="empty-state"><i class="ti ti-calendar-off"></i><p>這個分類目前沒有活動<br>要不要發起一個？</p></div>';return;}
+  document.getElementById('actList').innerHTML=list.map(a=>{
+    const bg=CATS.find(c=>c.id===a.cat)?.bg||'background:#f5f5f0';
+    const joined=a.attendees.includes(currentUser?.uid)||a.attendees.includes('me');
+    const full=a.attendees.length>=a.max&&!joined;
+    const attHtml=a.attendees.slice(0,4).map(uid=>{const u=uid==='me'?{emoji:myProfile?.emoji||'😊',colorIdx:0}:(allUsers.find(x=>x.uid===uid)||{emoji:'👤',colorIdx:0});const c=COLORS[u.colorIdx%COLORS.length];return`<div class="att-av" style="${c}">${u.emoji}</div>`;}).join('');
+    return`<div class="act-card" onclick="openActDetail('${a.id}')">
+      <div class="act-card-top">
+        <div class="act-icon" style="${bg}">${a.emoji}</div>
+        <div class="act-card-info">
+          <div class="act-title">${a.title}</div>
+          <div class="act-host-row"><i class="ti ti-user"></i>由 ${a.hostName} 發起${joined?' <span style="color:#22C55E;font-size:11px">✓ 已報名</span>':''}</div>
+        </div>
+      </div>
+      <div class="act-meta">
+        <div class="act-meta-item"><i class="ti ti-clock"></i>${a.time}</div>
+        <div class="act-meta-item"><i class="ti ti-map-pin"></i>${a.loc}</div>
+      </div>
+      <div class="act-footer">
+        <div class="att-row">${attHtml}<span class="att-count" style="margin-left:${a.attendees.length?10:0}px">${a.attendees.length}/${a.max}人</span></div>
+        ${joined?`<div class="joined-badge"><i class="ti ti-check"></i>已報名</div>`:full?`<span style="font-size:11px;color:#aaa;background:#f5f5f0;padding:4px 10px;border-radius:10px">已額滿</span>`:`<button class="join-btn" onclick="event.stopPropagation();quickJoin('${a.id}')">報名參加</button>`}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* 快速報名 */
+function quickJoin(id){
+  const a=activities.find(x=>x.id===id);if(!a)return;
+  if(a.attendees.includes(currentUser?.uid)||a.attendees.includes('me')){T('你已報名這個活動');return;}
+  if(a.attendees.length>=a.max){T('活動已額滿');return;}
+  a.attendees.push(currentUser?.uid||'me');
+  renderActList();T(`成功報名「${a.title}」🎉`);
+  // 讓一位參加者對你打招呼
+  const others=a.attendees.filter(u=>u!==currentUser?.uid&&u!=='me'&&!myHiSent.has(u));
+  if(others.length){const ruid=others[Math.floor(Math.random()*others.length)];const u=allUsers.find(x=>x.uid===ruid);if(u){setTimeout(()=>{if(!myHiSent.has(ruid)){const ok=window.confirm(`${u.name} 也在這個活動，要不要向他打招呼？`);if(ok)sendHi(ruid,u.name,u.emoji,u.colorIdx);}},1500);}}
+}
+
+/* 活動詳情 */
+function openActDetail(id){
+  currentActId=id;
+  const a=activities.find(x=>x.id===id);if(!a)return;
+  const joined=a.attendees.includes(currentUser?.uid)||a.attendees.includes('me');
+  const bg=CATS.find(c=>c.id===a.cat)?.bg||'background:#f5f5f0';
+  const allAtt=a.attendees.map(uid=>{if(uid==='me'||uid===currentUser?.uid)return{uid:'me',name:'我',emoji:myProfile?.emoji||'😊',colorIdx:myProfile?.colorIdx||0,isMe:true};return allUsers.find(x=>x.uid===uid)||{uid,name:'用戶',emoji:'👤',colorIdx:0};}).filter(Boolean);
+  const attGrid=allAtt.map(u=>{
+    const c=COLORS[u.colorIdx%COLORS.length];
+    const isMe=u.isMe||u.uid==='me';
+    const isM=!isMe&&myMatches.has(u.uid);
+    const sentH=!isMe&&myHiSent.has(u.uid);
+    let sl,sc;
+    if(isMe){sl='（你）';sc='';}
+    else if(isM){sl='✓ 已配對';sc='match-s';}
+    else if(sentH){sl='已打招呼';sc='hi-s';}
+    else{sl='點擊打招呼';sc='';}
+    return`<div class="att-person" onclick="${isMe?'':(`sendHi('${u.uid}','${u.name}','${u.emoji}','${u.colorIdx}')`)}">
+      <div class="att-person-av ${isMe?'is-me':''}" style="${c}">${u.emoji}${!isMe&&!sentH&&!isM?'<div class="hi-ring"></div>':''}</div>
+      <div class="att-person-name">${u.name}</div>
+      <div class="att-person-state ${sc}">${sl}</div>
+    </div>`;
+  }).join('');
+  document.getElementById('actDetailTitle').textContent=`${a.emoji} ${a.title}`;
+  document.getElementById('actDetailSub').textContent=`${a.attendees.length}/${a.max}人 · ${a.loc}`;
+  document.getElementById('actDetailBody').innerHTML=`
+    <div class="act-detail-banner" style="${bg}">${a.emoji}</div>
+    <div class="act-detail-title">${a.title}</div>
+    <div class="act-detail-host">
+      <div style="width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;${COLORS[a.hostColorIdx%COLORS.length]}">${a.hostEmoji}</div>
+      由 ${a.hostName} 發起
+    </div>
+    <div class="info-grid">
+      <div class="info-card"><i class="ti ti-clock"></i><div><div class="info-card-label">時間</div><div class="info-card-val">${a.time}</div></div></div>
+      <div class="info-card"><i class="ti ti-map-pin"></i><div><div class="info-card-label">地點</div><div class="info-card-val">${a.loc}</div></div></div>
+      <div class="info-card"><i class="ti ti-users"></i><div><div class="info-card-label">人數</div><div class="info-card-val">${a.attendees.length}/${a.max}人</div></div></div>
+      <div class="info-card"><i class="ti ti-tag"></i><div><div class="info-card-label">類別</div><div class="info-card-val">${CATS.find(c=>c.id===a.cat)?.label||''}</div></div></div>
+    </div>
+    <div class="act-desc-section"><div class="section-label">活動說明</div><div class="act-desc-text">${a.desc}</div></div>
+    ${joined?`
+    <div class="group-chat-btn" onclick="openGroupChat('${a.id}')">
+      <div class="gc-icon"><i class="ti ti-messages"></i></div>
+      <div><div class="gc-name">活動群組聊天</div><div class="gc-sub">${allAtt.length} 位成員</div></div>
+      <i class="ti ti-chevron-right" style="color:#bbb"></i>
+    </div>`:''}
+    <div class="att-section">
+      <div class="section-label">${joined?'參加者（點頭像可打招呼）':'已有 '+allAtt.length+' 人報名'}</div>
+      <div class="att-grid">${attGrid}</div>
+    </div>
+  `;
+  document.getElementById('actDetailFooter').innerHTML=`
+    <button class="act-join-big ${joined?'joined':''}" onclick="toggleJoinDetail('${a.id}')">
+      ${joined?'<i class="ti ti-x"></i> 取消報名':'<i class="ti ti-calendar-plus"></i> 報名參加'}
+    </button>`;
   hideAllMainPages();
-  document.getElementById('chatPage').style.display='flex';
+  document.getElementById('actDetailPage').style.display='flex';
+}
+function closeActDetail(){
+  document.getElementById('actDetailPage').style.display='none';
+  switchTab('act');
+}
+function toggleJoinDetail(id){
+  const a=activities.find(x=>x.id===id);if(!a)return;
+  const myUid=currentUser?.uid||'me';
+  const idx=a.attendees.indexOf(myUid);
+  if(idx>=0){a.attendees.splice(idx,1);T('已取消報名');}
+  else{if(a.attendees.length>=a.max){T('活動已額滿');return;}a.attendees.push(myUid);T(`成功報名！歡迎加入 🎉`);}
+  renderActList();openActDetail(id);
+}
+
+/* 活動群組聊天（即時，存 Firestore） */
+function openGroupChat(actId){
+  const a=activities.find(x=>x.id===actId);if(!a)return;
+  chatMode='group';chatTarget=actId;
+  const hdr=document.getElementById('chatHdrAv');hdr.className='chat-header-av group';hdr.textContent=a.emoji;
+  document.getElementById('chatHdrName').textContent=`${a.title} 群組`;
+  document.getElementById('chatHdrStatus').textContent=`${a.attendees.length}位成員`;
+  document.getElementById('eqRow').innerHTML=['😊','❤️','👋','😄','🎉','☕','🌸','😂'].map(e=>`<span class="eq" onclick="appendEmoji('${e}')">${e}</span>`).join('');
   document.getElementById('chatInp').value='';
   document.getElementById('chatInp').addEventListener('keydown',onChatEnter);
-  listenChat(uid);
+  hideAllMainPages();document.getElementById('chatPage').style.display='flex';
+  listenGroupChat(actId);
   setTimeout(()=>document.getElementById('chatMessages').scrollTop=9999,100);
+}
+
+function listenGroupChat(actId){
+  if(chatUnsubscribe){chatUnsubscribe();chatUnsubscribe=null;}
+  chatUnsubscribe=db.collection('groupChats').doc(actId).collection('msgs')
+    .orderBy('createdAt').limit(100)
+    .onSnapshot(snap=>renderGroupMessages(snap,actId));
+}
+
+function renderGroupMessages(snap,actId){
+  const a=activities.find(x=>x.id===actId);
+  const box=document.getElementById('chatMessages');
+  box.innerHTML=`<div class="sys-msg"><span>${a?.emoji||'🎉'} ${a?.title||''} 群組聊天</span></div>`;
+  let prevSender=null;
+  snap.forEach(doc=>{
+    const m=doc.data();const isMe=m.from===currentUser?.uid;
+    const t=m.createdAt?ft(m.createdAt):'';
+    if(isMe){box.innerHTML+=`<div class="brow me"><div><div class="bubble me">${esc(m.text)}</div><div class="b-time me-t">${t}</div></div></div>`;}
+    else{
+      const showN=prevSender!==m.from;
+      box.innerHTML+=`${showN?`<div class="bubble-sender">${esc(m.fromName||'用戶')}</div>`:''}<div class="brow them"><div class="b-av" style="${COLORS[(m.fromColorIdx||0)%COLORS.length]}">${m.fromEmoji||'👤'}</div><div><div class="bubble them">${esc(m.text)}</div><div class="b-time th-t">${t}</div></div></div>`;
+    }
+    prevSender=m.from;
+  });
+  box.scrollTop=9999;
+}
+
+/* 私訊 */
+function openPrivateChat(uid){
+  const p=matchedProfiles[uid];if(!p)return;
+  chatMode='private';chatTarget=uid;prevTab=getCurrentTab();
+  const c=COLORS[p.colorIdx%COLORS.length];
+  const hdr=document.getElementById('chatHdrAv');hdr.className='chat-header-av';hdr.style.cssText=c;hdr.textContent=p.emoji;
+  document.getElementById('chatHdrName').textContent=p.name;
+  document.getElementById('chatHdrStatus').textContent='配對成功 💚';
+  document.getElementById('eqRow').innerHTML=['😊','❤️','👋','😄','🎉','☕','🌸','😂'].map(e=>`<span class="eq" onclick="appendEmoji('${e}')">${e}</span>`).join('');
+  document.getElementById('chatInp').value='';
+  document.getElementById('chatInp').addEventListener('keydown',onChatEnter);
+  hideAllMainPages();document.getElementById('chatPage').style.display='flex';
+  listenPrivateChat(uid);
+  setTimeout(()=>document.getElementById('chatMessages').scrollTop=9999,100);
+}
+function listenPrivateChat(uid){
+  if(chatUnsubscribe){chatUnsubscribe();chatUnsubscribe=null;}
+  const matchId=[currentUser.uid,uid].sort().join('_');
+  chatUnsubscribe=db.collection('messages').doc(matchId).collection('msgs').orderBy('createdAt').limit(100).onSnapshot(snap=>{
+    const p=matchedProfiles[uid];const c=COLORS[p.colorIdx%COLORS.length];
+    const box=document.getElementById('chatMessages');
+    box.innerHTML=`<div class="sys-msg"><span>你和 ${p.name} 配對成功，開始聊天吧！💚</span></div>`;
+    let prevS=null;
+    snap.forEach(doc=>{const m=doc.data();const isMe=m.from===currentUser.uid;const t=m.createdAt?ft(m.createdAt):'';
+      if(isMe)box.innerHTML+=`<div class="brow me"><div><div class="bubble me">${esc(m.text)}</div><div class="b-time me-t">${t}</div></div></div>`;
+      else{const showAv=prevS!==m.from;box.innerHTML+=`<div class="brow them">${showAv?`<div class="b-av" style="${c}">${p.emoji}</div>`:'<div style="width:28px;flex-shrink:0"></div>'}<div><div class="bubble them">${esc(m.text)}</div><div class="b-time th-t">${t}</div></div></div>`;}
+      prevS=m.from;});
+    box.scrollTop=9999;
+  });
+}
+
+function onChatEnter(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg();}}
+function appendEmoji(e){document.getElementById('chatInp').value+=e;document.getElementById('chatInp').focus();}
+
+async function sendMsg(){
+  const inp=document.getElementById('chatInp');const text=inp.value.trim();
+  if(!text||!currentUser)return;inp.value='';
+  if(chatMode==='group'){
+    const actId=chatTarget;
+    await db.collection('groupChats').doc(actId).collection('msgs').add({
+      from:currentUser.uid,fromName:myProfile?.name||'蜜友用戶',
+      fromEmoji:myProfile?.emoji||'😊',fromColorIdx:myProfile?.colorIdx||0,
+      text,createdAt:firebase.firestore.FieldValue.serverTimestamp()
+    });
+  } else {
+    const matchId=[currentUser.uid,chatTarget].sort().join('_');
+    await db.collection('messages').doc(matchId).collection('msgs').add({from:currentUser.uid,text,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+    await db.collection('matches').doc(matchId).update({lastMsg:text,lastMsgAt:firebase.firestore.FieldValue.serverTimestamp()});
+    if(matchedProfiles[chatTarget])matchedProfiles[chatTarget].lastMsg=text;
+  }
 }
 
 function closeChat(){
@@ -896,199 +1041,89 @@ function closeChat(){
   document.getElementById('chatInp').removeEventListener('keydown',onChatEnter);
   document.getElementById('chatPage').style.display='none';
   chatTarget=null;
-  switchTab(prevTab||'match');
+  if(chatMode==='group'){document.getElementById('actDetailPage').style.display='flex';}
+  else switchTab(prevTab||'match');
 }
 
-function onChatEnter(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg();}}
-function appendEmoji(e){document.getElementById('chatInp').value+=e;document.getElementById('chatInp').focus();}
-
-function listenChat(uid){
-  if(chatUnsubscribe){chatUnsubscribe();chatUnsubscribe=null;}
-  const matchId=[currentUser.uid,uid].sort().join('_');
-  chatUnsubscribe=db.collection('messages').doc(matchId).collection('msgs')
-    .orderBy('createdAt').limit(100)
-    .onSnapshot(snap=>{renderChatMessages(snap,uid);});
+/* 發起活動 */
+function renderCatSel(){document.getElementById('catSel').innerHTML=CATS.filter(c=>c.id!=='all').map(c=>`<div class="csr ${createCat===c.id?'active':''}" onclick="setCC('${c.id}')">${c.emoji||''} ${c.label}</div>`).join('');}
+function setCC(id){createCat=id;renderCatSel();}
+function openCreateModal(){if(!currentUser){T('請先登入才能發起活動');return;}renderCatSel();document.getElementById('createModal').classList.add('open');}
+function closeCreateModal(){document.getElementById('createModal').classList.remove('open');}
+function submitCreate(){
+  const title=document.getElementById('nTitle').value.trim();if(!title){T('請輸入活動名稱');return;}
+  const cat=CATS.find(c=>c.id===createCat);
+  const newAct={id:'u'+Date.now(),title,cat:createCat,emoji:cat?.emoji||'🎉',loc:document.getElementById('nLoc').value.trim()||'地點待定',time:document.getElementById('nTime').value.trim()||'時間待定',max:parseInt(document.getElementById('nMax').value)||8,desc:document.getElementById('nDesc').value.trim()||'歡迎大家來參加！',hostUid:currentUser.uid,hostName:myProfile?.name||'蜜友用戶',hostEmoji:myProfile?.emoji||'😊',hostColorIdx:myProfile?.colorIdx||0,attendees:[currentUser.uid],createdAt:new Date()};
+  activities.unshift(newAct);
+  closeCreateModal();['nTitle','nLoc','nTime','nDesc'].forEach(id=>document.getElementById(id).value='');
+  renderActList();T('活動發起成功！🎉');
+  setTimeout(()=>openActDetail(newAct.id),300);
 }
 
-function renderChatMessages(snap,uid){
-  const p=matchedProfiles[uid];if(!p)return;
-  const c=COLORS[p.colorIdx%COLORS.length];
-  const box=document.getElementById('chatMessages');
-  box.innerHTML=`<div class="sys-msg"><span>你和 ${p.name} 配對成功，開始聊天吧！💚</span></div>`;
-  let prevSender=null;
-  snap.forEach(doc=>{
-    const m=doc.data();
-    const isMe=m.from===currentUser.uid;
-    const t=m.createdAt?.toDate?.()?new Date(m.createdAt.toDate()):new Date();
-    const timeStr=t.getHours().toString().padStart(2,'0')+':'+t.getMinutes().toString().padStart(2,'0');
-    if(isMe){
-      box.innerHTML+=`<div class="brow me"><div><div class="bubble me">${esc(m.text)}</div><div class="b-time me-t">${timeStr}</div></div></div>`;
-    } else {
-      const showAv=prevSender!==m.from;
-      box.innerHTML+=`<div class="brow them">${showAv?`<div class="b-av" style="${c}">${p.emoji}</div>`:'<div style="width:28px;flex-shrink:0"></div>'}<div><div class="bubble them">${esc(m.text)}</div><div class="b-time th-t">${timeStr}</div></div></div>`;
-    }
-    prevSender=m.from;
-  });
-  box.scrollTop=9999;
-}
-
-async function sendMsg(){
-  const inp=document.getElementById('chatInp');
-  const text=inp.value.trim();
-  if(!text||!chatTarget||!currentUser)return;
-  inp.value='';
-  const matchId=[currentUser.uid,chatTarget].sort().join('_');
-  try{
-    await db.collection('messages').doc(matchId).collection('msgs').add({
-      from:currentUser.uid,text,
-      createdAt:firebase.firestore.FieldValue.serverTimestamp()
-    });
-    // 更新最後訊息
-    await db.collection('matches').doc(matchId).update({
-      lastMsg:text,lastMsgAt:firebase.firestore.FieldValue.serverTimestamp()
-    });
-    if(matchedProfiles[chatTarget]) matchedProfiles[chatTarget].lastMsg=text;
-  }catch(e){T('發送失敗');}
-}
-
-/* ===== Tab 切換 ===== */
+/* Tab 切換 */
 function switchTab(tab){
   hideAllMainPages();
   document.querySelectorAll('.tab-item').forEach(t=>t.classList.remove('active'));
   document.getElementById('tab-'+tab)?.classList.add('active');
   if(tab==='nearby'){document.getElementById('nearbyPage').style.display='flex';}
+  else if(tab==='act'){document.getElementById('actPage').style.display='flex';renderActList();}
   else if(tab==='match'){document.getElementById('matchPage').style.display='flex';renderMatchPage();}
   else if(tab==='profile'){document.getElementById('profilePage').style.display='flex';renderProfilePage();}
 }
-function hideAllMainPages(){
-  ['nearbyPage','matchPage','chatPage','profilePage'].forEach(id=>{
-    const el=document.getElementById(id);if(el)el.style.display='none';
-  });
-}
-function getCurrentTab(){
-  const tabs=['nearby','match','profile'];
-  return tabs.find(t=>document.getElementById('tab-'+t)?.classList.contains('active'))||'nearby';
-}
+function hideAllMainPages(){['nearbyPage','actPage','actDetailPage','matchPage','chatPage','profilePage'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});}
+function getCurrentTab(){return['nearby','act','match','profile'].find(t=>document.getElementById('tab-'+t)?.classList.contains('active'))||'nearby';}
 
-/* ===== 地圖 ===== */
-function initMap(){
-  if(leafletMap)return;
-  const lat=myLat||25.0330,lng=myLng||121.5654;
-  leafletMap=L.map('leafletMap',{zoomControl:false}).setView([lat,lng],13);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap',maxZoom:18}).addTo(leafletMap);
-  L.control.zoom({position:'bottomright'}).addTo(leafletMap);
-  updateMyMarker();renderMapMarkers();
-}
-function updateMyMarker(){
-  if(!leafletMap||!myLat||!myLng)return;
-  if(myMarker)myMarker.remove();
-  const icon=L.divIcon({className:'',html:'<div class="my-marker-pulse"></div>',iconSize:[16,16],iconAnchor:[8,8]});
-  myMarker=L.marker([myLat,myLng],{icon,zIndexOffset:1000}).addTo(leafletMap).bindPopup('📍 你的位置');
-}
-function renderMapMarkers(){
-  if(!leafletMap)return;
-  userMarkers.forEach(m=>m.remove());userMarkers=[];
-  if(!myLat||!myLng)return;
-  allUsers.forEach(u=>{
-    if(!u.location)return;
-    const dist=calcDist(myLat,myLng,u.location.lat,u.location.lng);
-    if(dist>distFilter)return;
-    const c=COLORS[u.colorIdx%COLORS.length];
-    const bg=c.split(';')[0].replace('background:','');
-    const tc=c.split(';')[1]?.replace('color:','');
-    const icon=L.divIcon({className:'',html:`<div style="background:${bg};color:${tc};width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;border:2.5px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.25)">${u.emoji}</div>`,iconSize:[36,36],iconAnchor:[18,18]});
-    const m=L.marker([u.location.lat,u.location.lng],{icon}).addTo(leafletMap).bindPopup(`<b>${u.name}</b>，${u.age}歲<br>📍 ${fmtDist(dist)}`);
-    userMarkers.push(m);
-  });
-}
-function setView(v){
-  currentView=v;
-  document.getElementById('listView').style.display=v==='list'?'flex':'none';
-  document.getElementById('mapView').style.display=v==='map'?'block':'none';
-  document.getElementById('vt-list').classList.toggle('active',v==='list');
-  document.getElementById('vt-map').classList.toggle('active',v==='map');
-  if(v==='map')setTimeout(()=>{initMap();leafletMap?.invalidateSize();},100);
-}
-function setDist(km){
-  distFilter=km;
-  document.querySelectorAll('[id^="fc-"]').forEach(el=>el.classList.remove('active'));
-  document.getElementById('fc-'+km)?.classList.add('active');
-  renderUserList();renderMapMarkers();
-}
+/* 地圖 */
+function initMap(){if(leafletMap)return;const lat=myLat||25.0330,lng=myLng||121.5654;leafletMap=L.map('leafletMap',{zoomControl:false}).setView([lat,lng],13);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap',maxZoom:18}).addTo(leafletMap);L.control.zoom({position:'bottomright'}).addTo(leafletMap);updateMyMarker();renderMapMarkers();}
+function updateMyMarker(){if(!leafletMap||!myLat||!myLng)return;if(myMarker)myMarker.remove();const icon=L.divIcon({className:'',html:'<div class="my-marker-pulse"></div>',iconSize:[16,16],iconAnchor:[8,8]});myMarker=L.marker([myLat,myLng],{icon,zIndexOffset:1000}).addTo(leafletMap).bindPopup('📍 你的位置');}
+function renderMapMarkers(){if(!leafletMap)return;userMarkers.forEach(m=>m.remove());userMarkers=[];if(!myLat||!myLng)return;allUsers.forEach(u=>{if(!u.location)return;const dist=calcDist(myLat,myLng,u.location.lat,u.location.lng);if(dist>distFilter)return;const c=COLORS[u.colorIdx%COLORS.length];const bg=c.split(';')[0].replace('background:','');const tc=c.split(';')[1]?.replace('color:','');const icon=L.divIcon({className:'',html:`<div style="background:${bg};color:${tc};width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;border:2.5px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.25)">${u.emoji}</div>`,iconSize:[36,36],iconAnchor:[18,18]});const m=L.marker([u.location.lat,u.location.lng],{icon}).addTo(leafletMap).bindPopup(`<b>${u.name}</b>，${u.age}歲<br>📍 ${fmtDist(dist)}`);userMarkers.push(m);});}
+function setView(v){currentView=v;document.getElementById('listView').style.display=v==='list'?'flex':'none';document.getElementById('mapView').style.display=v==='map'?'block':'none';document.getElementById('vt-list').classList.toggle('active',v==='list');document.getElementById('vt-map').classList.toggle('active',v==='map');if(v==='map')setTimeout(()=>{initMap();leafletMap?.invalidateSize();},100);}
+function setDist(km){distFilter=km;document.querySelectorAll('[id^="fc-"]').forEach(el=>el.classList.remove('active'));document.getElementById('fc-'+km)?.classList.add('active');renderUserList();renderMapMarkers();}
 function centerMap(){if(!leafletMap||!myLat)return;leafletMap.setView([myLat,myLng],14,{animate:true});}
 
-/* ===== Badge ===== */
-function updateMatchBadge(){
-  const n=myMatches.size;
-  const b=document.getElementById('matchBadge');
-  b.style.display=n>0?'flex':'none';
-  b.textContent=n;
-}
+/* Badge */
+function updateMatchBadge(){const n=myMatches.size;const b=document.getElementById('matchBadge');b.style.display=n>0?'flex':'none';b.textContent=n;}
 
-/* ===== 個人頁 ===== */
+/* 個人頁 */
 function renderProfilePage(){
-  const p=myProfile;
-  if(!p){document.getElementById('profileContent').innerHTML='<div style="padding:20px;color:#aaa;text-align:center">載入中...</div>';return;}
+  const p=myProfile;if(!p){document.getElementById('profileContent').innerHTML='<div style="padding:20px;text-align:center;color:#aaa">載入中...</div>';return;}
   const c=COLORS[p.colorIdx%COLORS.length];
   document.getElementById('profileContent').innerHTML=`
     <div class="profile-cover"></div>
-    <div class="profile-av-row">
-      <div class="profile-av" style="${c}">${p.emoji}</div>
-      <button class="profile-edit-btn" onclick="T('編輯功能即將上線')">✏️ 編輯</button>
-    </div>
+    <div class="profile-av-row"><div class="profile-av" style="${c}">${p.emoji}</div><button class="profile-edit-btn" onclick="T('編輯功能即將上線')">✏️ 編輯</button></div>
     <div class="profile-name">${p.name}，${p.age}歲 <span class="v-badge">✓ 已驗證</span></div>
-    <div class="profile-sub">
-      📍 ${p.city||'台灣'}
-      ${p.gender?` · ${p.gender==='male'?'👨 男生':p.gender==='female'?'👩 女生':'🧑 其他'}`:''}
-      ${p.mbti?` · 🧠 ${p.mbti}`:''}
-    </div>
+    <div class="profile-sub">📍 ${p.city||'台灣'}${p.gender?` · ${p.gender==='male'?'👨 男生':p.gender==='female'?'👩 女生':'🧑 其他'}`:''}${p.mbti?` · 🧠 ${p.mbti}`:''}</div>
     <div class="profile-tags">${(p.tags||[]).map(t=>`<div class="p-tag">${t}</div>`).join('')}</div>
-    <div class="profile-sec">
-      <div class="profile-sec-title">配對統計</div>
-      <div class="info-card"><i class="ti ti-heart" style="color:#22C55E"></i><div><div class="info-card-text">已配對 ${myMatches.size} 人</div><div class="info-card-sub">打招呼給 ${myHiSent.size} 人</div></div></div>
+    <div class="profile-sec"><div class="profile-sec-title">配對統計</div>
+      <div class="p-info-card"><i class="ti ti-heart" style="color:#22C55E"></i><div><div class="p-info-text">已配對 ${myMatches.size} 人</div><div class="p-info-sub">打招呼給 ${myHiSent.size} 人 · 參加 ${activities.filter(a=>a.attendees.includes(currentUser?.uid)).length} 個活動</div></div></div>
     </div>
-    <div class="profile-sec">
-      <div class="profile-sec-title">地理位置</div>
-      <div class="info-card"><i class="ti ti-map-pin"></i><div><div class="info-card-text">${myLat?'位置已啟用':'尚未取得位置'}</div><div class="info-card-sub">${myLat?`${myLat.toFixed(4)}, ${myLng.toFixed(4)}`:'請允許位置權限'}</div></div></div>
+    <div class="profile-sec"><div class="profile-sec-title">地理位置</div>
+      <div class="p-info-card"><i class="ti ti-map-pin"></i><div><div class="p-info-text">${myLat?'位置已啟用':'尚未取得位置'}</div><div class="p-info-sub">${myLat?`${myLat.toFixed(4)}, ${myLng.toFixed(4)}`:'請允許位置權限'}</div></div></div>
     </div>
-    <div class="profile-sec">
-      <div class="profile-sec-title">帳號</div>
-      <div class="info-card"><i class="ti ti-phone"></i><div><div class="info-card-text">${p.phone||'—'}</div><div class="info-card-sub">已透過 Firebase 驗證</div></div></div>
+    <div class="profile-sec"><div class="profile-sec-title">帳號</div>
+      <div class="p-info-card"><i class="ti ti-phone"></i><div><div class="p-info-text">${p.phone||'—'}</div><div class="p-info-sub">已透過 Firebase 驗證 ✓</div></div></div>
     </div>
     <div style="padding:0 16px;margin-top:8px"><button class="btn-ghost" onclick="doSignOut()">登出</button></div>
   `;
 }
 
-/* ===== 用戶詳情（預留）===== */
-function showUserDetail(uid){T('用戶詳情頁即將上線');}
-
-/* ===== 登出 ===== */
+/* 登出 */
 async function doSignOut(){
-  clearInterval(locTimer);
-  if(chatUnsubscribe){chatUnsubscribe();chatUnsubscribe=null;}
+  clearInterval(locTimer);if(chatUnsubscribe){chatUnsubscribe();chatUnsubscribe=null;}
   if(currentUser){try{await db.collection('users').doc(currentUser.uid).update({online:false});}catch(e){}}
   await auth.signOut();
-  currentUser=null;myProfile=null;myLat=null;myLng=null;
-  myHiSent=new Set();myMatches=new Set();matchedProfiles={};
+  currentUser=null;myProfile=null;myLat=null;myLng=null;myHiSent=new Set();myMatches=new Set();matchedProfiles={};
   window.recaptchaVerifier?.clear();window.recaptchaVerifier=null;
-  document.getElementById('phoneInp').value='';
-  go(0);T('已登出');
+  document.getElementById('phoneInp').value='';go(0);T('已登出');
 }
 
-/* ===== 自動登入 ===== */
-auth.onAuthStateChanged(async user=>{
-  if(user&&document.getElementById('s0').classList.contains('active')){
-    currentUser=user;
-    await loadProfile(user.uid);
-    enterApp();
-  }
-});
+/* 自動登入 */
+auth.onAuthStateChanged(async user=>{if(user&&document.getElementById('s0').classList.contains('active')){currentUser=user;await loadProfile(user.uid);enterApp();}});
 
-/* ===== 工具 ===== */
+/* 工具 */
 function errMsg(code,phase){const m={'auth/invalid-phone-number':'手機號碼格式不正確','auth/too-many-requests':'請求次數過多，請稍後再試','auth/invalid-verification-code':'驗證碼不正確','auth/code-expired':'驗證碼已過期，請重新發送'};return m[code]||(phase==='send'?'發送失敗':'驗證失敗');}
-function setStEl(id,type,msg){const el=document.getElementById(id);if(!el)return;const ic={info:'ℹ️',error:'❌',success:'✅'};if(el.className.includes('status-box')){el.style.display=msg?'flex':'none';el.className=`status-box ${type}`;el.innerHTML=msg?`<span style="font-size:16px;flex-shrink:0">${ic[type]||'ℹ️'}</span><span>${msg}</span>`:'';}else el.innerHTML=msg?`<div class="status-box ${type}"><span style="font-size:16px;flex-shrink:0">${ic[type]||'ℹ️'}</span><span>${msg}</span></div>`:'';}
+function setStEl(id,type,msg){const el=document.getElementById(id);if(!el)return;const ic={info:'ℹ️',error:'❌',success:'✅'};if(el.className.includes('status-box')){el.style.display=msg?'flex':'none';el.className=`status-box ${type}`;el.innerHTML=msg?`<span style="font-size:16px;flex-shrink:0">${ic[type]||'ℹ️'}</span><span>${msg}</span>`:''}else el.innerHTML=msg?`<div class="status-box ${type}"><span style="font-size:16px;flex-shrink:0">${ic[type]||'ℹ️'}</span><span>${msg}</span></div>`:'';}
 function setBtnL(btnId,textId,loading,text){document.getElementById(btnId).disabled=loading;document.getElementById(textId).innerHTML=loading?`<div class="spinner"></div>${text}`:text;}
-function esc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function T(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2500);}
 if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(e=>console.warn(e)));}
 </script>
