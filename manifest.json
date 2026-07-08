@@ -1,0 +1,46 @@
+{
+  "name": "蜜友 MiYou",
+  "short_name": "蜜友",
+  "description": "認識真正有緣的人 — 附近的人、活動揪團、配對聊天",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#E8623A",
+  "lang": "zh-TW",
+  "categories": ["social", "lifestyle"],
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "screenshots/home.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "附近的人",
+      "url": "/index.html#nearby",
+      "description": "查看附近的用戶"
+    },
+    {
+      "name": "我的配對",
+      "url": "/index.html#match",
+      "description": "查看配對與訊息"
+    }
+  ]
+}
