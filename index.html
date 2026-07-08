@@ -729,7 +729,17 @@ async function saveAndEnter(){
   const p={uid:currentUser.uid,phone:currentUser.phoneNumber,name:document.getElementById('nameInp').value.trim()||'蜜友用戶',age:parseInt(document.getElementById('ageSlider').value)||22,city:document.getElementById('cityInp').value.trim()||'',gender:selGender,tags:[...selTags],mbti:selMbti||'',emoji:EMOJIS[Math.floor(Math.random()*EMOJIS.length)],colorIdx:Math.floor(Math.random()*COLORS.length),createdAt:firebase.firestore.FieldValue.serverTimestamp(),updatedAt:firebase.firestore.FieldValue.serverTimestamp(),online:true,location:null};
   try{await db.collection('users').doc(currentUser.uid).set(p);myProfile=p;enterApp();}catch(e){T('儲存失敗，請重試');}
 }
-async function loadProfile(uid){try{const d=await db.collection('users').doc(uid).get();if(d.exists)myProfile=d.data();}catch(e){}}
+async function loadProfile(uid){
+  try{
+    const d=await db.collection('users').doc(uid).get();
+    if(d.exists){myProfile=d.data();}
+    else{
+      // Firestore 沒有資料，用 Auth 基本資料建立
+      myProfile={uid:currentUser.uid,phone:currentUser.phoneNumber||'',name:'蜜友用戶',age:22,city:'',gender:null,tags:[],mbti:'',emoji:'😊',colorIdx:0,online:true,location:null};
+      await db.collection('users').doc(uid).set({...myProfile,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+    }
+  }catch(e){console.error('loadProfile error',e);}
+}
 
 /* 進入主 App */
 function enterApp(){
@@ -1184,9 +1194,20 @@ function compressAndSave(dataUrl){
 }
 
 /* ===== 自己的個人頁 ===== */
-function renderProfilePage(){
+async function renderProfilePage(){
+  // 若 myProfile 還沒載入，嘗試從 Firestore 重新讀取
+  if(!myProfile&&currentUser){
+    try{const doc=await db.collection('users').doc(currentUser.uid).get();if(doc.exists)myProfile=doc.data();}catch(e){}
+  }
   const p=myProfile;
-  if(!p){document.getElementById('profileContent').innerHTML='<div style="padding:20px;text-align:center;color:#aaa">載入中...</div>';return;}
+  // 若 Firestore 完全沒有資料，用 Firebase Auth 基本資料建立臨時 profile
+  if(!p){
+    if(currentUser){
+      myProfile={uid:currentUser.uid,phone:currentUser.phoneNumber||'',name:'蜜友用戶',age:22,city:'',gender:null,tags:[],mbti:'',emoji:'😊',colorIdx:Math.floor(Math.random()*5),online:true,location:null};
+      // 自動存入 Firestore
+      try{await db.collection('users').doc(currentUser.uid).set({...myProfile,createdAt:firebase.firestore.FieldValue.serverTimestamp()});}catch(e){}
+    }else{document.getElementById('profileContent').innerHTML='<div style="padding:20px;text-align:center;color:#aaa">請先登入</div>';return;}
+  }
   const c=COLORS[p.colorIdx%COLORS.length];
   const photoHtml=p.photoBase64
     ?`<div class="photo-upload-wrap" onclick="trigPhotoUpload()">
