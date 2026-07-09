@@ -1378,28 +1378,7 @@ function updateMatchBadge(){
   b.textContent=n>99?'99+':n;
 }
 
-/* 個人頁 */
-function renderProfilePage(){
-  const p=myProfile;if(!p){document.getElementById('profileContent').innerHTML='<div style="padding:20px;text-align:center;color:#aaa">載入中...</div>';return;}
-  const c=COLORS[p.colorIdx%COLORS.length];
-  document.getElementById('profileContent').innerHTML=`
-    <div class="profile-cover"></div>
-    <div class="profile-av-row"><div class="profile-av" style="${c}">${p.emoji}</div><button class="profile-edit-btn" onclick="T('編輯功能即將上線')">✏️ 編輯</button></div>
-    <div class="profile-name">${p.name}，${p.age}歲 <span class="v-badge">✓ 已驗證</span></div>
-    <div class="profile-sub">📍 ${p.city||'台灣'}${p.gender?` · ${p.gender==='male'?'👨 男生':p.gender==='female'?'👩 女生':'🧑 其他'}`:''}${p.mbti?` · 🧠 ${p.mbti}`:''}</div>
-    <div class="profile-tags">${(p.tags||[]).map(t=>`<div class="p-tag">${t}</div>`).join('')}</div>
-    <div class="profile-sec"><div class="profile-sec-title">配對統計</div>
-      <div class="p-info-card"><i class="ti ti-heart" style="color:#22C55E"></i><div><div class="p-info-text">已配對 ${myMatches.size} 人</div><div class="p-info-sub">打招呼給 ${myHiSent.size} 人 · 參加 ${activities.filter(a=>a.attendees.includes(currentUser?.uid)).length} 個活動</div></div></div>
-    </div>
-    <div class="profile-sec"><div class="profile-sec-title">地理位置</div>
-      <div class="p-info-card"><i class="ti ti-map-pin"></i><div><div class="p-info-text">${myLat?'位置已啟用':'尚未取得位置'}</div><div class="p-info-sub">${myLat?`${myLat.toFixed(4)}, ${myLng.toFixed(4)}`:'請允許位置權限'}</div></div></div>
-    </div>
-    <div class="profile-sec"><div class="profile-sec-title">帳號</div>
-      <div class="p-info-card"><i class="ti ti-phone"></i><div><div class="p-info-text">${p.phone||'—'}</div><div class="p-info-sub">已透過 Firebase 驗證 ✓</div></div></div>
-    </div>
-    <div style="padding:0 16px;margin-top:8px"><button class="btn-ghost" onclick="doSignOut()">登出</button></div>
-  `;
-}
+/* 個人頁由下方 async function renderProfilePage 處理 */
 
 /* ===== 照片上傳 ===== */
 function trigPhotoUpload(){document.getElementById('photoFileInp').click();}
@@ -1731,15 +1710,22 @@ async function resetPremium(){
     renderProfilePage();
   }catch(e){T('重置失敗');}
 }
-  clearInterval(locTimer);if(chatUnsubscribe){chatUnsubscribe();chatUnsubscribe=null;}
+
+/* 登出 */
+async function doSignOut(){
+  clearInterval(locTimer);
+  if(chatUnsubscribe){chatUnsubscribe();chatUnsubscribe=null;}
   if(currentUser){try{await db.collection('users').doc(currentUser.uid).update({online:false});}catch(e){}}
   await auth.signOut();
-  currentUser=null;myProfile=null;myLat=null;myLng=null;myHiSent=new Set();myMatches=new Set();matchedProfiles={};
+  currentUser=null;myProfile=null;myLat=null;myLng=null;
+  myHiSent=new Set();myMatches=new Set();matchedProfiles={};
+  incomingHellos=[];isPremium=false;
   window.recaptchaVerifier?.clear();window.recaptchaVerifier=null;
-  document.getElementById('phoneInp').value='';go(0);T('已登出');
+  document.getElementById('phoneInp').value='';
+  go(0);T('已登出');
 }
 
-/* 自動登入 */
+/* 自動登入偵測 */
 auth.onAuthStateChanged(async user=>{if(user&&document.getElementById('s0').classList.contains('active')){currentUser=user;await loadProfile(user.uid);enterApp();}});
 
 /* 工具 */
