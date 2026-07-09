@@ -1318,12 +1318,12 @@ function renderIncomingHellos(){
       const photoHtml=sender.photoBase64
         ?`<img class="hi-card-img" src="${sender.photoBase64}" alt="${sender.name}"/>`
         :`<div class="hi-card-av" style="${c}">${sender.emoji}</div>`;
-      return`<div class="hi-card" onclick="sendHi('${sender.uid}','${sender.name}','${sender.emoji}','${sender.colorIdx}')">
+      return`<div class="hi-card" onclick="showUserDetail('${sender.uid}')">
         <div class="hi-card-av-wrap">
           ${photoHtml}
         </div>
         <div class="hi-card-name">${sender.name}</div>
-        <div class="hi-card-sub" style="color:var(--brand);font-weight:600">👋 回打招呼</div>
+        <div class="hi-card-sub" style="color:var(--brand);font-weight:600">查看個人頁</div>
       </div>`;
     } else {
       // 鎖定狀態：模糊化
@@ -1550,11 +1550,21 @@ async function saveEditProfile(){
 
 /* ===== 公開個人展示頁（別人看到的）===== */
 async function showUserDetail(uid){
-  // 先顯示快取資料，再從 Firestore 載入最新
-  const cached=allUsers.find(u=>u.uid===uid)||matchedProfiles[uid];
-  renderPubProfile(cached||{uid,name:'載入中...',emoji:'😊',colorIdx:0,tags:[]});
+  // 先用快取資料顯示
+  const cached=allUsers.find(u=>u.uid===uid)||matchedProfiles[uid]||incomingHellos.find(h=>h.from===uid&&{uid,name:h.fromName,emoji:'😊',colorIdx:0});
+  if(cached) renderPubProfile(cached.uid?cached:{uid,...cached});
   document.getElementById('pubProfilePage').classList.add('open');
-  try{const doc=await db.collection('users').doc(uid).get();if(doc.exists)renderPubProfile({uid,...doc.data()});}catch(e){}
+  // 再從 Firestore 載入最新資料
+  try{
+    const doc=await db.collection('users').doc(uid).get();
+    if(doc.exists){renderPubProfile({uid,...doc.data()});}
+    else{
+      // Firestore 沒有資料（如 demo 帳號），用 hello 紀錄補充
+      const hello=incomingHellos.find(h=>h.from===uid);
+      const fallback=allUsers.find(u=>u.uid===uid)||{uid,name:hello?.fromName||'用戶',emoji:'😊',colorIdx:0,tags:[],online:false};
+      renderPubProfile(fallback);
+    }
+  }catch(e){console.error(e);}
 }
 
 function renderPubProfile(p){
