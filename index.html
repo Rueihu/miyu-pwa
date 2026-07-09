@@ -1499,7 +1499,8 @@ async function renderProfilePage(){
         <i class="ti ti-map-pin" style="font-size:18px;color:var(--brand)"></i>
         <div><div style="font-size:13px;color:#444">${myLat?'位置已啟用':'尚未取得位置'}</div><div style="font-size:11px;color:#aaa;margin-top:2px">${myLat?`${myLat.toFixed(4)}, ${myLng.toFixed(4)}`:'請允許位置權限'}</div></div>
       </div>
-      <button class="btn-ghost" onclick="doSignOut()" style="margin-bottom:20px">登出</button>
+      <button class="btn-ghost" onclick="doSignOut()" style="margin-bottom:10px">登出</button>
+      <button onclick="toggleTestMode()" style="width:100%;padding:10px;background:#f0f0f0;color:#bbb;border:.5px solid #e0e0e0;border-radius:12px;font-size:12px;cursor:pointer;font-family:inherit;margin-bottom:20px">🧪 開發者測試模式</button>
     </div>
   `;
 }
@@ -1614,8 +1615,122 @@ function renderPubProfile(p){
 
 function closePubProfile(){document.getElementById('pubProfilePage').classList.remove('open');}
 
-/* 登出 */
-async function doSignOut(){
+/* ===== 開發者測試模式 ===== */
+function toggleTestMode(){
+  // 顯示測試選單
+  const existing=document.getElementById('testPanel');
+  if(existing){existing.remove();return;}
+  const panel=document.createElement('div');
+  panel.id='testPanel';
+  panel.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:500;display:flex;align-items:flex-end';
+  panel.innerHTML=`
+    <div style="background:#fff;border-radius:20px 20px 0 0;padding:0 0 calc(20px + var(--sab));width:100%;max-width:430px;margin:auto" onclick="event.stopPropagation()">
+      <div style="width:36px;height:4px;background:#e0e0e0;border-radius:2px;margin:10px auto 14px"></div>
+      <div style="font-size:15px;font-weight:700;color:#111;padding:0 20px 14px;display:flex;align-items:center;gap:6px">
+        🧪 開發者測試模式
+        <span style="font-size:10px;background:#f5f5f0;color:#aaa;padding:2px 8px;border-radius:8px;font-weight:500">僅供測試</span>
+      </div>
+
+      <div style="padding:0 20px;display:flex;flex-direction:column;gap:8px">
+
+        <!-- 塞假招呼 -->
+        <button onclick="injectFakeHellos()" style="width:100%;padding:12px 16px;background:#FEF0EB;border:.5px solid var(--brand-border);border-radius:12px;color:var(--brand-dark);font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;text-align:left;display:flex;align-items:center;gap:10px">
+          <span style="font-size:20px">👋</span>
+          <div><div>塞入 5 筆假招呼</div><div style="font-size:11px;font-weight:400;color:#aaa;margin-top:1px">模擬別人對你打招呼</div></div>
+        </button>
+
+        <!-- 清除假招呼 -->
+        <button onclick="clearFakeHellos()" style="width:100%;padding:12px 16px;background:#FEF2F2;border:.5px solid #FECACA;border-radius:12px;color:#991B1B;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;text-align:left;display:flex;align-items:center;gap:10px">
+          <span style="font-size:20px">🗑️</span>
+          <div><div>清除所有測試招呼</div><div style="font-size:11px;font-weight:400;color:#aaa;margin-top:1px">移除剛才塞入的假資料</div></div>
+        </button>
+
+        <!-- 重置 Premium -->
+        <button onclick="resetPremium()" style="width:100%;padding:12px 16px;background:#FFFBEB;border:.5px solid #FDE68A;border-radius:12px;color:#92400E;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;text-align:left;display:flex;align-items:center;gap:10px">
+          <span style="font-size:20px">🔐</span>
+          <div><div>重置付費狀態</div><div style="font-size:11px;font-weight:400;color:#aaa;margin-top:1px">讓自己回到未付費狀態</div></div>
+        </button>
+
+      </div>
+
+      <div style="padding:14px 20px 0">
+        <button onclick="document.getElementById('testPanel').remove()" style="width:100%;padding:11px;background:#f5f5f0;border:.5px solid #e0e0e0;border-radius:12px;color:#888;font-size:14px;cursor:pointer;font-family:inherit">關閉</button>
+      </div>
+    </div>`;
+  panel.addEventListener('click',()=>panel.remove());
+  document.getElementById('app').appendChild(panel);
+}
+
+const FAKE_SENDERS=[
+  {uid:'fake_s1',name:'小妍',emoji:'😊',colorIdx:0,age:24,city:'台北市',tags:['攝影','咖啡','旅遊'],mbti:'ENFP'},
+  {uid:'fake_s2',name:'阿楷',emoji:'😄',colorIdx:1,age:27,city:'新北市',tags:['爬山','健身','音樂'],mbti:'INTJ'},
+  {uid:'fake_s3',name:'芷雯',emoji:'🌸',colorIdx:2,age:23,city:'台中市',tags:['貓咪','閱讀','插畫'],mbti:'INFJ'},
+  {uid:'fake_s4',name:'建翔',emoji:'☕',colorIdx:3,age:26,city:'台南市',tags:['桌遊','電影','料理'],mbti:'ESTP'},
+  {uid:'fake_s5',name:'欣蕾',emoji:'🎵',colorIdx:4,age:25,city:'高雄市',tags:['音樂','瑜珈','甜點'],mbti:'ENFJ'},
+];
+
+async function injectFakeHellos(){
+  if(!currentUser){T('請先登入');return;}
+  document.getElementById('testPanel')?.remove();
+  T('正在塞入測試資料...');
+  try{
+    const batch=db.batch();
+    for(const s of FAKE_SENDERS){
+      // 寫入 hello 紀錄
+      const helloRef=db.collection('hellos').doc(`${s.uid}_${currentUser.uid}`);
+      batch.set(helloRef,{
+        from:s.uid, to:currentUser.uid,
+        fromName:s.name,
+        createdAt:firebase.firestore.FieldValue.serverTimestamp()
+      });
+      // 同時寫入假用戶資料到 users（讓個人頁可以顯示完整資訊）
+      const userRef=db.collection('users').doc(s.uid);
+      batch.set(userRef,{
+        uid:s.uid, name:s.name, emoji:s.emoji,
+        colorIdx:s.colorIdx, age:s.age, city:s.city,
+        tags:s.tags, mbti:s.mbti,
+        online:true, location:myLat?{lat:myLat+(Math.random()-.5)*.02,lng:myLng+(Math.random()-.5)*.02}:null,
+        phone:'', gender:s.colorIdx%2===0?'female':'male',
+      },{merge:true});
+    }
+    await batch.commit();
+    T('✅ 已塞入 5 筆假招呼！');
+    await loadIncomingHellos();
+    renderMatchPage();
+    switchTab('match');
+  }catch(e){T('塞入失敗：'+e.message);console.error(e);}
+}
+
+async function clearFakeHellos(){
+  if(!currentUser){T('請先登入');return;}
+  document.getElementById('testPanel')?.remove();
+  T('清除中...');
+  try{
+    const batch=db.batch();
+    for(const s of FAKE_SENDERS){
+      batch.delete(db.collection('hellos').doc(`${s.uid}_${currentUser.uid}`));
+    }
+    await batch.commit();
+    incomingHellos=incomingHellos.filter(h=>!FAKE_SENDERS.find(s=>s.uid===h.from));
+    T('✅ 測試資料已清除');
+    renderIncomingHellos();
+    renderMatchPage();
+  }catch(e){T('清除失敗：'+e.message);}
+}
+
+async function resetPremium(){
+  if(!currentUser){T('請先登入');return;}
+  document.getElementById('testPanel')?.remove();
+  try{
+    await db.collection('users').doc(currentUser.uid).update({isPremium:false});
+    if(myProfile)myProfile.isPremium=false;
+    isPremium=false;
+    T('✅ 付費狀態已重置');
+    renderIncomingHellos();
+    renderMatchPage();
+    renderProfilePage();
+  }catch(e){T('重置失敗');}
+}
   clearInterval(locTimer);if(chatUnsubscribe){chatUnsubscribe();chatUnsubscribe=null;}
   if(currentUser){try{await db.collection('users').doc(currentUser.uid).update({online:false});}catch(e){}}
   await auth.signOut();
