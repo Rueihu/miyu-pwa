@@ -169,8 +169,32 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
 .matched-preview{font-size:12px;color:#aaa;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .match-badge{display:inline-flex;align-items:center;gap:3px;font-size:10px;color:#22C55E;background:#F0FDF4;padding:2px 8px;border-radius:8px;border:.5px solid #BBF7D0;font-weight:600}
 
+/* ===== 照片牆 ===== */
+.photo-wall{display:flex;gap:6px;padding:0 16px 14px;overflow-x:auto;scrollbar-width:none}
+.photo-wall::-webkit-scrollbar{display:none}
+.pw-slot{flex-shrink:0;width:100px;height:100px;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;border:.5px solid #e8e8e8}
+.pw-slot img{width:100%;height:100%;object-fit:cover;display:block}
+.pw-slot-empty{width:100%;height:100%;background:#f5f5f0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:#ccc;transition:all .15s}
+.pw-slot-empty:hover{background:#f0f0f0;color:#aaa}
+.pw-slot-empty i{font-size:22px}
+.pw-slot-empty span{font-size:10px;font-weight:600}
+.pw-slot-main-badge{position:absolute;top:5px;left:5px;background:var(--brand);color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:6px}
+.pw-slot-del{position:absolute;top:4px;right:4px;width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;border:none;cursor:pointer}
+.pw-slot-del:hover{background:rgba(200,30,30,.8)}
+.pub-photo-wall{display:flex;gap:6px;padding:0 16px 14px;overflow-x:auto;scrollbar-width:none}
+.pub-photo-wall::-webkit-scrollbar{display:none}
+.pub-pw-item{flex-shrink:0;width:110px;height:110px;border-radius:12px;overflow:hidden;border:.5px solid #e8e8e8;cursor:pointer}
+.pub-pw-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .2s}
+.pub-pw-item:hover img{transform:scale(1.05)}
+.pub-pw-item:first-child{width:130px;height:130px}
+.photo-preview-overlay{position:absolute;inset:0;background:rgba(0,0,0,.92);z-index:500;display:none;flex-direction:column;align-items:center;justify-content:center}
+.photo-preview-overlay.open{display:flex}
+.photo-preview-img{max-width:100%;max-height:80%;object-fit:contain;border-radius:4px}
+.photo-preview-close{position:absolute;top:calc(14px + var(--sat));right:16px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;cursor:pointer;border:none}
+.photo-preview-nav{display:flex;gap:6px;margin-top:14px}
+.pp-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.4);cursor:pointer;transition:background .2s}
+.pp-dot.active{background:#fff}
 /* ===== 付費解鎖：收到的招呼 ===== */
-.incoming-section{flex-shrink:0;border-bottom:.5px solid #f0f0f0}
 .incoming-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px 8px}
 .incoming-title{font-size:13px;font-weight:700;color:#111;display:flex;align-items:center;gap:6px}
 .incoming-count-badge{background:var(--brand);color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;display:flex;align-items:center;justify-content:center;padding:0 5px}
@@ -708,6 +732,14 @@ body.show-recaptcha .grecaptcha-badge{visibility:visible!important}
 
   <!-- 隱藏 file input（照片上傳用）-->
   <input type="file" id="photoFileInp" accept="image/*" style="display:none" onchange="onPhotoSelected(event)"/>
+  <input type="file" id="photoWallInp" accept="image/*" style="display:none" onchange="onWallPhotoSelected(event)"/>
+
+  <!-- 全螢幕照片預覽 -->
+  <div class="photo-preview-overlay" id="photoPreviewOverlay">
+    <button class="photo-preview-close" onclick="closePhotoPreview()">✕</button>
+    <img class="photo-preview-img" id="photoPreviewImg" src="" alt=""/>
+    <div class="photo-preview-nav" id="photoPreviewNav"></div>
+  </div>
 
   <!-- Tab Bar -->
   <div class="tab-bar">
@@ -1380,40 +1412,105 @@ function updateMatchBadge(){
 
 /* 個人頁由下方 async function renderProfilePage 處理 */
 
-/* ===== 照片上傳 ===== */
+/* ===== 照片上傳（大頭照）===== */
 function trigPhotoUpload(){document.getElementById('photoFileInp').click();}
 
 function onPhotoSelected(e){
   const file=e.target.files[0];e.target.value='';
   if(!file||!file.type.startsWith('image/'))return;
   const reader=new FileReader();
-  reader.onload=ev=>compressAndSave(ev.target.result);
+  reader.onload=ev=>compressPhoto(ev.target.result, compressed=>{
+    savePhoto(0, compressed);
+  });
   reader.readAsDataURL(file);
 }
 
-function compressAndSave(dataUrl){
+/* ===== 照片牆上傳 ===== */
+let wallUploadSlot=0;
+function trigWallUpload(slot){
+  wallUploadSlot=slot;
+  document.getElementById('photoWallInp').click();
+}
+
+function onWallPhotoSelected(e){
+  const file=e.target.files[0];e.target.value='';
+  if(!file||!file.type.startsWith('image/'))return;
+  const reader=new FileReader();
+  reader.onload=ev=>compressPhoto(ev.target.result, compressed=>{
+    savePhoto(wallUploadSlot, compressed);
+  });
+  reader.readAsDataURL(file);
+}
+
+/* 壓縮照片（最大 400px，JPEG 70%）*/
+function compressPhoto(dataUrl, callback){
   const img=new Image();
-  img.onload=async()=>{
-    // 壓縮到最大 400px，JPEG 70%
+  img.onload=()=>{
     const MAX=400,q=0.7;
     let w=img.width,h=img.height;
     if(w>MAX){h=Math.round(h*MAX/w);w=MAX;}
     if(h>MAX){w=Math.round(w*MAX/h);h=MAX;}
     const c=document.createElement('canvas');c.width=w;c.height=h;
     c.getContext('2d').drawImage(img,0,0,w,h);
-    const compressed=c.toDataURL('image/jpeg',q);
-    // 存到 Firestore 和本地
-    if(currentUser){
-      try{
-        await db.collection('users').doc(currentUser.uid).update({photoBase64:compressed});
-        if(myProfile)myProfile.photoBase64=compressed;
-        renderProfilePage();
-        T('照片已更新 ✓');
-      }catch(err){T('上傳失敗，請重試');}
-    }
+    callback(c.toDataURL('image/jpeg',q));
   };
   img.src=dataUrl;
 }
+
+/* 儲存照片到 Firestore（slot 0-4）*/
+async function savePhoto(slot, compressed){
+  if(!currentUser)return;
+  try{
+    // 取得現有照片陣列
+    const photos=myProfile?.photos||new Array(5).fill(null);
+    photos[slot]=compressed;
+    // slot 0 同時更新大頭照
+    const update={photos};
+    if(slot===0) update.photoBase64=compressed;
+    await db.collection('users').doc(currentUser.uid).update(update);
+    if(!myProfile.photos) myProfile.photos=new Array(5).fill(null);
+    myProfile.photos[slot]=compressed;
+    if(slot===0) myProfile.photoBase64=compressed;
+    renderProfilePage();
+    T(slot===0?'大頭照已更新 ✓':'照片已新增 ✓');
+  }catch(err){T('上傳失敗，請重試');}
+}
+
+/* 刪除照片 */
+async function deletePhoto(slot){
+  if(!currentUser)return;
+  const photos=myProfile?.photos||new Array(5).fill(null);
+  photos[slot]=null;
+  const update={photos};
+  if(slot===0){
+    // 大頭照刪除後用第二張補上
+    const next=photos.find((p,i)=>i>0&&p);
+    update.photoBase64=next||null;
+    if(myProfile)myProfile.photoBase64=next||null;
+  }
+  try{
+    await db.collection('users').doc(currentUser.uid).update(update);
+    if(myProfile)myProfile.photos=photos;
+    renderProfilePage();T('照片已刪除');
+  }catch(e){T('刪除失敗');}
+}
+
+/* 全螢幕照片預覽 */
+let previewPhotos=[], previewIdx=0;
+function openPhotoPreview(photos, idx){
+  previewPhotos=photos.filter(Boolean);
+  previewIdx=idx;
+  document.getElementById('photoPreviewImg').src=previewPhotos[previewIdx];
+  const nav=document.getElementById('photoPreviewNav');
+  nav.innerHTML=previewPhotos.map((_,i)=>`<div class="pp-dot ${i===previewIdx?'active':''}" onclick="switchPreview(${i})"></div>`).join('');
+  document.getElementById('photoPreviewOverlay').classList.add('open');
+}
+function switchPreview(idx){
+  previewIdx=idx;
+  document.getElementById('photoPreviewImg').src=previewPhotos[idx];
+  document.querySelectorAll('.pp-dot').forEach((d,i)=>d.classList.toggle('active',i===idx));
+}
+function closePhotoPreview(){document.getElementById('photoPreviewOverlay').classList.remove('open');}
 
 /* ===== 自己的個人頁 ===== */
 async function renderProfilePage(){
@@ -1425,24 +1522,37 @@ async function renderProfilePage(){
   // 若 Firestore 完全沒有資料，用 Firebase Auth 基本資料建立臨時 profile
   if(!p){
     if(currentUser){
-      myProfile={uid:currentUser.uid,phone:currentUser.phoneNumber||'',name:'蜜友用戶',age:22,city:'',gender:null,tags:[],mbti:'',emoji:'😊',colorIdx:Math.floor(Math.random()*5),online:true,location:null};
-      // 自動存入 Firestore
+      myProfile={uid:currentUser.uid,phone:currentUser.phoneNumber||'',name:'蜜友用戶',age:22,city:'',gender:null,tags:[],mbti:'',emoji:'😊',colorIdx:Math.floor(Math.random()*5),online:true,location:null,photos:new Array(5).fill(null)};
       try{await db.collection('users').doc(currentUser.uid).set({...myProfile,createdAt:firebase.firestore.FieldValue.serverTimestamp()});}catch(e){}
     }else{document.getElementById('profileContent').innerHTML='<div style="padding:20px;text-align:center;color:#aaa">請先登入</div>';return;}
   }
-  const c=COLORS[p.colorIdx%COLORS.length];
-  const photoHtml=p.photoBase64
-    ?`<div class="photo-upload-wrap" onclick="trigPhotoUpload()">
-        <img class="profile-photo" src="${p.photoBase64}" alt=""/>
-        <div class="photo-edit-mask"><i class="ti ti-camera"></i>換照片</div>
+  if(!myProfile.photos) myProfile.photos=new Array(5).fill(null);
+  const c2=COLORS[p.colorIdx%COLORS.length];
+  // 大頭照（slot 0 = 照片牆第一張）
+  const mainPhoto=p.photos?.[0]||p.photoBase64||null;
+  const photoHtml=mainPhoto
+    ?`<div class="photo-upload-wrap" onclick="trigWallUpload(0)">
+        <img class="profile-photo" src="${mainPhoto}" alt=""/>
+        <div class="photo-edit-mask"><i class="ti ti-camera"></i>換大頭照</div>
       </div>`
-    :`<div class="photo-upload-wrap" onclick="trigPhotoUpload()">
-        <div class="photo-placeholder" style="${c}">${p.emoji}</div>
+    :`<div class="photo-upload-wrap" onclick="trigWallUpload(0)">
+        <div class="photo-placeholder" style="${c2}">${p.emoji}</div>
         <div class="photo-edit-mask"><i class="ti ti-camera"></i>上傳照片</div>
       </div>`;
+  // 照片牆（5格）
+  const wallHtml=(p.photos||new Array(5).fill(null)).map((photo,i)=>{
+    if(photo) return`<div class="pw-slot">
+      <img src="${photo}" alt="" onclick="openPhotoPreview(myProfile.photos,${i})"/>
+      ${i===0?'<div class="pw-slot-main-badge">主照片</div>':''}
+      <button class="pw-slot-del" onclick="event.stopPropagation();deletePhoto(${i})">✕</button>
+    </div>`;
+    return`<div class="pw-slot" onclick="trigWallUpload(${i})">
+      <div class="pw-slot-empty"><i class="ti ti-plus"></i><span>${i===0?'主照片':'新增'}</span></div>
+    </div>`;
+  }).join('');
   const tagsHtml=(p.tags||[]).map(t=>`<div class="pub-tag">${t}</div>`).join('');
   document.getElementById('profileContent').innerHTML=`
-    <div class="profile-cover" style="background:linear-gradient(135deg,var(--brand),#F4A46A);height:130px;flex-shrink:0"></div>
+    <div style="height:130px;background:linear-gradient(135deg,var(--brand),#F4A46A);flex-shrink:0"></div>
     <div style="display:flex;align-items:flex-end;justify-content:space-between;padding:0 16px;margin-top:-44px;margin-bottom:10px">
       ${photoHtml}
       <button class="profile-edit-btn" onclick="openEditProfile()" style="margin-bottom:4px">✏️ 編輯資料</button>
@@ -1450,24 +1560,16 @@ async function renderProfilePage(){
     <div class="pub-name" style="font-size:19px">${p.name}，${p.age}歲 <span class="v-badge">✓ 已驗證</span></div>
     <div class="pub-sub">📍 ${p.city||'台灣'}${p.gender?` · ${p.gender==='male'?'👨 男生':p.gender==='female'?'👩 女生':'🧑 其他'}`:''}</div>
     ${p.mbti?`<div class="pub-mbti-badge">🧠 ${p.mbti}</div>`:''}
-    <div style="padding:0 16px 6px;font-size:12px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.4px">興趣標籤</div>
-    <div class="pub-tags" style="padding-bottom:14px">${tagsHtml||'<span style="color:#bbb;font-size:13px">尚未設定標籤</span>'}</div>
+    <div style="padding:0 16px 6px;font-size:12px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.4px">我的照片 <span style="color:#bbb;font-weight:400;font-size:11px">（點格子上傳，最多 5 張）</span></div>
+    <div class="photo-wall">${wallHtml}</div>
+    ${tagsHtml?`<div style="padding:0 16px 6px;font-size:12px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.4px">興趣標籤</div><div class="pub-tags" style="padding:0 16px 14px">${tagsHtml}</div>`:''}
     <div style="border-top:.5px solid #f0f0f0;margin:0 16px 14px"></div>
     <div style="padding:0 16px">
       <div style="font-size:12px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px">我的數據</div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px">
-        <div style="background:#f9f9f8;border:.5px solid #e8e8e8;border-radius:12px;padding:12px;text-align:center">
-          <div style="font-size:22px;font-weight:700;color:var(--brand)">${myMatches.size}</div>
-          <div style="font-size:11px;color:#aaa;margin-top:2px">配對數</div>
-        </div>
-        <div style="background:#f9f9f8;border:.5px solid #e8e8e8;border-radius:12px;padding:12px;text-align:center">
-          <div style="font-size:22px;font-weight:700;color:var(--brand)">${myHiSent.size}</div>
-          <div style="font-size:11px;color:#aaa;margin-top:2px">打招呼</div>
-        </div>
-        <div style="background:#f9f9f8;border:.5px solid #e8e8e8;border-radius:12px;padding:12px;text-align:center">
-          <div style="font-size:22px;font-weight:700;color:var(--brand)">${activities.filter(a=>a.attendees.includes(currentUser?.uid)).length}</div>
-          <div style="font-size:11px;color:#aaa;margin-top:2px">活動</div>
-        </div>
+        <div style="background:#f9f9f8;border:.5px solid #e8e8e8;border-radius:12px;padding:12px;text-align:center"><div style="font-size:22px;font-weight:700;color:var(--brand)">${myMatches.size}</div><div style="font-size:11px;color:#aaa;margin-top:2px">配對數</div></div>
+        <div style="background:#f9f9f8;border:.5px solid #e8e8e8;border-radius:12px;padding:12px;text-align:center"><div style="font-size:22px;font-weight:700;color:var(--brand)">${myHiSent.size}</div><div style="font-size:11px;color:#aaa;margin-top:2px">打招呼</div></div>
+        <div style="background:#f9f9f8;border:.5px solid #e8e8e8;border-radius:12px;padding:12px;text-align:center"><div style="font-size:22px;font-weight:700;color:var(--brand)">${activities.filter(a=>a.attendees.includes(currentUser?.uid)).length}</div><div style="font-size:11px;color:#aaa;margin-top:2px">活動</div></div>
       </div>
       <div style="font-size:12px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px">帳號資訊</div>
       <div style="background:#f9f9f8;border:.5px solid #e8e8e8;border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:10px;margin-bottom:8px">
@@ -1483,6 +1585,7 @@ async function renderProfilePage(){
     </div>
   `;
 }
+
 
 /* ===== 編輯個人資料 ===== */
 function openEditProfile(){
@@ -1578,6 +1681,13 @@ function renderPubProfile(p){
     </div>
     ${p.mbti?`<div class="pub-mbti-badge">🧠 ${p.mbti}</div>`:''}
     ${p.bio?`<div style="padding:0 16px 14px;font-size:14px;color:#555;line-height:1.65">${p.bio}</div>`:''}
+    ${(()=>{
+      const photos=(p.photos||[]).filter(Boolean);
+      if(!photos.length&&!p.photoBase64) return '';
+      const allPhotos=photos.length?photos:[p.photoBase64];
+      return `<div style="padding:0 16px 6px;font-size:12px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.4px">照片</div>
+        <div class="pub-photo-wall">${allPhotos.map((ph,i)=>`<div class="pub-pw-item" onclick="openPhotoPreview(${JSON.stringify(allPhotos)},${i})"><img src="${ph}" alt=""/></div>`).join('')}</div>`;
+    })()}
     ${tagsHtml?`<div style="padding:0 16px 6px;font-size:12px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.4px">興趣</div><div class="pub-tags">${tagsHtml}</div>`:''}
     <div style="padding:14px 16px 6px;font-size:12px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.4px">距離</div>
     <div style="padding:0 16px 20px;font-size:14px;color:#555;display:flex;align-items:center;gap:6px">
