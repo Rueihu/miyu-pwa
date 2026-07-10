@@ -358,10 +358,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
 /* 公開個人頁 */
 .pub-profile-overlay{position:absolute;inset:0;z-index:200;background:#fff;display:none;flex-direction:column;overflow:hidden}
 .pub-profile-overlay.open{display:flex}
-.pub-profile-scroll{flex:1;overflow-y:auto;padding-bottom:90px}
-.pub-profile-cover{height:160px;background:linear-gradient(135deg,var(--brand),#F4A46A);flex-shrink:0;position:relative;overflow:visible}
-.pub-back-btn{position:absolute;top:12px;left:12px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.85);display:flex;align-items:center;justify-content:center;font-size:20px;color:#444;cursor:pointer;border:none;z-index:2}
-.pub-av-row{display:flex;align-items:flex-end;justify-content:space-between;padding:0 16px;position:relative;margin-top:-46px;margin-bottom:10px;z-index:3}
+.pub-profile-cover{height:150px;background:linear-gradient(135deg,var(--brand),#F4A46A);flex-shrink:0;position:relative}
+.pub-back-btn{position:absolute;top:calc(12px + var(--sat));left:12px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.85);display:flex;align-items:center;justify-content:center;font-size:20px;color:#444;cursor:pointer;border:none;z-index:2}
+.pub-av-row{position:absolute;bottom:-44px;left:0;right:0;display:flex;align-items:flex-end;justify-content:space-between;padding:0 16px;z-index:2}
+.pub-profile-scroll{flex:1;overflow-y:auto;padding-top:54px;padding-bottom:90px}
 .pub-photo{width:88px;height:88px;border-radius:50%;object-fit:cover;border:3px solid #fff;box-shadow:0 2px 10px rgba(0,0,0,.18);display:block}
 .pub-placeholder{width:88px;height:88px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:700;border:3px solid #fff;box-shadow:0 2px 10px rgba(0,0,0,.15)}
 .pub-hi-btn{display:flex;align-items:center;gap:6px;padding:10px 18px;background:var(--brand);color:#fff;border:none;border-radius:22px;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:4px;font-family:inherit}
@@ -725,8 +725,9 @@ body.show-recaptcha .grecaptcha-badge{visibility:visible!important}
   <div class="pub-profile-overlay" id="pubProfilePage">
     <div class="pub-profile-cover">
       <button class="pub-back-btn" onclick="closePubProfile()">‹</button>
+      <div class="pub-av-row" id="pubAvRow"></div>
     </div>
-    <div style="flex:1;overflow-y:auto;padding-bottom:90px;overflow-x:visible" id="pubProfileBody"></div>
+    <div style="flex:1;overflow-y:auto;padding-top:54px;padding-bottom:90px" id="pubProfileBody"></div>
     <div class="pub-footer" id="pubProfileFooter"></div>
   </div>
 
@@ -1667,16 +1668,16 @@ function renderPubProfile(p){
   if(isM){btnClass='matched';btnHtml='<i class="ti ti-message-circle"></i> 傳送訊息';}
   else if(sentH){btnClass='sent';btnHtml='<i class="ti ti-check"></i> 已打招呼';}
   else{btnClass='';btnHtml='<i class="ti ti-hand-stop"></i> 打招呼';}
-  document.getElementById('pubProfileBody').innerHTML=`
-    <div style="height:18px"></div>
-    <div class="pub-av-row">
-      ${photoHtml}
-      <div style="margin-bottom:4px">
-        ${isM?`<button class="pub-hi-btn matched" onclick="openPrivateChat('${p.uid}');closePubProfile()"><i class="ti ti-message-circle"></i> 傳送訊息</button>`
-            :sentH?`<button class="pub-hi-btn sent" disabled><i class="ti ti-check"></i> 已打招呼</button>`
-            :`<button class="pub-hi-btn" onclick="sendHi('${p.uid}','${p.name}','${p.emoji||'😊'}','${p.colorIdx}');closePubProfile()"><i class="ti ti-hand-stop"></i> 打招呼</button>`}
-      </div>
+  // avatar 放到 cover 的 pubAvRow
+  document.getElementById('pubAvRow').innerHTML=`
+    ${photoHtml}
+    <div style="margin-bottom:6px">
+      ${isM?`<button class="pub-hi-btn matched" onclick="openPrivateChat('${p.uid}');closePubProfile()"><i class="ti ti-message-circle"></i> 傳送訊息</button>`
+          :sentH?`<button class="pub-hi-btn sent" disabled><i class="ti ti-check"></i> 已打招呼</button>`
+          :`<button class="pub-hi-btn" onclick="sendHi('${p.uid}','${p.name}','${p.emoji||'😊'}','${p.colorIdx}');closePubProfile()"><i class="ti ti-hand-stop"></i> 打招呼</button>`}
     </div>
+  `;
+  document.getElementById('pubProfileBody').innerHTML=`
     <div class="pub-name">${p.name}${p.age?`，${p.age}歲`:''} ${p.phone?'<span class="v-badge">✓ 已驗證</span>':''}</div>
     <div class="pub-sub">
       ${p.city?`📍 ${p.city}`:''}
