@@ -988,10 +988,42 @@ async function sendHi(tid,tname,temoji,tci){
 async function loadMyHiSent(){if(!currentUser)return;try{const s=await db.collection('hellos').where('from','==',currentUser.uid).get();s.forEach(d=>myHiSent.add(d.data().to));}catch(e){}}
 function listenMatches(){
   if(!currentUser)return;
-  db.collection('matches').where('users','array-contains',currentUser.uid).onSnapshot(snap=>{
-    snap.docChanges().forEach(ch=>{
-      if(ch.type==='added'){const d=ch.doc.data();const ou=d.users.find(u=>u!==currentUser.uid);myMatches.add(ou);matchedProfiles[ou]={uid:ou,name:d.userNames[ou],emoji:d.userEmojis[ou],colorIdx:d.userColorIdx[ou],matchId:ch.doc.id,lastMsg:d.lastMsg||'',lastMsgAt:d.lastMsgAt};}
-    });
+  db.collection('matches').where('users','array-contains',currentUser.uid).onSnapshot(async snap=>{
+    const changes=snap.docChanges();
+    for(const ch of changes){
+      if(ch.type==='added'){
+        const d=ch.doc.data();
+        const ou=d.users.find(u=>u!==currentUser.uid);
+        myMatches.add(ou);
+        matchedProfiles[ou]={
+          uid:ou,
+          name:d.userNames[ou],
+          emoji:d.userEmojis[ou],
+          colorIdx:d.userColorIdx[ou],
+          matchId:ch.doc.id,
+          lastMsg:d.lastMsg||'',
+          lastMsgAt:d.lastMsgAt
+        };
+        // 非同步載入對方完整資料（含照片）
+        db.collection('users').doc(ou).get().then(uDoc=>{
+          if(uDoc.exists){
+            const ud=uDoc.data();
+            Object.assign(matchedProfiles[ou],{
+              photoBase64:ud.photoBase64||null,
+              photos:ud.photos||null,
+              city:ud.city||'',
+              gender:ud.gender||null,
+              tags:ud.tags||[],
+              mbti:ud.mbti||'',
+              bio:ud.bio||'',
+              online:ud.online||false,
+              location:ud.location||null,
+            });
+            renderMatchPage();
+          }
+        }).catch(()=>{});
+      }
+    }
     updateMatchBadge();renderUserList();renderMatchPage();
   });
 }
@@ -1017,7 +1049,18 @@ function renderMatchPage(){
   else ps.style.display='none';
   const ml=document.getElementById('matchedLabel');const mlist=document.getElementById('matchedList');const mes=document.getElementById('matchEmptyState');const sub=document.getElementById('matchHeaderSub');
   if(matched.length){ml.style.display='block';mes.style.display='none';sub.textContent=`你有 ${matched.length} 個配對！`;
-    mlist.innerHTML=matched.map(p=>{const c=COLORS[p.colorIdx%COLORS.length];return`<div class="matched-card" onclick="openPrivateChat('${p.uid}')"><div class="matched-av" style="${c}">${p.emoji}</div><div class="matched-info"><div class="matched-name">${p.name}</div><div class="matched-preview">${p.lastMsg||'點擊開始聊天 💬'}</div></div><span>💚</span></div>`;}).join('');
+    mlist.innerHTML=matched.map(p=>{
+      const c=COLORS[p.colorIdx%COLORS.length];
+      const mainPhoto=p.photos?.[0]||p.photoBase64||null;
+      const avHtml=mainPhoto
+        ?`<img src="${mainPhoto}" style="width:52px;height:52px;border-radius:50%;object-fit:cover;border:2px solid #22C55E;display:block" alt="${p.name}"/>`
+        :`<div class="matched-av" style="${c}">${p.emoji}</div>`;
+      return`<div class="matched-card" onclick="openPrivateChat('${p.uid}')">
+        ${avHtml}
+        <div class="matched-info"><div class="matched-name">${p.name}</div><div class="matched-preview">${p.lastMsg||'點擊開始聊天 💬'}</div></div>
+        <span>💚</span>
+      </div>`;
+    }).join('');
   }else if(!pending.length){ml.style.display='none';mlist.innerHTML='';mes.style.display='flex';sub.textContent='尚未有配對';}
   else{ml.style.display='none';mlist.innerHTML='';mes.style.display='none';sub.textContent='等待對方回應中...';}
 }
@@ -1205,7 +1248,14 @@ function openPrivateChat(uid){
   chatMode='private';chatTarget=uid;prevTab=getCurrentTab();
   const c=COLORS[p.colorIdx%COLORS.length];
   const hdr=document.getElementById('chatHdrAv');
-  hdr.className='chat-header-av';hdr.style.cssText=c;hdr.textContent=p.emoji;
+  const mainPhoto=p.photos?.[0]||p.photoBase64||null;
+  if(mainPhoto){
+    hdr.className='chat-header-av';hdr.style.cssText='';
+    hdr.innerHTML=`<img src="${mainPhoto}" style="width:38px;height:38px;border-radius:50%;object-fit:cover;display:block" alt="${p.name}"/>`;
+  } else {
+    hdr.className='chat-header-av';hdr.style.cssText=c;
+    hdr.innerHTML=p.emoji;
+  }
   hdr.style.cursor='pointer';hdr.title='查看個人頁面';
   hdr.onclick=()=>showUserDetail(uid);
   document.getElementById('chatHdrName').textContent=p.name;
