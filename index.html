@@ -316,6 +316,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
 .btn-submit{flex:2;padding:11px;background:var(--brand);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit}
 .btn-submit:hover{background:var(--brand-dark)}
 
+/* ===== ✨ 聊天小幫手 ===== */
+.ai-assist-bar{background:linear-gradient(135deg,#1A1A2E,#16213E);border-top:.5px solid rgba(255,255,255,.08);padding:10px 12px;flex-shrink:0;display:none}
+.ai-assist-bar.open{display:block}
+.ai-assist-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.ai-assist-title{font-size:11px;font-weight:700;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:5px}
+.ai-assist-close{font-size:14px;color:rgba(255,255,255,.4);cursor:pointer;padding:2px 4px}
+.ai-chips{display:flex;gap:7px;flex-wrap:wrap}
+.ai-chip{padding:7px 13px;background:rgba(255,255,255,.08);border:.5px solid rgba(255,255,255,.15);border-radius:20px;font-size:13px;color:#fff;cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .15s}
+.ai-chip:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.3)}
+.ai-loading-row{display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.5);font-size:12px}
+.ai-spin{width:14px;height:14px;border:2px solid rgba(255,255,255,.2);border-top-color:rgba(255,255,255,.7);border-radius:50%;animation:sp .7s linear infinite;flex-shrink:0}
+.ai-assist-btn{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#534AB7,#8B5CF6);border:none;color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s;box-shadow:0 2px 8px rgba(83,74,183,.4)}
+.ai-assist-btn:hover{transform:scale(1.08)}
+.ai-assist-btn.active{background:linear-gradient(135deg,#8B5CF6,#EC4899)}
+
 /* 聊天室 */
 .chat-header{display:flex;align-items:center;gap:10px;padding:12px 14px;background:#fff;border-bottom:.5px solid #eee;flex-shrink:0}
 .chat-back{width:36px;height:36px;border-radius:50%;background:#f5f5f0;border:.5px solid #e0e0e0;display:flex;align-items:center;justify-content:center;color:#666;cursor:pointer;font-size:20px}
@@ -658,7 +673,16 @@ body.show-recaptcha .grecaptcha-badge{visibility:visible!important}
     </div>
     <div class="chat-messages" id="chatMessages"></div>
     <div class="eq-row" id="eqRow"></div>
+    <!-- 小幫手建議面板 -->
+    <div class="ai-assist-bar" id="aiAssistBar">
+      <div class="ai-assist-header">
+        <div class="ai-assist-title">✨ 小幫手建議</div>
+        <span class="ai-assist-close" onclick="closeAiAssist()">✕</span>
+      </div>
+      <div id="aiChips"></div>
+    </div>
     <div class="chat-input-bar">
+      <button class="ai-assist-btn" id="aiAssistBtn" onclick="toggleAiAssist()" title="✨ 聊天小幫手">✨</button>
       <input class="chat-inp" id="chatInp" placeholder="傳送訊息..." maxlength="500" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMsg();}"/>
       <button class="chat-send" onclick="sendMsg()"><i class="ti ti-send"></i></button>
     </div>
@@ -817,6 +841,71 @@ let prevTab='nearby',newMatchUid=null;
 /* 活動 */
 let activities=[],activeCat='all',createCat='cafe',currentActId=null;
 
+/* ===== 演算法評分系統 ===== */
+
+// 計算單一用戶的排名分數（滿分 100）
+function calcRankScore(u){
+  let score=0;
+  const now=Date.now();
+
+  // ① 活躍度（0-40 分）
+  const lastSeen=(u.locationUpdatedAt?.toDate?.()?.getTime()
+    ||u.updatedAt?.toDate?.()?.getTime()
+    ||u.lastActiveAt?.toDate?.()?.getTime()||0);
+  const hoursAgo=(now-lastSeen)/3600000;
+  if(u.online||hoursAgo<1) score+=40;
+  else if(hoursAgo<6)  score+=32;
+  else if(hoursAgo<24) score+=20;
+  else if(hoursAgo<72) score+=10;
+  else if(hoursAgo<168)score+=3;
+
+  // ② 資料完整度（0-30 分）
+  if(u.photoBase64||(u.photos||[]).some(Boolean)) score+=15;
+  if(u.bio&&u.bio.length>5) score+=8;
+  if((u.tags||[]).length>=3) score+=7;
+
+  // ③ 已驗證帳號（0-15 分）
+  if(u.phone) score+=15;
+
+  // ④ 打招呼回應率（0-15 分）
+  const sent=u.helloSentCount||0;
+  const matched=u.matchCount||0;
+  if(sent>0) score+=Math.round(Math.min(matched/sent,1)*15);
+  else if(matched>0) score+=10;
+
+  return Math.min(score,100);
+}
+
+// 判斷是否為活躍用戶（6小時內）
+function isActiveUser(u){
+  if(u.online)return true;
+  const t=u.locationUpdatedAt?.toDate?.()?.getTime()
+    ||u.lastActiveAt?.toDate?.()?.getTime()||0;
+  return(Date.now()-t)<6*3600000;
+}
+
+// 依演算法排序（活躍 → 一般 → 不活躍，層內按分數，接近時按距離）
+function rankUsers(users){
+  const scored=users.map(u=>({...u,rankScore:calcRankScore(u)}));
+  const isNormal=u=>{
+    const t=u.locationUpdatedAt?.toDate?.()?.getTime()
+      ||u.lastActiveAt?.toDate?.()?.getTime()||0;
+    return(Date.now()-t)<72*3600000;
+  };
+  const active=scored.filter(u=>isActiveUser(u));
+  const normal=scored.filter(u=>!isActiveUser(u)&&isNormal(u));
+  const inactive=scored.filter(u=>!isActiveUser(u)&&!isNormal(u));
+  const byScoreThenDist=(a,b)=>{
+    const diff=b.rankScore-a.rankScore;
+    return Math.abs(diff)>20?diff:a.dist-b.dist;
+  };
+  return[
+    ...active.sort(byScoreThenDist),
+    ...normal.sort(byScoreThenDist),
+    ...inactive.sort((a,b)=>a.dist-b.dist),
+  ];
+}
+
 /* 距離 */
 function calcDist(a,b,c,d){const R=6371,dL=(c-a)*Math.PI/180,dG=(d-b)*Math.PI/180,x=Math.sin(dL/2)**2+Math.cos(a*Math.PI/180)*Math.cos(c*Math.PI/180)*Math.sin(dG/2)**2;return R*2*Math.atan2(Math.sqrt(x),Math.sqrt(1-x));}
 function fmtDist(k){if(k<1)return Math.round(k*1000)+'m 內';if(k<10)return k.toFixed(1)+' 公里內';return Math.round(k)+' 公里內';}
@@ -911,6 +1000,8 @@ function enterApp(){
   document.getElementById('pb').classList.remove('show');
   startLocTracking();loadNearbyUsers();listenMatches();loadMyHiSent();
   loadActivities();renderCatBar();loadIncomingHellos();
+  // 記錄活躍時間
+  if(currentUser) db.collection('users').doc(currentUser.uid).update({lastActiveAt:firebase.firestore.FieldValue.serverTimestamp()}).catch(()=>{});
 }
 
 /* 位置 */
@@ -941,7 +1032,11 @@ function demoUsers(){const b={lat:myLat||25.0330,lng:myLng||121.5654};return[{ui
 function renderUserList(){
   const list=document.getElementById('userList');
   if(!myLat||!myLng){list.innerHTML='<div class="empty-state"><i class="ti ti-map-pin-off"></i><p>需要位置權限<br>才能顯示附近的人</p></div>';return;}
-  let users=allUsers.map(u=>({...u,dist:calcDist(myLat,myLng,u.location.lat,u.location.lng)})).filter(u=>u.dist<=distFilter).sort((a,b)=>a.dist-b.dist);
+  let users=allUsers
+    .map(u=>({...u,dist:calcDist(myLat,myLng,u.location.lat,u.location.lng)}))
+    .filter(u=>u.dist<=distFilter);
+  // 演算法排序
+  users=rankUsers(users);
   if(!users.length){list.innerHTML=`<div class="empty-state"><i class="ti ti-users-minus"></i><p>${distFilter}公里內暫時沒有人</p></div>`;return;}
   list.innerHTML=users.map(u=>{
     const c=COLORS[u.colorIdx%COLORS.length];
@@ -976,10 +1071,18 @@ async function sendHi(tid,tname,temoji,tci){
   const myUid=currentUser.uid,hid=`${myUid}_${tid}`,rid=`${tid}_${myUid}`;
   try{
     await db.collection('hellos').doc(hid).set({from:myUid,to:tid,fromName:myProfile?.name||'蜜友用戶',toName:tname,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+    // 更新自己的打招呼計數
+    db.collection('users').doc(myUid).update({
+      helloSentCount:firebase.firestore.FieldValue.increment(1),
+      lastActiveAt:firebase.firestore.FieldValue.serverTimestamp()
+    }).catch(()=>{});
     const rdoc=await db.collection('hellos').doc(rid).get();
     if(rdoc.exists){
       const matchId=[myUid,tid].sort().join('_');
       await db.collection('matches').doc(matchId).set({users:[myUid,tid],userNames:{[myUid]:myProfile?.name||'我',[tid]:tname},userEmojis:{[myUid]:myProfile?.emoji||'😊',[tid]:temoji},userColorIdx:{[myUid]:myProfile?.colorIdx||0,[tid]:parseInt(tci)},createdAt:firebase.firestore.FieldValue.serverTimestamp(),lastMsg:'',lastMsgAt:null});
+      // 雙方 matchCount +1
+      db.collection('users').doc(myUid).update({matchCount:firebase.firestore.FieldValue.increment(1)}).catch(()=>{});
+      db.collection('users').doc(tid).update({matchCount:firebase.firestore.FieldValue.increment(1)}).catch(()=>{});
       myMatches.add(tid);matchedProfiles[tid]={uid:tid,name:tname,emoji:temoji,colorIdx:parseInt(tci),online:true};
       newMatchUid=tid;showMatchOverlay(tname,temoji,parseInt(tci));updateMatchBadge();renderUserList();
     } else T(`已向 ${tname} 打招呼 👋`);
@@ -1874,6 +1977,93 @@ async function resetPremium(){
     renderMatchPage();
     renderProfilePage();
   }catch(e){T('重置失敗');}
+}
+
+/* ===== ✨ 聊天小幫手 ===== */
+let aiAssistOpen=false;
+
+function toggleAiAssist(){
+  if(aiAssistOpen){closeAiAssist();return;}
+  aiAssistOpen=true;
+  document.getElementById('aiAssistBtn').classList.add('active');
+  document.getElementById('aiAssistBar').classList.add('open');
+  fetchAiSuggestions();
+}
+
+function closeAiAssist(){
+  aiAssistOpen=false;
+  document.getElementById('aiAssistBtn').classList.remove('active');
+  document.getElementById('aiAssistBar').classList.remove('open');
+}
+
+async function fetchAiSuggestions(){
+  const chips=document.getElementById('aiChips');
+  chips.innerHTML=`<div class="ai-loading-row"><div class="ai-spin"></div><span>AI 分析中，請稍候…</span></div>`;
+
+  // 取得對方資料
+  const target=chatMode==='private'?matchedProfiles[chatTarget]:null;
+  const targetName=target?.name||'對方';
+  const targetTags=(target?.tags||[]).join('、')||'';
+  const targetMbti=target?.mbti||'';
+  const targetCity=target?.city||'';
+
+  // 取最近 5 則訊息
+  let recentMsgs='（還沒有對話，請建議開場白）';
+  try{
+    const matchId=chatMode==='private'?[currentUser.uid,chatTarget].sort().join('_'):chatTarget;
+    const col=chatMode==='private'?'messages':'groupChats';
+    const snap=await db.collection(col).doc(matchId).collection('msgs')
+      .orderBy('createdAt','desc').limit(5).get();
+    if(!snap.empty){
+      const msgs=[];
+      snap.forEach(d=>{const m=d.data();msgs.unshift(`[${m.from===currentUser.uid?'我':targetName}]：${m.text}`);});
+      recentMsgs=msgs.join('\n');
+    }
+  }catch(e){}
+
+  const prompt=`你是交友 App 的聊天小幫手，幫助不擅長開話題的用戶。
+
+對方：${targetName}${targetTags?`，興趣：${targetTags}`:''}${targetMbti?`，MBTI：${targetMbti}`:''}${targetCity?`，城市：${targetCity}`:''}
+
+最近對話：
+${recentMsgs}
+
+請提供3個不同風格的自然回覆或開場白建議。
+要求：繁體中文、語氣輕鬆真誠、每則10-30字、符合對方的興趣或對話脈絡。
+
+只回傳JSON，不要其他文字：
+{"suggestions":[{"style":"輕鬆","emoji":"💬","text":"..."},{"style":"有趣","emoji":"😄","text":"..."},{"style":"問問題","emoji":"🤔","text":"..."}]}`;
+
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:400,messages:[{role:'user',content:prompt}]})
+    });
+    const data=await res.json();
+    const raw=data.content?.[0]?.text||'{}';
+    const parsed=JSON.parse(raw.replace(/```json|```/g,'').trim());
+    const sugs=parsed.suggestions||[];
+    if(!sugs.length)throw new Error('empty');
+    chips.innerHTML=sugs.map(s=>`
+      <div class="ai-chip" onclick="applyAiSug(this,\`${s.text.replace(/`/g,"'")}\`)">
+        ${s.emoji} <strong style="font-size:11px;opacity:.65">${s.style}</strong>&nbsp;${s.text}
+      </div>`).join('');
+  }catch(err){
+    // 離線 fallback：用對方標籤產生簡單建議
+    const tag1=(target?.tags||[])[0]||'聊天';
+    chips.innerHTML=[
+      {e:'💬',s:'輕鬆',t:`嗨！你好，看到你喜歡${tag1}，我也很感興趣 😊`},
+      {e:'😄',s:'有趣',t:`哈哈，你的${tag1}是怎麼開始的？`},
+      {e:'🤔',s:'問問題',t:`最近有沒有${tag1}的好地方推薦？`},
+    ].map(s=>`<div class="ai-chip" onclick="applyAiSug(this,\`${s.t}\`)">${s.e} <strong style="font-size:11px;opacity:.65">${s.s}</strong>&nbsp;${s.t}</div>`).join('');
+  }
+}
+
+function applyAiSug(el,text){
+  document.getElementById('chatInp').value=text;
+  document.getElementById('chatInp').focus();
+  closeAiAssist();
 }
 
 /* 登出 */
