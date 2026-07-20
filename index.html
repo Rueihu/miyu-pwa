@@ -316,6 +316,45 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
 .btn-submit{flex:2;padding:11px;background:var(--brand);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit}
 .btn-submit:hover{background:var(--brand-dark)}
 
+/* ===== 聊天附件 ===== */
+.attach-menu{position:absolute;bottom:calc(100% + 6px);left:4px;background:#fff;border-radius:14px;box-shadow:0 4px 20px rgba(0,0,0,.18);border:.5px solid #e8e8e8;overflow:hidden;z-index:50;min-width:160px;animation:slideUpFade .2s ease}
+@keyframes slideUpFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.attach-item{display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;transition:background .15s;font-size:14px;color:#333}
+.attach-item:hover{background:#f5f5f0}
+.attach-item-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.attach-btn{width:36px;height:36px;border-radius:50%;background:#f5f5f0;border:.5px solid #e0e0e0;color:#666;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s;position:relative}
+.attach-btn:hover{background:#ebebeb}
+.attach-btn.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+.msg-image{max-width:200px;border-radius:12px;cursor:pointer;display:block}
+.msg-image:hover{opacity:.88}
+.msg-link-card{background:#f9f9f8;border:.5px solid #e8e8e8;border-radius:12px;overflow:hidden;max-width:220px;cursor:pointer}
+.msg-link-card:hover{background:#f0f0f0}
+.msg-link-body{padding:8px 10px}
+.msg-link-domain{font-size:10px;color:#aaa;margin-bottom:2px;text-transform:uppercase;letter-spacing:.3px}
+.msg-link-title{font-size:12px;font-weight:600;color:#111;line-height:1.4}
+.msg-video-card{background:#111;border-radius:12px;overflow:hidden;max-width:220px;cursor:pointer;position:relative}
+.msg-video-thumb{width:100%;height:120px;object-fit:cover;display:block;opacity:.75}
+.msg-video-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:36px}
+.msg-video-info{padding:7px 10px;background:#1a1a1a}
+.msg-video-title{font-size:11px;color:#ccc;line-height:1.4}
+.link-inp{width:100%;padding:11px 13px;border:.5px solid #e0e0e0;border-radius:12px;background:#f9f9f8;font-size:14px;font-family:inherit;outline:none;color:#111;margin-bottom:10px}
+.link-inp:focus{border-color:var(--brand);background:#fff}
+
+/* ===== 用戶回饋問卷 ===== */
+.survey-modal{background:#fff;border-radius:24px 24px 0 0;padding:0;padding-bottom:calc(20px + var(--sab));width:100%;max-height:90%;display:flex;flex-direction:column}
+.survey-scroll{overflow-y:auto;flex:1;padding:0 20px}
+.survey-q{margin-bottom:20px}
+.survey-q-label{font-size:14px;font-weight:600;color:#111;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.star-row{display:flex;gap:8px}
+.star{font-size:28px;cursor:pointer;transition:transform .1s;user-select:none;line-height:1}
+.star:hover{transform:scale(1.15)}
+.star.off{filter:grayscale(1) opacity(.25)}
+.survey-score-label{font-size:11px;color:var(--brand);font-weight:600;margin-top:4px;min-height:16px}
+.survey-textarea{width:100%;padding:11px 13px;border:.5px solid #e0e0e0;border-radius:12px;background:#f9f9f8;color:#111;font-size:14px;font-family:inherit;outline:none;resize:none;line-height:1.6;transition:border-color .2s}
+.survey-textarea:focus{border-color:var(--brand);background:#fff}
+.survey-done{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:36px 24px;text-align:center}
+.survey-done-art{font-size:60px;margin-bottom:12px;animation:pop .5s cubic-bezier(.175,.885,.32,1.275)}
+
 /* ===== ✨ 聊天小幫手 ===== */
 .ai-assist-bar{background:linear-gradient(135deg,#1A1A2E,#16213E);border-top:.5px solid rgba(255,255,255,.08);padding:10px 12px;flex-shrink:0;display:none}
 .ai-assist-bar.open{display:block}
@@ -681,16 +720,82 @@ body.show-recaptcha .grecaptcha-badge{visibility:visible!important}
       </div>
       <div id="aiChips"></div>
     </div>
-    <div class="chat-input-bar">
-      <button class="ai-assist-btn" id="aiAssistBtn" onclick="toggleAiAssist()" title="✨ 聊天小幫手">✨</button>
+    <!-- 圖片上傳 input -->
+    <input type="file" id="chatImgInp" accept="image/*" style="display:none" onchange="onChatImageSelected(event)"/>
+    <div class="chat-input-bar" style="position:relative">
+      <!-- 附件按鈕 -->
+      <button class="attach-btn" id="attachBtn" onclick="toggleAttachMenu()" title="傳送附件">＋</button>
+      <!-- 附件選單 -->
+      <div class="attach-menu" id="attachMenu" style="display:none">
+        <div class="attach-item" onclick="trigChatImage()">
+          <div class="attach-item-icon" style="background:#FEF0EB">📷</div>
+          <span>傳送圖片</span>
+        </div>
+        <div class="attach-item" onclick="openVideoModal()">
+          <div class="attach-item-icon" style="background:#EEF0FE">🎬</div>
+          <span>傳送影片連結</span>
+        </div>
+        <div class="attach-item" onclick="openLinkModal()">
+          <div class="attach-item-icon" style="background:#E1F5EE">🔗</div>
+          <span>分享連結</span>
+        </div>
+      </div>
       <input class="chat-inp" id="chatInp" placeholder="傳送訊息..." maxlength="500" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMsg();}"/>
+      <button class="ai-assist-btn" id="aiAssistBtn" onclick="toggleAiAssist()" title="✨ 聊天小幫手">✨</button>
       <button class="chat-send" onclick="sendMsg()"><i class="ti ti-send"></i></button>
+    </div>
+
+    <!-- 影片連結 Modal -->
+    <div class="modal-bg" id="videoModal" onclick="closeVideoModal()">
+      <div class="modal" onclick="event.stopPropagation()" style="padding-bottom:calc(20px + var(--sab))">
+        <div class="modal-handle"></div>
+        <div class="m-title">🎬 傳送影片連結</div>
+        <div style="padding:0 20px 14px">
+          <div style="font-size:12px;color:#aaa;margin-bottom:8px">支援 YouTube、Instagram Reels、TikTok 等影片網址</div>
+          <input class="link-inp" id="videoUrlInp" type="url" placeholder="https://www.youtube.com/watch?v=..."/>
+          <div style="display:flex;gap:8px">
+            <button class="btn-cancel" onclick="closeVideoModal()">取消</button>
+            <button class="btn-submit" onclick="sendVideoLink()">傳送</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 分享連結 Modal -->
+    <div class="modal-bg" id="linkModal" onclick="closeLinkModal()">
+      <div class="modal" onclick="event.stopPropagation()" style="padding-bottom:calc(20px + var(--sab))">
+        <div class="modal-handle"></div>
+        <div class="m-title">🔗 分享連結</div>
+        <div style="padding:0 20px 14px">
+          <div style="font-size:12px;color:#aaa;margin-bottom:8px">IG、Facebook、Twitter、網站等連結都可以</div>
+          <input class="link-inp" id="linkUrlInp" type="url" placeholder="https://..."/>
+          <input class="link-inp" id="linkCaptionInp" type="text" placeholder="加上說明（選填）" maxlength="50" style="margin-top:8px"/>
+          <div style="display:flex;gap:8px">
+            <button class="btn-cancel" onclick="closeLinkModal()">取消</button>
+            <button class="btn-submit" onclick="sendShareLink()">傳送</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
   <!-- 個人頁 -->
   <div class="nearby-page" id="profilePage" style="display:none">
     <div class="profile-page" id="profileContent"></div>
+  </div>
+
+  <!-- 用戶回饋問卷 Modal -->
+  <div class="modal-bg" id="surveyModal" onclick="closeSurvey()">
+    <div class="survey-modal" onclick="event.stopPropagation()" id="surveyInner">
+      <div class="modal-handle"></div>
+      <div style="font-size:16px;font-weight:700;color:#111;padding:0 20px 6px;flex-shrink:0">📝 使用回饋</div>
+      <div style="font-size:13px;color:#aaa;padding:0 20px 14px;flex-shrink:0">你的意見讓蜜友變得更好 ✨</div>
+      <div class="survey-scroll" id="surveyBody"></div>
+      <div style="padding:12px 20px 0;flex-shrink:0;display:flex;gap:8px" id="surveyFooter">
+        <button class="btn-cancel" onclick="closeSurvey()">取消</button>
+        <button class="btn-submit" onclick="submitSurvey()">📤 送出回饋</button>
+      </div>
+    </div>
   </div>
 
   <!-- 解鎖 Modal -->
@@ -1334,12 +1439,8 @@ function renderGroupMessages(snap,actId){
   let prevSender=null;
   snap.forEach(doc=>{
     const m=doc.data();const isMe=m.from===currentUser?.uid;
-    const t=m.createdAt?ft(m.createdAt):'';
-    if(isMe){box.innerHTML+=`<div class="brow me"><div><div class="bubble me">${esc(m.text)}</div><div class="b-time me-t">${t}</div></div></div>`;}
-    else{
-      const showN=prevSender!==m.from;
-      box.innerHTML+=`${showN?`<div class="bubble-sender">${esc(m.fromName||'用戶')}</div>`:''}<div class="brow them"><div class="b-av" style="${COLORS[(m.fromColorIdx||0)%COLORS.length]}">${m.fromEmoji||'👤'}</div><div><div class="bubble them">${esc(m.text)}</div><div class="b-time th-t">${t}</div></div></div>`;
-    }
+    const senderColor=COLORS[(m.fromColorIdx||0)%COLORS.length];
+    box.innerHTML+=renderMsgBubble(m,isMe,senderColor,m.fromEmoji||'👤',m.fromName||'用戶');
     prevSender=m.from;
   });
   box.scrollTop=9999;
@@ -1378,10 +1479,11 @@ function listenPrivateChat(uid){
     const box=document.getElementById('chatMessages');
     box.innerHTML=`<div class="sys-msg"><span>你和 ${p.name} 配對成功，開始聊天吧！💚</span></div>`;
     let prevS=null;
-    snap.forEach(doc=>{const m=doc.data();const isMe=m.from===currentUser.uid;const t=m.createdAt?ft(m.createdAt):'';
-      if(isMe)box.innerHTML+=`<div class="brow me"><div><div class="bubble me">${esc(m.text)}</div><div class="b-time me-t">${t}</div></div></div>`;
-      else{const showAv=prevS!==m.from;box.innerHTML+=`<div class="brow them">${showAv?`<div class="b-av" style="${c}">${p.emoji}</div>`:'<div style="width:28px;flex-shrink:0"></div>'}<div><div class="bubble them">${esc(m.text)}</div><div class="b-time th-t">${t}</div></div></div>`;}
-      prevS=m.from;});
+    snap.forEach(doc=>{
+      const m=doc.data();const isMe=m.from===currentUser.uid;
+      box.innerHTML+=renderMsgBubble(m,isMe,c,p.emoji,p.name);
+      prevS=m.from;
+    });
     box.scrollTop=9999;
   });
 }
@@ -1739,6 +1841,7 @@ async function renderProfilePage(){
         <div><div style="font-size:13px;color:#444">${myLat?'位置已啟用':'尚未取得位置'}</div><div style="font-size:11px;color:#aaa;margin-top:2px">${myLat?`${myLat.toFixed(4)}, ${myLng.toFixed(4)}`:'請允許位置權限'}</div></div>
       </div>
       <button class="btn-ghost" onclick="doSignOut()" style="margin-bottom:10px">登出</button>
+      <button onclick="openSurvey()" style="width:100%;padding:11px;background:#f0f0f0;color:#555;border:.5px solid #e0e0e0;border-radius:12px;font-size:14px;cursor:pointer;font-family:inherit;margin-bottom:8px;display:flex;align-items:center;justify-content:center;gap:6px;font-weight:500">📝 使用回饋 / 建議</button>
       <button onclick="toggleTestMode()" style="width:100%;padding:10px;background:#f0f0f0;color:#bbb;border:.5px solid #e0e0e0;border-radius:12px;font-size:12px;cursor:pointer;font-family:inherit;margin-bottom:20px">🧪 開發者測試模式</button>
     </div>
   `;
@@ -1979,8 +2082,259 @@ async function resetPremium(){
   }catch(e){T('重置失敗');}
 }
 
-/* ===== ✨ 聊天小幫手 ===== */
-let aiAssistOpen=false;
+/* ===== 聊天附件功能 ===== */
+let attachMenuOpen=false;
+
+function toggleAttachMenu(){
+  attachMenuOpen=!attachMenuOpen;
+  document.getElementById('attachMenu').style.display=attachMenuOpen?'block':'none';
+  document.getElementById('attachBtn').classList.toggle('active',attachMenuOpen);
+  if(attachMenuOpen) setTimeout(()=>document.addEventListener('click',closeAttachOnClick,{once:true}),50);
+}
+function closeAttachOnClick(e){
+  if(!document.getElementById('attachMenu').contains(e.target)){
+    closeAttachMenu();
+  }
+}
+function closeAttachMenu(){
+  attachMenuOpen=false;
+  document.getElementById('attachMenu').style.display='none';
+  document.getElementById('attachBtn').classList.remove('active');
+}
+
+/* 圖片上傳 */
+function trigChatImage(){closeAttachMenu();document.getElementById('chatImgInp').click();}
+
+function onChatImageSelected(e){
+  const file=e.target.files[0];e.target.value='';
+  if(!file||!file.type.startsWith('image/'))return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    compressPhoto(ev.target.result,compressed=>{
+      sendChatAttachment({type:'image',imageBase64:compressed,text:''});
+    });
+  };
+  reader.readAsDataURL(file);
+}
+
+/* 影片連結 */
+function openVideoModal(){closeAttachMenu();document.getElementById('videoModal').classList.add('open');setTimeout(()=>document.getElementById('videoUrlInp').focus(),300);}
+function closeVideoModal(){document.getElementById('videoModal').classList.remove('open');document.getElementById('videoUrlInp').value='';}
+
+function sendVideoLink(){
+  const url=document.getElementById('videoUrlInp').value.trim();
+  if(!url){T('請輸入影片網址');return;}
+  closeVideoModal();
+  const info=parseVideoUrl(url);
+  sendChatAttachment({type:'video',url,title:info.title,thumb:info.thumb,text:''});
+}
+
+function parseVideoUrl(url){
+  // YouTube
+  const ytMatch=url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+  if(ytMatch){
+    const id=ytMatch[1];
+    return{title:'YouTube 影片',thumb:`https://img.youtube.com/vi/${id}/mqdefault.jpg`,platform:'YouTube'};
+  }
+  // IG Reels
+  if(url.includes('instagram.com'))
+    return{title:'Instagram',thumb:'',platform:'Instagram'};
+  // TikTok
+  if(url.includes('tiktok.com'))
+    return{title:'TikTok 影片',thumb:'',platform:'TikTok'};
+  // 其他
+  return{title:'影片連結',thumb:'',platform:'影片'};
+}
+
+/* 分享連結 */
+function openLinkModal(){closeAttachMenu();document.getElementById('linkModal').classList.add('open');setTimeout(()=>document.getElementById('linkUrlInp').focus(),300);}
+function closeLinkModal(){document.getElementById('linkModal').classList.remove('open');document.getElementById('linkUrlInp').value='';document.getElementById('linkCaptionInp').value='';}
+
+function sendShareLink(){
+  const url=document.getElementById('linkUrlInp').value.trim();
+  if(!url){T('請輸入連結網址');return;}
+  const caption=document.getElementById('linkCaptionInp').value.trim();
+  closeLinkModal();
+  const domain=url.replace(/https?:\/\//,'').split('/')[0];
+  const platform=detectPlatform(url);
+  sendChatAttachment({type:'link',url,caption,domain,platform,text:caption||url});
+}
+
+function detectPlatform(url){
+  if(url.includes('instagram.com'))return{name:'Instagram',emoji:'📸',color:'#E1306C'};
+  if(url.includes('facebook.com')||url.includes('fb.com'))return{name:'Facebook',emoji:'👤',color:'#1877F2'};
+  if(url.includes('twitter.com')||url.includes('x.com'))return{name:'X (Twitter)',emoji:'🐦',color:'#000'};
+  if(url.includes('youtube.com')||url.includes('youtu.be'))return{name:'YouTube',emoji:'▶️',color:'#FF0000'};
+  if(url.includes('tiktok.com'))return{name:'TikTok',emoji:'🎵',color:'#000'};
+  if(url.includes('line.me'))return{name:'LINE',emoji:'💬',color:'#00C300'};
+  return{name:'連結',emoji:'🔗',color:'#666'};
+}
+
+/* 傳送附件到 Firestore */
+async function sendChatAttachment(payload){
+  if(!currentUser||!chatTarget)return;
+  try{
+    const msg={from:currentUser.uid,...payload,createdAt:firebase.firestore.FieldValue.serverTimestamp()};
+    if(chatMode==='group'){
+      msg.fromName=myProfile?.name||'用戶';
+      msg.fromEmoji=myProfile?.emoji||'😊';
+      msg.fromColorIdx=myProfile?.colorIdx||0;
+      await db.collection('groupChats').doc(chatTarget).collection('msgs').add(msg);
+    } else {
+      const matchId=[currentUser.uid,chatTarget].sort().join('_');
+      await db.collection('messages').doc(matchId).collection('msgs').add(msg);
+      const preview=payload.type==='image'?'📷 圖片':payload.type==='video'?'🎬 影片':payload.caption||payload.url||'🔗 連結';
+      await db.collection('matches').doc(matchId).update({lastMsg:preview,lastMsgAt:firebase.firestore.FieldValue.serverTimestamp()});
+    }
+  }catch(e){T('傳送失敗，請重試');console.error(e);}
+}
+
+/* 渲染附件訊息 */
+function renderMsgBubble(m, isMe, partnerColor, partnerEmoji, partnerName){
+  const t=m.createdAt?ft(m.createdAt):'';
+  let content='';
+  if(m.type==='image'&&m.imageBase64){
+    content=`<img class="msg-image" src="${m.imageBase64}" alt="圖片" onclick="openPhotoPreview(['${m.imageBase64}'],0)"/>`;
+  } else if(m.type==='video'&&m.url){
+    const info=parseVideoUrl(m.url);
+    content=`<div class="msg-video-card" onclick="window.open('${m.url}','_blank')">
+      ${info.thumb?`<img class="msg-video-thumb" src="${info.thumb}" alt=""/>
+        <div class="msg-video-play">▶️</div>`
+        :`<div style="height:80px;display:flex;align-items:center;justify-content:center;font-size:32px">🎬</div>`}
+      <div class="msg-video-info"><div class="msg-video-title">${info.platform} · 點擊觀看</div></div>
+    </div>`;
+  } else if(m.type==='link'&&m.url){
+    const p=m.platform||detectPlatform(m.url);
+    content=`<div class="msg-link-card" onclick="window.open('${m.url}','_blank')">
+      <div class="msg-link-body">
+        <div class="msg-link-domain" style="color:${p.color||'#aaa'}">${p.emoji||'🔗'} ${p.name||m.domain}</div>
+        <div class="msg-link-title">${m.caption||m.url}</div>
+      </div>
+    </div>`;
+  } else {
+    // 純文字，偵測 URL 自動超連結
+    const text=esc(m.text||'');
+    content=`<div class="bubble ${isMe?'me':'them'}">${text}</div>`;
+  }
+  if(isMe){
+    return`<div class="brow me"><div>${content}<div class="b-time me-t">${t}</div></div></div>`;
+  } else {
+    return`<div class="brow them">
+      <div class="b-av" style="${partnerColor}">${partnerEmoji}</div>
+      <div>${content}<div class="b-time th-t">${t}</div></div>
+    </div>`;
+  }
+}[
+  {key:'smoothness', label:'操作流暢度',  icon:'⚡', desc:'整體操作是否順暢？'},
+  {key:'userQuality',label:'用戶品質',    icon:'👥', desc:'附近的人和配對的品質'},
+  {key:'ui',         label:'介面美觀',    icon:'🎨', desc:'設計是否好看易用？'},
+  {key:'payment',    label:'付費機制',    icon:'💳', desc:'付費解鎖的設計是否合理？'},
+];
+const STAR_LABELS=['','很差','還好','普通','不錯','非常好'];
+let surveyRatings={smoothness:0,userQuality:0,ui:0,payment:0};
+let surveySuggestion='';
+
+function openSurvey(){
+  // 嘗試載入之前的回饋
+  if(currentUser){
+    db.collection('feedback').doc(currentUser.uid).get().then(doc=>{
+      if(doc.exists){
+        const d=doc.data();
+        surveyRatings={...surveyRatings,...(d.ratings||{})};
+        surveySuggestion=d.suggestion||'';
+      }
+      renderSurvey();
+    }).catch(()=>renderSurvey());
+  } else renderSurvey();
+  document.getElementById('surveyModal').classList.add('open');
+}
+
+function renderSurvey(){
+  document.getElementById('surveyFooter').style.display='flex';
+  document.getElementById('surveyBody').innerHTML=SURVEY_QS.map(q=>`
+    <div class="survey-q">
+      <div class="survey-q-label">${q.icon} ${q.label}</div>
+      <div style="font-size:11px;color:#aaa;margin-bottom:8px">${q.desc}</div>
+      <div class="star-row" id="stars_${q.key}">
+        ${[1,2,3,4,5].map(i=>`<span class="star ${surveyRatings[q.key]>=i?'on':'off'}"
+          onclick="setStar('${q.key}',${i})">⭐</span>`).join('')}
+      </div>
+      <div class="survey-score-label" id="label_${q.key}">
+        ${surveyRatings[q.key]>0?STAR_LABELS[surveyRatings[q.key]]:''}
+      </div>
+    </div>`).join('')+`
+    <div class="survey-q">
+      <div class="survey-q-label">💡 額外建議</div>
+      <div style="font-size:11px;color:#aaa;margin-bottom:8px">有什麼功能想要，或是哪裡可以改善？</div>
+      <textarea class="survey-textarea" id="surveySuggestion" rows="4"
+        placeholder="例：希望可以搜尋特定興趣的人、照片可以多幾張…"
+        maxlength="300">${surveySuggestion}</textarea>
+      <div style="font-size:11px;color:#bbb;text-align:right;margin-top:4px" id="suggLen">${surveySuggestion.length} / 300</div>
+    </div>
+  `;
+  // 字數即時計算
+  const ta=document.getElementById('surveySuggestion');
+  if(ta)ta.addEventListener('input',()=>{
+    document.getElementById('suggLen').textContent=ta.value.length+' / 300';
+  });
+}
+
+function setStar(key,val){
+  surveyRatings[key]=val;
+  // 更新星星顯示
+  document.querySelectorAll(`#stars_${key} .star`).forEach((s,i)=>{
+    s.className='star '+(i<val?'on':'off');
+  });
+  document.getElementById(`label_${key}`).textContent=STAR_LABELS[val];
+}
+
+function closeSurvey(){document.getElementById('surveyModal').classList.remove('open');}
+
+async function submitSurvey(){
+  const suggestion=document.getElementById('surveySuggestion')?.value.trim()||'';
+  const rated=Object.values(surveyRatings).filter(v=>v>0).length;
+  if(rated<2){T('請至少評分 2 個項目再送出');return;}
+
+  const data={
+    uid:currentUser?.uid||'anonymous',
+    name:myProfile?.name||'匿名用戶',
+    ratings:{...surveyRatings},
+    suggestion,
+    version:'1.0',
+    platform:navigator.userAgent.includes('Mobile')?'mobile':'desktop',
+    updatedAt:firebase.firestore.FieldValue.serverTimestamp(),
+  };
+
+  try{
+    // 用 uid 當 doc id，每人一份（可更新）
+    if(currentUser){
+      await db.collection('feedback').doc(currentUser.uid).set(data,{merge:true});
+    } else {
+      await db.collection('feedback').add({...data,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+    }
+    // 顯示感謝畫面
+    document.getElementById('surveyFooter').style.display='none';
+    const avg=(Object.values(surveyRatings).filter(v=>v>0).reduce((a,b)=>a+b,0)/rated).toFixed(1);
+    document.getElementById('surveyBody').innerHTML=`
+      <div class="survey-done">
+        <div class="survey-done-art">🙏</div>
+        <div style="font-size:18px;font-weight:700;color:#111;margin-bottom:8px">感謝你的回饋！</div>
+        <div style="font-size:13px;color:#888;line-height:1.7;margin-bottom:20px">
+          你的意見對蜜友的改善非常重要<br>我們會認真參考每一則建議 ✨
+        </div>
+        <div style="background:#f9f9f8;border:.5px solid #e8e8e8;border-radius:14px;padding:14px 20px;width:100%;margin-bottom:16px">
+          <div style="font-size:12px;color:#aaa;margin-bottom:6px">你的整體評分</div>
+          <div style="font-size:32px;font-weight:800;color:var(--brand)">${avg} <span style="font-size:14px;color:#bbb">/ 5</span></div>
+          <div style="display:flex;gap:4px;margin-top:6px">${[1,2,3,4,5].map(i=>`<span style="font-size:20px;filter:${parseFloat(avg)>=i?'none':'grayscale(1) opacity(.3)'}">⭐</span>`).join('')}</div>
+        </div>
+        ${suggestion?`<div style="background:#FEF0EB;border:.5px solid var(--brand-border);border-radius:12px;padding:12px 14px;width:100%;text-align:left"><div style="font-size:11px;color:var(--brand);font-weight:600;margin-bottom:4px">你的建議</div><div style="font-size:13px;color:#555;line-height:1.5">${suggestion}</div></div>`:''}
+        <button onclick="closeSurvey()" style="margin-top:20px;padding:12px 36px;background:var(--brand);color:#fff;border:none;border-radius:22px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit">關閉</button>
+      </div>`;
+  }catch(e){
+    T('送出失敗，請稍後再試');
+    console.error(e);
+  }
+}
 
 function toggleAiAssist(){
   if(aiAssistOpen){closeAiAssist();return;}
