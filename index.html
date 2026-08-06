@@ -2373,6 +2373,8 @@ async function submitSurvey(){
 }
 
 let aiAssistOpen=false;
+let aiLastRequestTime=0;
+const AI_COOLDOWN_MS=12000; // 12 秒冷卻
 
 function toggleAiAssist(){
   if(aiAssistOpen){closeAiAssist();return;}
@@ -2407,6 +2409,18 @@ async function fetchAiSuggestions(){
   }
 
   chips.innerHTML=`<div class="ai-loading-row"><div class="ai-spin"></div><span>AI 分析中，請稍候…</span></div>`;
+
+  // 冷卻時間判斷
+  const now=Date.now();
+  const elapsed=now-aiLastRequestTime;
+  if(aiLastRequestTime>0&&elapsed<AI_COOLDOWN_MS){
+    const wait=Math.ceil((AI_COOLDOWN_MS-elapsed)/1000);
+    chips.innerHTML=`<div style="font-size:12px;color:rgba(255,255,255,.7);text-align:center;padding:6px 0">
+      ⏱️ 請等 ${wait} 秒後再試<br><span style="font-size:10px;opacity:.6">（每分鐘最多 15 次請求）</span>
+    </div>`;
+    return;
+  }
+  aiLastRequestTime=now;
 
   // 取得對方資料
   const target=chatMode==='private'?matchedProfiles[chatTarget]:null;
@@ -2446,7 +2460,7 @@ ${recentMsgs}
 
   try{
     const res=await fetch(
-      `https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent?key=${encodeURIComponent(apiKey)}`,
+      `https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash-lite:generateContent?key=${encodeURIComponent(apiKey)}`,
       {
         method:'POST',
         headers:{'Content-Type':'application/json'},
