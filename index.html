@@ -1212,6 +1212,8 @@ function listenMatches(){
           lastMsg:d.lastMsg||'',
           lastMsgAt:d.lastMsgAt
         };
+        // 啟動這個配對的訊息監聽
+        listenMatchMessages(ou, ch.doc.id);
         // 非同步載入對方完整資料（含照片）
         db.collection('users').doc(ou).get().then(uDoc=>{
           if(uDoc.exists){
@@ -1265,8 +1267,13 @@ function renderMatchPage(){
         :`<div class="matched-av" style="${c}">${p.emoji}</div>`;
       return`<div class="matched-card" onclick="openPrivateChat('${p.uid}')">
         ${avHtml}
-        <div class="matched-info"><div class="matched-name">${p.name}</div><div class="matched-preview">${p.lastMsg||'點擊開始聊天 💬'}</div></div>
-        <span>💚</span>
+        <div class="matched-info">
+          <div class="matched-name">${p.name}</div>
+          <div class="matched-preview">${p.lastMsg||'點擊開始聊天 💬'}</div>
+        </div>
+        ${unreadMsgs[p.matchId]>0
+          ?`<div style="background:#EF4444;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;display:flex;align-items:center;justify-content:center;padding:0 4px">${unreadMsgs[p.matchId]}</div>`
+          :'<span style="font-size:16px">💚</span>'}
       </div>`;
     }).join('');
   }else if(!pending.length){ml.style.display='none';mlist.innerHTML='';mes.style.display='flex';sub.textContent='尚未有配對';}
@@ -1450,6 +1457,8 @@ function renderGroupMessages(snap,actId){
 function openPrivateChat(uid){
   const p=matchedProfiles[uid];if(!p)return;
   chatMode='private';chatTarget=uid;prevTab=getCurrentTab();
+  const matchId=[currentUser.uid,uid].sort().join('_');
+  markAsRead(matchId);  // 標記已讀
   const c=COLORS[p.colorIdx%COLORS.length];
   const hdr=document.getElementById('chatHdrAv');
   const mainPhoto=p.photos?.[0]||p.photoBase64||null;
@@ -1663,11 +1672,36 @@ function closeUnlockSuccess(){
 }
 
 /* 更新 tab badge（含收到招呼數）*/
+let unreadMsgs={};
+
+function markAsRead(matchId){
+  unreadMsgs[matchId]=0;
+  localStorage.setItem('miyu_read_'+matchId,Date.now().toString());
+  updateMatchBadge();
+}
+
 function updateMatchBadge(){
-  const n=myMatches.size+(isPremium?0:incomingHellos.length);
+  const incomingN=isPremium?0:incomingHellos.length;
+  const unreadN=Object.values(unreadMsgs).reduce((a,b)=>a+b,0);
+  const total=incomingN+unreadN;
   const b=document.getElementById('matchBadge');
-  b.style.display=n>0?'flex':'none';
-  b.textContent=n>99?'99+':n;
+  if(!b)return;
+  if(total>0){b.style.display='flex';b.textContent=total>99?'99+':total;}
+  else if(myMatches.size>0){b.style.display='none';}
+  else b.style.display='none';
+}
+
+function listenMatchMessages(uid,matchId){
+  const lastReadMs=parseInt(localStorage.getItem('miyu_read_'+matchId)||'0');
+  const lastReadTs=new firebase.firestore.Timestamp(Math.floor(lastReadMs/1000),0);
+  db.collection('messages').doc(matchId).collection('msgs')
+    .where('createdAt','>',lastReadTs)
+    .onSnapshot(snap=>{
+      if(chatTarget===uid)return; // 正在聊天中不算未讀
+      let cnt=0;
+      snap.forEach(d=>{if(d.data().from!==currentUser?.uid)cnt++;});
+      if(cnt>0){unreadMsgs[matchId]=cnt;updateMatchBadge();renderMatchPage();}
+    });
 }
 
 /* 個人頁由下方 async function renderProfilePage 處理 */
@@ -2235,18 +2269,20 @@ let surveyRatings={smoothness:0,userQuality:0,ui:0,payment:0};
 let surveySuggestion='';
 
 function openSurvey(){
-  // 嘗試載入之前的回饋
-  if(currentUser){
-    db.collection('feedback').doc(currentUser.uid).get().then(doc=>{
-      if(doc.exists){
-        const d=doc.data();
-        surveyRatings={...surveyRatings,...(d.ratings||{})};
-        surveySuggestion=d.suggestion||'';
-      }
-      renderSurvey();
-    }).catch(()=>renderSurvey());
-  } else renderSurvey();
   document.getElementById('surveyModal').classList.add('open');
+  // 先 render 空狀態，再載入已有的回饋
+  renderSurvey();
+  if(currentUser){
+    db.collection('feedback').doc(currentUser.uid).get()
+      .then(doc=>{
+        if(doc.exists){
+          const d=doc.data();
+          if(d.ratings) Object.assign(surveyRatings,d.ratings);
+          surveySuggestion=d.suggestion||'';
+          renderSurvey(); // 用已儲存資料重新渲染
+        }
+      }).catch(()=>{});
+  }
 }
 
 function renderSurvey(){
@@ -2352,6 +2388,22 @@ function closeAiAssist(){
 
 async function fetchAiSuggestions(){
   const chips=document.getElementById('aiChips');
+
+  // 檢查是否有 Gemini API Key
+  const apiKey=localStorage.getItem('miyu_gemini_key')||'';
+  if(!apiKey){
+    chips.innerHTML=`
+      <div style="font-size:12px;color:rgba(255,255,255,.8);margin-bottom:8px">✨ 設定 Gemini API Key 啟用 AI 小幫手（免費）</div>
+      <div style="display:flex;gap:6px">
+        <input id="apiKeyInp" type="password" placeholder="AIza..." style="flex:1;padding:7px 10px;border-radius:8px;border:none;font-size:12px;background:rgba(255,255,255,.15);color:#fff;outline:none"/>
+        <button onclick="saveApiKey()" style="padding:7px 14px;background:var(--brand);color:#fff;border:none;border-radius:8px;font-size:12px;cursor:pointer;font-family:inherit;font-weight:600">儲存</button>
+      </div>
+      <div style="font-size:10px;color:rgba(255,255,255,.4);margin-top:5px">
+        免費申請：aistudio.google.com → Create API key
+      </div>`;
+    return;
+  }
+
   chips.innerHTML=`<div class="ai-loading-row"><div class="ai-spin"></div><span>AI 分析中，請稍候…</span></div>`;
 
   // 取得對方資料
@@ -2359,25 +2411,27 @@ async function fetchAiSuggestions(){
   const targetName=target?.name||'對方';
   const targetTags=(target?.tags||[]).join('、')||'';
   const targetMbti=target?.mbti||'';
-  const targetCity=target?.city||'';
 
-  // 取最近 5 則訊息
+  // 取最近 5 則文字訊息
   let recentMsgs='（還沒有對話，請建議開場白）';
   try{
     const matchId=chatMode==='private'?[currentUser.uid,chatTarget].sort().join('_'):chatTarget;
     const col=chatMode==='private'?'messages':'groupChats';
     const snap=await db.collection(col).doc(matchId).collection('msgs')
-      .orderBy('createdAt','desc').limit(5).get();
+      .orderBy('createdAt','desc').limit(6).get();
     if(!snap.empty){
       const msgs=[];
-      snap.forEach(d=>{const m=d.data();msgs.unshift(`[${m.from===currentUser.uid?'我':targetName}]：${m.text}`);});
-      recentMsgs=msgs.join('\n');
+      snap.forEach(d=>{
+        const m=d.data();
+        if(m.text) msgs.unshift(`[${m.from===currentUser.uid?'我':targetName}]：${m.text}`);
+      });
+      if(msgs.length) recentMsgs=msgs.join('\n');
     }
   }catch(e){}
 
   const prompt=`你是交友 App 的聊天小幫手，幫助不擅長開話題的用戶。
 
-對方：${targetName}${targetTags?`，興趣：${targetTags}`:''}${targetMbti?`，MBTI：${targetMbti}`:''}${targetCity?`，城市：${targetCity}`:''}
+對方：${targetName}${targetTags?`，興趣：${targetTags}`:''}${targetMbti?`，MBTI：${targetMbti}`:''}
 
 最近對話：
 ${recentMsgs}
@@ -2389,13 +2443,23 @@ ${recentMsgs}
 {"suggestions":[{"style":"輕鬆","emoji":"💬","text":"..."},{"style":"有趣","emoji":"😄","text":"..."},{"style":"問問題","emoji":"🤔","text":"..."}]}`;
 
   try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:400,messages:[{role:'user',content:prompt}]})
-    });
+    const res=await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+      {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          contents:[{parts:[{text:prompt}]}],
+          generationConfig:{maxOutputTokens:400,temperature:0.8}
+        })
+      }
+    );
+    if(!res.ok){
+      if(res.status===400||res.status===403){localStorage.removeItem('miyu_gemini_key');throw new Error('invalid_key');}
+      throw new Error('api_error');
+    }
     const data=await res.json();
-    const raw=data.content?.[0]?.text||'{}';
+    const raw=data.candidates?.[0]?.content?.parts?.[0]?.text||'{}';
     const parsed=JSON.parse(raw.replace(/```json|```/g,'').trim());
     const sugs=parsed.suggestions||[];
     if(!sugs.length)throw new Error('empty');
@@ -2404,14 +2468,21 @@ ${recentMsgs}
         ${s.emoji} <strong style="font-size:11px;opacity:.65">${s.style}</strong>&nbsp;${s.text}
       </div>`).join('');
   }catch(err){
-    // 離線 fallback：用對方標籤產生簡單建議
     const tag1=(target?.tags||[])[0]||'聊天';
     chips.innerHTML=[
       {e:'💬',s:'輕鬆',t:`嗨！你好，看到你喜歡${tag1}，我也很感興趣 😊`},
-      {e:'😄',s:'有趣',t:`哈哈，你的${tag1}是怎麼開始的？`},
+      {e:'😄',s:'有趣', t:`哈哈，你的${tag1}經驗是從哪裡開始的？`},
       {e:'🤔',s:'問問題',t:`最近有沒有${tag1}的好地方推薦？`},
     ].map(s=>`<div class="ai-chip" onclick="applyAiSug(this,\`${s.t}\`)">${s.e} <strong style="font-size:11px;opacity:.65">${s.s}</strong>&nbsp;${s.t}</div>`).join('');
+    if(err.message==='invalid_key') chips.innerHTML+=`<div style="font-size:11px;color:#F87171;margin-top:6px">⚠️ API Key 無效，請重新設定</div>`;
   }
+}
+function saveApiKey(){
+  const k=document.getElementById('apiKeyInp')?.value.trim();
+  if(!k||!k.startsWith('AIza')){T('請輸入有效的 Gemini API Key（AIza 開頭）');return;}
+  localStorage.setItem('miyu_gemini_key',k);
+  T('✅ API Key 已儲存！');
+  fetchAiSuggestions();
 }
 
 function applyAiSug(el,text){
