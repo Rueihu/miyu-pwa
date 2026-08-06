@@ -2397,7 +2397,7 @@ async function fetchAiSuggestions(){
     chips.innerHTML=`
       <div style="font-size:12px;color:rgba(255,255,255,.8);margin-bottom:8px">✨ 設定 Gemini API Key 啟用 AI 小幫手（免費）</div>
       <div style="display:flex;gap:6px">
-        <input id="apiKeyInp" type="password" placeholder="AIza..." style="flex:1;padding:7px 10px;border-radius:8px;border:none;font-size:12px;background:rgba(255,255,255,.15);color:#fff;outline:none"/>
+        <input id="apiKeyInp" type="password" placeholder="貼上你的 API Key…" style="flex:1;padding:7px 10px;border-radius:8px;border:none;font-size:12px;background:rgba(255,255,255,.15);color:#fff;outline:none"/>
         <button onclick="saveApiKey()" style="padding:7px 14px;background:var(--brand);color:#fff;border:none;border-radius:8px;font-size:12px;cursor:pointer;font-family:inherit;font-weight:600">儲存</button>
       </div>
       <div style="font-size:10px;color:rgba(255,255,255,.4);margin-top:5px">
@@ -2445,19 +2445,29 @@ ${recentMsgs}
 {"suggestions":[{"style":"輕鬆","emoji":"💬","text":"..."},{"style":"有趣","emoji":"😄","text":"..."},{"style":"問問題","emoji":"🤔","text":"..."}]}`;
 
   try{
-    const res=await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+    // 先用 x-goog-api-key header（新版 auth key 格式）
+    let res=await fetch(
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent',
       {
         method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({
-          contents:[{parts:[{text:prompt}]}],
-          generationConfig:{maxOutputTokens:400,temperature:0.8}
-        })
+        headers:{'Content-Type':'application/json','x-goog-api-key':apiKey},
+        body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{maxOutputTokens:400,temperature:0.8}})
       }
     );
+    // 若 401，改試 query string 方式（舊版標準 key）
+    if(res.status===401){
+      res=await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+        {
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{maxOutputTokens:400,temperature:0.8}})
+        }
+      );
+    }
     if(!res.ok){
-      if(res.status===400||res.status===403){localStorage.removeItem('miyu_gemini_key');throw new Error('invalid_key');}
+      console.error('Gemini error',res.status);
+      if(res.status===400||res.status===403||res.status===401){localStorage.removeItem('miyu_gemini_key');throw new Error('invalid_key');}
       throw new Error('api_error');
     }
     const data=await res.json();
@@ -2481,7 +2491,7 @@ ${recentMsgs}
 }
 function saveApiKey(){
   const k=document.getElementById('apiKeyInp')?.value.trim();
-  if(!k||!k.startsWith('AIza')){T('請輸入有效的 Gemini API Key（AIza 開頭）');return;}
+  if(!k||k.length<20){T('請輸入有效的 Gemini API Key');return;}
   localStorage.setItem('miyu_gemini_key',k);
   T('✅ API Key 已儲存！');
   fetchAiSuggestions();
