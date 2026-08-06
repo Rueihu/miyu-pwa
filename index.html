@@ -2459,6 +2459,7 @@ ${recentMsgs}
     if(!res.ok){
       const errBody=await res.json().catch(()=>({}));
       console.error('Gemini API 錯誤',res.status,errBody);
+      if(res.status===429) throw new Error('rate_limit');
       if(res.status===400||res.status===403||res.status===401){
         localStorage.removeItem('miyu_gemini_key');
         throw new Error('invalid_key');
@@ -2479,6 +2480,8 @@ ${recentMsgs}
     const tag1=(target?.tags||[])[0]||'聊天';
     const errMsg=err.message==='invalid_key'
       ?'<div style="font-size:11px;color:#F87171;margin-bottom:6px">⚠️ API Key 無效，請重新點 ✨ 設定</div>'
+      :err.message==='rate_limit'
+      ?'<div style="font-size:11px;color:#F59E0B;margin-bottom:6px">⏱️ 請求太頻繁，請等 1 分鐘再試（免費方案限制）</div>'
       :err.message?.startsWith('HTTP')
       ?`<div style="font-size:11px;color:#F59E0B;margin-bottom:6px">⚠️ API 錯誤（${err.message}），改用備用建議</div>`
       :'';
