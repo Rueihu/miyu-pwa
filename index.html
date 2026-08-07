@@ -2286,33 +2286,39 @@ function openSurvey(){
 }
 
 function renderSurvey(){
-  document.getElementById('surveyFooter').style.display='flex';
-  document.getElementById('surveyBody').innerHTML=SURVEY_QS.map(q=>`
-    <div class="survey-q">
-      <div class="survey-q-label">${q.icon} ${q.label}</div>
-      <div style="font-size:11px;color:#aaa;margin-bottom:8px">${q.desc}</div>
-      <div class="star-row" id="stars_${q.key}">
-        ${[1,2,3,4,5].map(i=>`<span class="star ${surveyRatings[q.key]>=i?'on':'off'}"
-          onclick="setStar('${q.key}',${i})">⭐</span>`).join('')}
-      </div>
-      <div class="survey-score-label" id="label_${q.key}">
-        ${surveyRatings[q.key]>0?STAR_LABELS[surveyRatings[q.key]]:''}
-      </div>
-    </div>`).join('')+`
-    <div class="survey-q">
-      <div class="survey-q-label">💡 額外建議</div>
-      <div style="font-size:11px;color:#aaa;margin-bottom:8px">有什麼功能想要，或是哪裡可以改善？</div>
-      <textarea class="survey-textarea" id="surveySuggestion" rows="4"
-        placeholder="例：希望可以搜尋特定興趣的人、照片可以多幾張…"
-        maxlength="300">${surveySuggestion}</textarea>
-      <div style="font-size:11px;color:#bbb;text-align:right;margin-top:4px" id="suggLen">${surveySuggestion.length} / 300</div>
-    </div>
-  `;
-  // 字數即時計算
-  const ta=document.getElementById('surveySuggestion');
-  if(ta)ta.addEventListener('input',()=>{
-    document.getElementById('suggLen').textContent=ta.value.length+' / 300';
-  });
+  try{
+    document.getElementById('surveyFooter').style.display='flex';
+    let html='';
+    SURVEY_QS.forEach(function(q){
+      let stars='';
+      for(let i=1;i<=5;i++){
+        const on=surveyRatings[q.key]>=i?'on':'off';
+        stars+='<span class="star '+on+'" onclick="setStar(\''+q.key+'\','+i+')">⭐</span>';
+      }
+      const label=surveyRatings[q.key]>0?STAR_LABELS[surveyRatings[q.key]]:'';
+      html+='<div class="survey-q">'
+        +'<div class="survey-q-label">'+q.icon+' '+q.label+'</div>'
+        +'<div style="font-size:11px;color:#aaa;margin-bottom:8px">'+q.desc+'</div>'
+        +'<div class="star-row" id="stars_'+q.key+'">'+stars+'</div>'
+        +'<div class="survey-score-label" id="label_'+q.key+'">'+label+'</div>'
+        +'</div>';
+    });
+    html+='<div class="survey-q">'
+      +'<div class="survey-q-label">💡 額外建議</div>'
+      +'<div style="font-size:11px;color:#aaa;margin-bottom:8px">有什麼功能想要，或是哪裡可以改善？</div>'
+      +'<textarea class="survey-textarea" id="surveySuggestion" rows="4" maxlength="300" '
+      +'placeholder="例：希望可以搜尋特定興趣的人、照片可以多幾張…">'+surveySuggestion+'</textarea>'
+      +'<div style="font-size:11px;color:#bbb;text-align:right;margin-top:4px" id="suggLen">'+surveySuggestion.length+' / 300</div>'
+      +'</div>';
+    document.getElementById('surveyBody').innerHTML=html;
+    const ta=document.getElementById('surveySuggestion');
+    if(ta)ta.addEventListener('input',function(){
+      document.getElementById('suggLen').textContent=ta.value.length+' / 300';
+    });
+  }catch(e){
+    console.error('renderSurvey error',e);
+    document.getElementById('surveyBody').innerHTML='<div style="padding:20px;text-align:center;color:#aaa">載入失敗，請重新開啟</div>';
+  }
 }
 
 function setStar(key,val){
