@@ -2264,6 +2264,12 @@ function renderMsgBubble(m, isMe, partnerColor, partnerEmoji, partnerName){
   {key:'ui',         label:'介面美觀',    icon:'🎨', desc:'設計是否好看易用？'},
   {key:'payment',    label:'付費機制',    icon:'💳', desc:'付費解鎖的設計是否合理？'},
 ];
+const SURVEY_QS=[
+  {key:'smoothness', label:'操作流暢度', icon:'⚡', desc:'整體操作是否順暢？'},
+  {key:'userQuality',label:'用戶品質',   icon:'👥', desc:'附近的人和配對的品質'},
+  {key:'ui',         label:'介面美觀',   icon:'🎨', desc:'設計是否好看易用？'},
+  {key:'payment',    label:'付費機制',   icon:'💳', desc:'付費解鎖的設計是否合理？'},
+];
 const STAR_LABELS=['','很差','還好','普通','不錯','非常好'];
 let surveyRatings={smoothness:0,userQuality:0,ui:0,payment:0};
 let surveySuggestion='';
