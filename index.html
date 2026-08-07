@@ -2394,16 +2394,16 @@ async function fetchAiSuggestions(){
   const chips=document.getElementById('aiChips');
 
   // 檢查是否有 Gemini API Key
-  const apiKey=localStorage.getItem('miyu_gemini_key')||'';
+  const apiKey=localStorage.getItem('miyu_groq_key')||'';
   if(!apiKey){
     chips.innerHTML=`
-      <div style="font-size:12px;color:rgba(255,255,255,.8);margin-bottom:8px">✨ 設定 Gemini API Key 啟用 AI 小幫手（免費）</div>
+      <div style="font-size:12px;color:rgba(255,255,255,.8);margin-bottom:8px">✨ 設定 Groq API Key 啟用 AI 小幫手（完全免費）</div>
       <div style="display:flex;gap:6px">
-        <input id="apiKeyInp" type="password" placeholder="貼上你的 API Key…" style="flex:1;padding:7px 10px;border-radius:8px;border:none;font-size:12px;background:rgba(255,255,255,.15);color:#fff;outline:none"/>
+        <input id="apiKeyInp" type="password" placeholder="gsk_..." style="flex:1;padding:7px 10px;border-radius:8px;border:none;font-size:12px;background:rgba(255,255,255,.15);color:#fff;outline:none"/>
         <button onclick="saveApiKey()" style="padding:7px 14px;background:var(--brand);color:#fff;border:none;border-radius:8px;font-size:12px;cursor:pointer;font-family:inherit;font-weight:600">儲存</button>
       </div>
       <div style="font-size:10px;color:rgba(255,255,255,.4);margin-top:5px">
-        免費申請：aistudio.google.com → Create API key
+        免費申請：console.groq.com → API Keys → Create
       </div>`;
     return;
   }
@@ -2460,28 +2460,33 @@ ${recentMsgs}
 
   try{
     const res=await fetch(
-      `https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash-lite:generateContent?key=${encodeURIComponent(apiKey)}`,
+      'https://api.groq.com/openai/v1/chat/completions',
       {
         method:'POST',
-        headers:{'Content-Type':'application/json'},
+        headers:{
+          'Content-Type':'application/json',
+          'Authorization':`Bearer ${apiKey}`
+        },
         body:JSON.stringify({
-          contents:[{parts:[{text:prompt}]}],
-          generationConfig:{maxOutputTokens:400,temperature:0.8}
+          model:'llama-3.1-8b-instant',
+          messages:[{role:'user',content:prompt}],
+          max_tokens:400,
+          temperature:0.8
         })
       }
     );
     if(!res.ok){
       const errBody=await res.json().catch(()=>({}));
-      console.error('Gemini API 錯誤',res.status,errBody);
+      console.error('Groq API 錯誤',res.status,errBody);
       if(res.status===429) throw new Error('rate_limit');
-      if(res.status===400||res.status===403||res.status===401){
-        localStorage.removeItem('miyu_gemini_key');
+      if(res.status===401||res.status===403){
+        localStorage.removeItem('miyu_groq_key');
         throw new Error('invalid_key');
       }
       throw new Error(`HTTP ${res.status}`);
     }
     const data=await res.json();
-    const raw=data.candidates?.[0]?.content?.parts?.[0]?.text||'{}';
+    const raw=data.choices?.[0]?.message?.content||'{}';
     const parsed=JSON.parse(raw.replace(/```json|```/g,'').trim());
     const sugs=parsed.suggestions||[];
     if(!sugs.length)throw new Error('empty');
@@ -2508,8 +2513,8 @@ ${recentMsgs}
 }
 function saveApiKey(){
   const k=document.getElementById('apiKeyInp')?.value.trim();
-  if(!k||k.length<20){T('請輸入有效的 Gemini API Key');return;}
-  localStorage.setItem('miyu_gemini_key',k);
+  if(!k||k.length<20){T('請輸入有效的 Groq API Key');return;}
+  localStorage.setItem('miyu_groq_key',k);
   T('✅ API Key 已儲存！');
   fetchAiSuggestions();
 }
