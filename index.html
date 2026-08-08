@@ -340,7 +340,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
 .link-inp{width:100%;padding:11px 13px;border:.5px solid #e0e0e0;border-radius:12px;background:#f9f9f8;font-size:14px;font-family:inherit;outline:none;color:#111;margin-bottom:10px}
 .link-inp:focus{border-color:var(--brand);background:#fff}
 
-/* ===== 用戶回饋問卷 ===== */
+/* ===== 封鎖 / 檢舉 ===== */
+.more-menu{position:absolute;top:50px;right:12px;background:#fff;border-radius:14px;box-shadow:0 4px 20px rgba(0,0,0,.18);border:.5px solid #e8e8e8;overflow:hidden;z-index:10;min-width:150px;animation:slideUpFade .2s ease}
+.more-item{display:flex;align-items:center;gap:10px;padding:12px 16px;cursor:pointer;font-size:14px;color:#333;transition:background .15s}
+.more-item:hover{background:#f5f5f0}
+.more-item.danger{color:#EF4444}
+.more-item.danger:hover{background:#FEF2F2}
+.more-btn{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.2);border:none;color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative}
+.more-btn:hover{background:rgba(255,255,255,.3)}
 .survey-modal{background:#fff;border-radius:24px 24px 0 0;padding:0;padding-bottom:calc(20px + var(--sab));width:100%;height:82vh;max-height:82vh;display:flex;flex-direction:column}
 .survey-scroll{overflow-y:auto;flex:1;padding:0 20px;min-height:0}
 .survey-q{margin-bottom:20px}
@@ -709,6 +716,13 @@ body.show-recaptcha .grecaptcha-badge{visibility:visible!important}
         <div class="chat-header-name" id="chatHdrName"></div>
         <div class="chat-header-status" id="chatHdrStatus"></div>
       </div>
+      <div style="position:relative">
+        <button onclick="toggleChatMore()" style="width:36px;height:36px;border-radius:50%;background:#f5f5f0;border:.5px solid #e0e0e0;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#666">⋯</button>
+        <div class="more-menu" id="chatMoreMenu" style="display:none;right:0;top:44px">
+          <div class="more-item danger" onclick="blockUserFromChat()"><span>🚫</span>封鎖此用戶</div>
+          <div class="more-item" onclick="reportUserFromChat()"><span>⚠️</span>檢舉此用戶</div>
+        </div>
+      </div>
     </div>
     <div class="chat-messages" id="chatMessages"></div>
     <div class="eq-row" id="eqRow"></div>
@@ -855,6 +869,11 @@ body.show-recaptcha .grecaptcha-badge{visibility:visible!important}
     <div class="pub-profile-cover">
       <button class="pub-back-btn" onclick="closePubProfile()">‹</button>
       <div class="pub-av-row" id="pubAvRow"></div>
+      <button class="more-btn" id="pubMoreBtn" onclick="togglePubMore()" style="position:absolute;top:calc(12px + var(--sat));right:12px">⋯</button>
+      <div class="more-menu" id="pubMoreMenu" style="display:none;top:calc(52px + var(--sat))">
+        <div class="more-item danger" onclick="blockUserFromProfile()"><span>🚫</span>封鎖此用戶</div>
+        <div class="more-item" onclick="reportUserFromProfile()"><span>⚠️</span>檢舉此用戶</div>
+      </div>
     </div>
     <div style="flex:1;overflow-y:auto;padding-top:54px;padding-bottom:90px" id="pubProfileBody"></div>
     <div class="pub-footer" id="pubProfileFooter"></div>
@@ -1104,7 +1123,7 @@ function enterApp(){
   document.getElementById('sApp').classList.add('active');
   document.getElementById('pb').classList.remove('show');
   startLocTracking();loadNearbyUsers();listenMatches();loadMyHiSent();
-  loadActivities();renderCatBar();loadIncomingHellos();
+  loadActivities();renderCatBar();loadIncomingHellos();loadBlockedUsers();
   // 記錄活躍時間
   if(currentUser) db.collection('users').doc(currentUser.uid).update({lastActiveAt:firebase.firestore.FieldValue.serverTimestamp()}).catch(()=>{});
 }
@@ -1139,8 +1158,7 @@ function renderUserList(){
   if(!myLat||!myLng){list.innerHTML='<div class="empty-state"><i class="ti ti-map-pin-off"></i><p>需要位置權限<br>才能顯示附近的人</p></div>';return;}
   let users=allUsers
     .map(u=>({...u,dist:calcDist(myLat,myLng,u.location.lat,u.location.lng)}))
-    .filter(u=>u.dist<=distFilter);
-  // 演算法排序
+    .filter(u=>u.dist<=distFilter&&!myBlockedUsers.has(u.uid));
   users=rankUsers(users);
   if(!users.length){list.innerHTML=`<div class="empty-state"><i class="ti ti-users-minus"></i><p>${distFilter}公里內暫時沒有人</p></div>`;return;}
   list.innerHTML=users.map(u=>{
@@ -1947,6 +1965,8 @@ async function showUserDetail(uid){
 
 function renderPubProfile(p){
   if(!p)return;
+  pubProfileUid=p.uid;
+  pubProfileName=p.name||'此用戶';
   const c=COLORS[p.colorIdx%COLORS.length];
   const isM=myMatches.has(p.uid);
   const sentH=myHiSent.has(p.uid);
@@ -2536,6 +2556,105 @@ function applyAiSug(el,text){
   document.getElementById('chatInp').focus();
   closeAiAssist();
 }
+
+/* ===== 封鎖功能 ===== */
+let myBlockedUsers=new Set();
+
+function loadBlockedUsers(){
+  if(!myProfile)return;
+  myBlockedUsers=new Set(myProfile.blockedUsers||[]);
+}
+
+function confirmBlock(uid,name,onConfirm){
+  const div=document.createElement('div');
+  div.id='blockConfirmModal';
+  div.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:600;display:flex;align-items:center;justify-content:center;padding:24px';
+  div.innerHTML=`
+    <div style="background:#fff;border-radius:20px;padding:24px;width:100%;max-width:320px;text-align:center">
+      <div style="font-size:36px;margin-bottom:12px">🚫</div>
+      <div style="font-size:17px;font-weight:700;color:#111;margin-bottom:8px">封鎖 ${name}？</div>
+      <div style="font-size:13px;color:#888;line-height:1.6;margin-bottom:20px">
+        封鎖後你們將無法在附近看到對方<br>也不會收到對方的招呼或訊息
+      </div>
+      <div style="display:flex;gap:8px">
+        <button onclick="document.getElementById('blockConfirmModal').remove()"
+          style="flex:1;padding:11px;background:#f5f5f0;border:.5px solid #e0e0e0;border-radius:12px;font-size:14px;cursor:pointer;font-family:inherit">取消</button>
+        <button id="confirmBlockBtn"
+          style="flex:1;padding:11px;background:#EF4444;color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">封鎖</button>
+      </div>
+    </div>`;
+  document.getElementById('app').appendChild(div);
+  document.getElementById('confirmBlockBtn').onclick=()=>{div.remove();onConfirm();};
+  div.addEventListener('click',e=>{if(e.target===div)div.remove();});
+}
+
+async function doBlock(uid,name){
+  if(!currentUser||!uid)return;
+  try{
+    myBlockedUsers.add(uid);
+    await db.collection('users').doc(currentUser.uid).update({blockedUsers:firebase.firestore.FieldValue.arrayUnion(uid)});
+    if(myProfile)myProfile.blockedUsers=[...myBlockedUsers];
+    // 刪除配對和招呼
+    const matchId=[currentUser.uid,uid].sort().join('_');
+    db.collection('matches').doc(matchId).delete().catch(()=>{});
+    db.collection('hellos').doc(currentUser.uid+'_'+uid).delete().catch(()=>{});
+    db.collection('hellos').doc(uid+'_'+currentUser.uid).delete().catch(()=>{});
+    // 更新本地狀態
+    myMatches.delete(uid);myHiSent.delete(uid);
+    delete matchedProfiles[uid];
+    incomingHellos=incomingHellos.filter(h=>h.from!==uid);
+    renderUserList();renderMatchPage();renderIncomingHellos();
+    T('已封鎖 '+name+'，對方不會再出現');
+  }catch(e){myBlockedUsers.delete(uid);T('封鎖失敗，請重試');console.error(e);}
+}
+
+let pubProfileUid=null,pubProfileName=null;
+function blockUserFromProfile(){
+  closePubMore();
+  if(!pubProfileUid)return;
+  const uid=pubProfileUid,name=pubProfileName;
+  confirmBlock(uid,name,async()=>{closePubProfile();await doBlock(uid,name);});
+}
+function blockUserFromChat(){
+  closeChatMore();
+  if(!chatTarget||chatMode!=='private')return;
+  const p=matchedProfiles[chatTarget]||{name:'此用戶'};
+  const uid=chatTarget,name=p.name;
+  confirmBlock(uid,name,async()=>{closeChat();await doBlock(uid,name);});
+}
+
+function showReportModal(uid,name){
+  const reasons=['騷擾或不當行為','色情或不雅內容','假帳號或詐騙','人身安全威脅','其他'];
+  const div=document.createElement('div');
+  div.id='reportModal';
+  div.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:600;display:flex;align-items:flex-end';
+  div.innerHTML='<div style="background:#fff;border-radius:20px 20px 0 0;padding:0 0 calc(20px + var(--sab));width:100%;max-width:430px;margin:auto">'
+    +'<div style="width:36px;height:4px;background:#e0e0e0;border-radius:2px;margin:10px auto 14px"></div>'
+    +'<div style="font-size:16px;font-weight:700;color:#111;padding:0 20px 14px">⚠️ 檢舉 '+name+'</div>'
+    +'<div style="padding:0 20px">'
+    +reasons.map(r=>'<div onclick="submitReport(\''+uid+'\',\''+name+'\',\''+r+'\')" '
+      +'style="padding:13px 0;border-bottom:.5px solid #f5f5f0;font-size:14px;color:#333;cursor:pointer;display:flex;align-items:center;justify-content:space-between">'
+      +r+'<span style="color:#ccc">›</span></div>').join('')
+    +'</div><div style="padding:14px 20px 0">'
+    +'<button onclick="document.getElementById(\'reportModal\').remove()" '
+    +'style="width:100%;padding:11px;background:#f5f5f0;border:.5px solid #e0e0e0;border-radius:12px;font-size:14px;cursor:pointer;font-family:inherit;color:#666">取消</button>'
+    +'</div></div>';
+  document.getElementById('app').appendChild(div);
+  div.addEventListener('click',e=>{if(e.target===div)div.remove();});
+}
+async function submitReport(uid,name,reason){
+  document.getElementById('reportModal')?.remove();
+  try{
+    await db.collection('reports').add({reporter:currentUser.uid,reported:uid,reportedName:name,reason,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+    T('已送出檢舉，我們會盡快審查 ✓');
+  }catch(e){T('檢舉送出失敗');}
+}
+function reportUserFromProfile(){closePubMore();showReportModal(pubProfileUid,pubProfileName);}
+function reportUserFromChat(){closeChatMore();if(chatMode!=='private')return;const p=matchedProfiles[chatTarget]||{name:'用戶'};showReportModal(chatTarget,p.name);}
+function togglePubMore(){const m=document.getElementById('pubMoreMenu');const open=m.style.display==='none';m.style.display=open?'block':'none';if(open)setTimeout(()=>document.addEventListener('click',()=>{m.style.display='none';},{once:true}),50);}
+function closePubMore(){const m=document.getElementById('pubMoreMenu');if(m)m.style.display='none';}
+function toggleChatMore(){const m=document.getElementById('chatMoreMenu');const open=m.style.display==='none';m.style.display=open?'block':'none';if(open)setTimeout(()=>document.addEventListener('click',()=>{m.style.display='none';},{once:true}),50);}
+function closeChatMore(){const m=document.getElementById('chatMoreMenu');if(m)m.style.display='none';}
 
 /* 登出 */
 async function doSignOut(){
